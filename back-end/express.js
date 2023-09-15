@@ -110,6 +110,12 @@ app.patch('/tasks/:id', async (req, res) => {
 	if (req.body.assigned_to !== undefined) {
 		updates.assigned_to = req.body.assigned_to;
 	}
+	if (req.body.task_requirement !== undefined) {
+		updates.task_requirement = req.body.task_requirement;
+	}
+	if (req.body.due_date !== undefined) {
+		updates.due_date = req.body.due_date;
+	}
 
 	try {
 		await knex('tasks_table').where({ id: taskId }).update(updates);
