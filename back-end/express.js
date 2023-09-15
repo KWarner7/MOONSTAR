@@ -97,6 +97,29 @@ app.delete('/tasks/:id', (req, res) => {
 		.catch((err) => res.status(500).json(err));
 });
 
+app.patch('/tasks/:id', async (req, res) => {
+	const taskId = req.params.id;
+	const updates = {};
+
+	if (req.body.task_name !== undefined) {
+		updates.task_name = req.body.task_name;
+	}
+	if (req.body.task_description !== undefined) {
+		updates.task_description = req.body.task_description;
+	}
+	if (req.body.assigned_to !== undefined) {
+		updates.assigned_to = req.body.assigned_to;
+	}
+
+	try {
+		await knex('tasks_table').where({ id: taskId }).update(updates);
+		res.status(200).send({ message: 'Task updated successfully' });
+	} catch (error) {
+		console.error(error);
+		res.status(500).send({ message: 'Internal server error' });
+	}
+});
+
 app.listen(PORT, () => {
 	console.log(`The server is running on ${PORT}`);
 });
