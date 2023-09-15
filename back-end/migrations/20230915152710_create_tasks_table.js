@@ -3,6 +3,8 @@ exports.up = function(knex) {
         table.increments();
         table.string('task_name', 250).notNullable();
         table.string('task_description', 550).notNullable();
+        table.string('task_requirement', 550).notNullable();
+        table.string('status_update').notNullable();
         table.timestamp('creation_date').notNullable();
         table.dateTime('due_date').notNullable();
         table.timestamp('completion_date').notNullable();
