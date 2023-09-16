@@ -126,6 +126,44 @@ app.patch('/tasks/:id', async (req, res) => {
 	}
 });
 
+app.patch('/users/:id', async (req, res) => {
+	const userId = req.params.id;
+	const updates = {};
+
+	if (req.body.username !== undefined) {
+		updates.username = req.body.username;
+	}
+	if (req.body.password !== undefined) {
+		updates.password = req.body.password;
+	}
+	if (req.body.first_name !== undefined) {
+		updates.first_name = req.body.first_name;
+	}
+	if (req.body.last_name !== undefined) {
+		updates.last_name = req.body.last_name;
+	}
+	if (req.body.rank !== undefined) {
+		updates.rank = req.body.rank;
+	}
+	if (req.body.role !== undefined) {
+		updates.role = req.body.role;
+	}
+	if (req.body.flight !== undefined) {
+		updates.flight = req.body.flight;
+	}
+	if (req.body.section !== undefined) {
+		updates.section = req.body.section;
+	}
+
+	try {
+		await knex('user_table').where({ id: userId }).update(updates);
+		res.status(200).send({ message: 'user updated successfully' });
+	} catch (error) {
+		console.error(error);
+		res.status(500).send({ message: 'Internal server error' });
+	}
+});
+
 app.listen(PORT, () => {
 	console.log(`The server is running on ${PORT}`);
 });
