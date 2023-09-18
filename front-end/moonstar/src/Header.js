@@ -7,8 +7,13 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
+	const navigate = useNavigate();
+	const handleSignInClick = () => {
+		navigate('/login');
+	};
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position='static'>
@@ -30,7 +35,9 @@ export default function Header() {
 							{user.first_name} {user.last_name}
 						</Typography>
 					) : ( */}
-					<Button color='inherit'>Sign In</Button>
+					<Button color='inherit' onClick={handleSignInClick}>
+						Sign In
+					</Button>
 					{/* )} */}
 				</Toolbar>
 			</AppBar>
