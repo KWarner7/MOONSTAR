@@ -8,8 +8,13 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
+	const navigate = useNavigate();
+	const handleSignInClick = () => {
+		navigate('/login');
+	};
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position='static'>
