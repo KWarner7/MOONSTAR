@@ -31,6 +31,47 @@ app.get('/tasks', function (req, res) {
 		);
 });
 
+app.get('/users/search', async (req, res) => {
+	const { name, flight, section } = req.query;
+
+	if (!name && !flight && !section) {
+		return res
+			.status(400)
+			.json({ error: 'You must provide at least one search parameter' });
+	}
+
+	try {
+		let query = knex('user_table');
+
+		if (name) {
+			query = query
+				.where('first_name', 'ilike', `%${name}%`)
+				.orWhere('last_name', 'ilike', `%${name}%`);
+		}
+
+		if (flight) {
+			query = query.orWhere('flight', 'ilike', `%${flight}%`);
+		}
+
+		if (section) {
+			query = query.orWhere('section', 'ilike', `%${section}%`);
+		}
+
+		const users = await query;
+
+		if (users.length === 0) {
+			return res
+				.status(404)
+				.json({ message: 'No users found with the provided criteria' });
+		}
+
+		res.status(200).json(users);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: 'Internal server error' });
+	}
+});
+
 app.get('/users/:id', async (req, res) => {
 	const userId = req.params.id;
 	try {
