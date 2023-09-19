@@ -115,8 +115,11 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+                component={RouterLink}
+                to="/Login"
             >
-              <Link href="#" variant="body2" component={RouterLink} to="/Login">Sign Up</Link>
+                Sign Up
+              {/* <Link href="#" variant="body2" component={RouterLink} to="/Login">Sign Up</Link> */}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
