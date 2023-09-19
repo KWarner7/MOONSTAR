@@ -7,11 +7,17 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Header from './Header.js';
 import { Link } from 'react-router-dom';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const defaultTheme = createTheme();
 
 export default function HomePage() {
   return (
     <>
-      <AppBar position="relative">
+    <ThemeProvider theme={defaultTheme}>
+      <CssBaseline />
+      <AppBar>
         <Header />
       </AppBar>
       <main>
@@ -69,6 +75,7 @@ export default function HomePage() {
         </Typography>
         <Copyright />
       </Box>
+      </ThemeProvider>
     </>
   );
 }
