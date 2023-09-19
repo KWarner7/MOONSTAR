@@ -19,8 +19,10 @@ export default function Header() {
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position='static'>
 				<Toolbar>
-					<Typography variant='h6' component='div' align='left' sx={{ flexGrow: 1 }}>
-						M.O.O.N.S.T.A.R.
+					<Typography variant='h6' component='div' align='center' sx={{ flexGrow: 1 }}>
+						<Link to= "/">
+						<Button sx={{ color: 'white'}}> M.O.O.N.S.T.A.R.</Button>
+						</Link>
 					</Typography>
 					<Link to="/login" style={{ textDecoration: 'none' }}>
 						<Button sx={{ color: 'white' }}>Login</Button>
