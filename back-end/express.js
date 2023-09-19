@@ -1,10 +1,15 @@
 const express = require('express');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 8081;
 const knex = require('knex')(
 	require('./knexfile')[process.env.NODE_ENV || 'development']
 );
+
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
 
 app.use(express.json());
 
