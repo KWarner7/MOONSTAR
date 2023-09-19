@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink } from 'react-router-dom';
+import HomePage from './HomePage.js';
 
 function Copyright(props) {
   return (
@@ -90,7 +91,7 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              <Link href="#" variant="body2" component={RouterLink} to="/HomePage">Login</Link>
             </Button>
             <Grid container>
               <Grid item xs>

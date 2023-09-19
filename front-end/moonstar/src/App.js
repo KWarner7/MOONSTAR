@@ -7,6 +7,7 @@ import Login from './Login.js';
 import ActiveProjects from './ActiveProjects.js';
 import CompletedProjects from './CompletedProjects.js';
 import EditProject from './EditProject';
+import Signup from './Signup.js';
 
 function App() {
 	return (
@@ -16,6 +17,7 @@ function App() {
 					<Routes>
 						<Route path='/' element={<HomePage />} />
 						<Route path='/login' element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
 						<Route path='/active-projects' element={<ActiveProjects />} />
 						<Route path='/completed-projects' element={<CompletedProjects />} />
 						<Route path='/edit-project' element={<EditProject />} />
