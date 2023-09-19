@@ -6,6 +6,7 @@ import HomePage from './HomePage.js';
 import Login from './Login.js';
 import ActiveProjects from './ActiveProjects.js';
 import CompletedProjects from './CompletedProjects.js';
+import CreateProject from './CreateProject.js'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/active-projects" element={<ActiveProjects />} />
           <Route path="/completed-projects" element={<CompletedProjects />} />
+          <Route path="/create-project" element={<CreateProject />} />
         </Routes>
       </header>
     </div>
