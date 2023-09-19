@@ -4,6 +4,7 @@ import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import { BrowserRouter as Router } from 'react-router-dom';
 import HomePage from './HomePage.js';
 import Login from './Login.js';
+import Signup from './Signup.js';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </header>
     </div>
