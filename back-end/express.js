@@ -1,12 +1,17 @@
 const express = require('express');
-
+const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 8081;
 const knex = require('knex')(
 	require('./knexfile')[process.env.NODE_ENV || 'development']
 );
 
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
+
 app.use(express.json());
+app.use(cors());
 
 app.get('/users', function (req, res) {
 	knex('user_table')
@@ -87,9 +92,31 @@ app.get('/users/:id', async (req, res) => {
 app.get('/tasks/:id', async (req, res) => {
 	const taskId = req.params.id;
 	try {
-		const taskData = await knex('tasks_table').where({ id: taskId });
+		const taskData = await knex('tasks_table')
+			.join(
+				'user_table as assignedBy',
+				'tasks_table.assigned_by',
+				'=',
+				'assignedBy.id'
+			)
+			.join(
+				'user_table as assignedTo',
+				'tasks_table.assigned_to',
+				'=',
+				'assignedTo.id'
+			)
+			.where('tasks_table.id', taskId)
+			.select(
+				'tasks_table.*',
+				'assignedBy.first_name as assigned_by_first_name',
+				'assignedBy.last_name as assigned_by_last_name',
+				'assignedTo.first_name as assigned_to_first_name',
+				'assignedTo.last_name as assigned_to_last_name'
+			);
+
 		res.status(200).json(taskData);
 	} catch (err) {
+		console.error(err);
 		res.status(500).json({
 			error: `Cannot retrieve task data by the given task ID: ${taskId}`,
 		});
@@ -156,6 +183,9 @@ app.patch('/tasks/:id', async (req, res) => {
 	}
 	if (req.body.due_date !== undefined) {
 		updates.due_date = req.body.due_date;
+	}
+	if (req.body.priority !== undefined) {
+		updates.priority = req.body.priority;
 	}
 
 	try {
