@@ -43,18 +43,17 @@ export default function CompletedProjects() {
         <Header />
       </AppBar>
       <main>
-        {/* Hero unit */}
         <Box
           sx={{
             bgcolor: 'transparent',
-            pt: 8,
-            pb: 6,
+            pt: 2,
+            pb: 1
           }}
         >
           <Container maxWidth="sm">
             <Typography
               component="h1"
-              variant="h2"
+              variant="h3"
               align="center"
               color="white"
               gutterBottom
@@ -62,12 +61,26 @@ export default function CompletedProjects() {
               Completed Projects
             </Typography>
           </Container>
+          <Stack
+              direction="row"
+              spacing={2}
+              justifyContent="center"
+            >
+              <Link to="/create-project" style={{ textDecoration: 'none' }}>
+                <Button variant="contained">Create New Project</Button>
+              </Link>
+            </Stack>
         </Box>
-        <Container sx={{
-          py: 1,
-          border: '1px solid #ffffff'
-        }}
-          maxWidth="lg">
+        <Container
+          sx={{
+            py: 1,
+            border: '1px solid #ffffff',
+            maxHeight: '600px',
+            overflowY: 'auto',
+            padding: '2rem'
+          }}
+          maxWidth="lg"
+        >
           <Grid container spacing={4}>
             {tasks.map((task, index) => (
               <Grid item key={task.id} xs={12}>
@@ -76,43 +89,102 @@ export default function CompletedProjects() {
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    marginTop: index === 0 ? '30px' : '0px'  // Apply top margin only for the first card
                   }}
                 >
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2" align="left">
-                      {task.task_name}  {/* Use the task_name from the API data */}
-                    </Typography>
-                    <Typography>
-                      {task.task_description}  {/* You can also display other data like this */}
-                    </Typography>
+                  <CardContent
+                    sx={{
+                      flexGrow: 1
+                    }}
+                  >
+                    <Grid container spacing={2}>
+                      <Container>
+                        <Typography
+                          sx={{
+                            fontSize: '2rem',
+                            textDecoration: 'underline'
+                          }}
+                          gutterBottom
+                          variant="h7"
+                          component="h2"
+                          align="left"
+                        >
+                          {task.task_name}
+                        </Typography>
+                      </Container>
+                      <Grid item xs={4}>
+                        <Container
+                          sx={{
+                            border: '1px solid #000',
+                            p: 6,
+                            maxHeight: '200px',
+                            overflowY: 'auto'
+                          }}
+                          align='left'
+                        >
+                          <Typography>
+                            {task.task_description}
+                          </Typography>
+                        </Container>
+                        <Container>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            component="h2"
+                            align="center">
+                            Description
+                          </Typography>
+                        </Container>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Container
+                          sx={{
+                            border: '1px solid #000',
+                            p: 6,
+                            maxHeight: '200px',
+                            overflowY: 'auto'
+                          }}
+                          align='left'
+                        >
+                          <Typography>
+                            {task.status_update}
+                          </Typography>
+                        </Container>
+                        <Container align='center'>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            component="h2" a
+                            lign="center"
+                          >
+                            Status Updates
+                          </Typography>
+                        </Container>
+                      </Grid>
+                    </Grid>
                   </CardContent>
-                  <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
-                  </CardActions>
                 </Card>
               </Grid>
             ))}
           </Grid>
         </Container>
       </main>
-      {/* Footer */}
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
+      <Box
+        sx={{
+          bgcolor: 'transparent',
+          p: 6
+        }}
+        component="footer"
+      >
         <Typography
           variant="subtitle1"
           align="center"
-          color="text.secondary"
+          color="white"
           component="p"
         >
           Take your projects to the moon!
         </Typography>
         <Copyright />
       </Box>
-      {/* End footer */}
     </ThemeProvider>
   );
 }
