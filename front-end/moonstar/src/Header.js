@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
@@ -18,27 +19,14 @@ export default function Header() {
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position='static'>
 				<Toolbar>
-					{/* <IconButton
-						size='large'
-						edge='start'
-						color='inherit'
-						aria-label='menu'
-						sx={{ mr: 2 }}
-					>
-						<MenuIcon />
-					</IconButton> */}
-					<Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-						M.O.O.N.S.T.A.R.
+					<Typography variant='h6' component='div' align='center' sx={{ flexGrow: 1 }}>
+						<Link to= "/">
+						<Button sx={{ color: 'white'}}> M.O.O.N.S.T.A.R.</Button>
+						</Link>
 					</Typography>
-					{/* {user ? (
-						<Typography variant='body1' color='inherit'>
-							{user.first_name} {user.last_name}
-						</Typography>
-					) : ( */}
-					<Button color='inherit' onClick={handleSignInClick}>
-						Sign In
-					</Button>
-					{/* )} */}
+					<Link to="/login" style={{ textDecoration: 'none' }}>
+						<Button sx={{ color: 'white' }}>Login</Button>
+					</Link>
 				</Toolbar>
 			</AppBar>
 		</Box>

@@ -3,23 +3,10 @@ import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Header from './Header.js';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="white" align="center">
-      {'Copyright © '}
-      <Link color="rgb(0,0,990,1)" href="https://mui.com/">
-        M.O.O.N.S.T.A.R.
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { Link } from 'react-router-dom';
 
 export default function HomePage() {
   return (
@@ -61,8 +48,12 @@ export default function HomePage() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained">View Active Projects</Button>
-              <Button variant="contained">View Completed Projects</Button>
+              <Link to="/active-projects" style={{ textDecoration: 'none' }}>
+                <Button variant="contained">View Active Projects</Button>
+              </Link>
+              <Link to="/completed-projects" style={{ textDecoration: 'none' }}>
+                <Button variant="contained">View Completed Projects</Button>
+              </Link>
             </Stack>
           </Container>
         </Box>
@@ -79,5 +70,18 @@ export default function HomePage() {
         <Copyright />
       </Box>
     </>
+  );
+}
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="white" align="center">
+      {'Copyright © '}
+      <Link color="rgb(0,0,990,1)" href="https://mui.com/">
+        M.O.O.N.S.T.A.R.
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
   );
 }

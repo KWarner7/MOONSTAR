@@ -6,6 +6,10 @@ const knex = require('knex')(
 	require('./knexfile')[process.env.NODE_ENV || 'development']
 );
 
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
+
 app.use(express.json());
 app.use(cors());
 
