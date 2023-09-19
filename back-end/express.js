@@ -6,9 +6,11 @@ const knex = require('knex')(
 	require('./knexfile')[process.env.NODE_ENV || 'development']
 );
 
-app.use(cors({
-  origin: 'http://localhost:3000'
-}));
+app.use(
+	cors({
+		origin: 'http://localhost:3000',
+	})
+);
 
 app.use(express.json());
 app.use(cors());
@@ -174,6 +176,9 @@ app.patch('/tasks/:id', async (req, res) => {
 	}
 	if (req.body.task_description !== undefined) {
 		updates.task_description = req.body.task_description;
+	}
+	if (req.body.assigned_by !== undefined) {
+		updates.assigned_by = req.body.assigned_by;
 	}
 	if (req.body.assigned_to !== undefined) {
 		updates.assigned_to = req.body.assigned_to;
