@@ -8,6 +8,7 @@ exports.up = function (knex) {
 		table.timestamp('creation_date').notNullable();
 		table.dateTime('due_date').notNullable();
 		table.timestamp('completion_date').notNullable();
+		table.boolean('is_active').notNullable();
 		table.string('priority', 250).notNullable();
 		table.integer('assigned_to').notNullable();
 		table.foreign('assigned_to').references('user_table.id');
