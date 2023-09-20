@@ -16,6 +16,7 @@ import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Header from './Header.js';
 import React, { useState, useEffect } from 'react';
+import FilterActive from './FilterActive.js';
 
 const defaultTheme = createTheme();
 
@@ -60,6 +61,7 @@ export default function ActiveProjects() {
             >
               Active Projects
             </Typography>
+            <FilterActive />
           </Container>
           <Stack
               direction="row"

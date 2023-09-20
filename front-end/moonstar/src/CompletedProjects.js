@@ -16,6 +16,7 @@ import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Header from './Header.js';
 import React, { useState, useEffect } from 'react';
+import FilterCompleted from './FilterCompleted.js';
 
 const defaultTheme = createTheme();
 
@@ -60,6 +61,7 @@ export default function CompletedProjects() {
             >
               Completed Projects
             </Typography>
+            <FilterCompleted />
           </Container>
           <Stack
               direction="row"
