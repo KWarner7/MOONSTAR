@@ -3,7 +3,6 @@ import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
@@ -12,6 +11,8 @@ import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import PermContactCalendarOutlinedIcon from '@mui/icons-material/PermContactCalendarOutlined';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import EventAvailableOutlinedIcon from '@mui/icons-material/EventAvailableOutlined';
+import { DatePicker } from '@mui/x-date-pickers';
+import TextField from '@mui/material/TextField';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -54,14 +55,29 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function CustomizedMenus() {
+export default function FilterCompleted() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [startDate, setStartDate] = React.useState(null);
+  const [endDate, setEndDate] = React.useState(null);
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleStartDateChange = (date) => {
+    if (!endDate || date <= endDate) {
+      setStartDate(date);
+    }
+  };
+
+  const handleEndDateChange = (date) => {
+    if (!startDate || date >= startDate) {
+      setEndDate(date);
+    }
   };
 
   return (
@@ -105,13 +121,24 @@ export default function CustomizedMenus() {
           Month Assigned:
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={handleClose} disableRipple>
+        <Divider sx={{ my: 0.5 }} />
+        <MenuItem disableRipple>
           <EventAvailableOutlinedIcon />
-          Year Completed:
+          Start Date:
+          <DatePicker
+            value={startDate}
+            onChange={handleStartDateChange}
+            renderInput={(params) => <TextField {...params} />}
+          />
         </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-        <EventAvailableIcon />
-          Month Completed:
+        <MenuItem disableRipple>
+          <EventAvailableIcon />
+          End Date:
+          <DatePicker
+            value={endDate}
+            onChange={handleEndDateChange}
+            renderInput={(params) => <TextField {...params} />}
+          />
         </MenuItem>
       </StyledMenu>
     </div>
