@@ -6,6 +6,7 @@ import HomePage from './HomePage.js';
 import Login from './Login.js';
 import ActiveProjects from './ActiveProjects.js';
 import CompletedProjects from './CompletedProjects.js';
+import CreateProject from './CreateProject.js'
 import EditProject from './EditProject';
 import Signup from './Signup.js';
 
@@ -21,6 +22,7 @@ function App() {
 						<Route path='/active-projects' element={<ActiveProjects />} />
 						<Route path='/completed-projects' element={<CompletedProjects />} />
 						<Route path='/edit-project' element={<EditProject />} />
+            <Route path="/create-project" element={<CreateProject />} />
 					</Routes>
 				</header>
 			</div>
