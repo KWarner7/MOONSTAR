@@ -4,7 +4,8 @@ exports.up = function (knex) {
 		table.string('task_name', 250).notNullable();
 		table.string('task_description', 550).notNullable();
 		table.string('task_requirement', 550).notNullable();
-		table.string('status_update');
+		table.string('status_update', 550);
+		table.timestamp('status_update_timestamp');
 		table.timestamp('creation_date').notNullable();
 		table.dateTime('due_date').notNullable();
 		table.timestamp('completion_date').notNullable();
