@@ -34,14 +34,14 @@ function Copyright() {
 	);
 }
 
-export default function EditProject() {
-	const { taskId } = useParams();
-	const { data, error } = FetchData(`http://localhost:8081/tasks/${taskId}`);
+export default function StatusUpdate() {
+	// const { taskId } = useParams();
+	const { data, error } = FetchData(`http://localhost:8081/tasks/1`);
 	const { data: userData, error: userError } = FetchData(
 		'http://localhost:8081/users'
 	);
 
-	const [taskRequirements, setTaskRequirements] = useState([]);
+	const [statusUpdate, setStatusUpdate] = useState([]);
 	const [task, setTask] = useState(null);
 	const [assignedBy, setAssignedBy] = useState('');
 	const [assignedByUserId, setAssignedByUserId] = useState(null);
@@ -51,7 +51,7 @@ export default function EditProject() {
 	useEffect(() => {
 		if (data && data.length > 0 && userData) {
 			setTask(data[0]);
-			setTaskRequirements(data[0].task_requirement.split(', '));
+			setStatusUpdate(data[0].status_update.split(' || '));
 
 			const initialAssignedByUser = userData.find(
 				(user) =>
@@ -111,7 +111,7 @@ export default function EditProject() {
 					task_description: task.task_description,
 					assigned_by: assignedByUserId,
 					assigned_to: assignedToUserId,
-					task_requirement: taskRequirements.join(', '),
+					status_update: statusUpdate.join(' || '),
 					due_date: task.due_date,
 					priority: task.priority,
 				}),
@@ -124,15 +124,15 @@ export default function EditProject() {
 		}
 	}
 
-	function handleAddTaskRequirement() {
-		setTaskRequirements([...taskRequirements, '']);
+	function handleAddStatusUpdate() {
+		setStatusUpdate([...statusUpdate, '']);
 	}
 
-	function handleDeleteTaskRequirement(index) {
-		const updatedRequirements = [...taskRequirements];
-		updatedRequirements.splice(index, 1);
-		setTaskRequirements(updatedRequirements);
-	}
+	// function handleDeleteTaskRequirement(index) {
+	// 	const updatedStatus = [...statusUpdate];
+	// 	updatedStatus.splice(index, 1);
+	// 	setStatusUpdate(updatedStatus);
+	// }
 
 	return (
 		<>
@@ -148,7 +148,7 @@ export default function EditProject() {
 						color='white'
 						gutterBottom
 					>
-						Edit Project
+						Update Status
 					</Typography>
 
 					{task && (
@@ -162,9 +162,15 @@ export default function EditProject() {
 										margin='normal'
 										size='small'
 										value={task.task_name}
-										onChange={(e) =>
-											setTask({ ...task, task_name: e.target.value })
-										}
+										InputProps={{
+											readOnly: true,
+											style: {
+												cursor: 'default',
+												userSelect: 'none',
+												pointerEvents: 'none',
+												color: 'inherit',
+											},
+										}}
 									/>
 									<Typography variant='body2' gutterBottom>
 										<FormControl fullWidth variant='outlined' margin='normal'>
@@ -193,6 +199,15 @@ export default function EditProject() {
 														{...params}
 														label='Assigned By'
 														variant='outlined'
+														InputProps={{
+															readOnly: true,
+															style: {
+																cursor: 'default',
+																userSelect: 'none',
+																pointerEvents: 'none',
+																color: 'inherit',
+															},
+														}}
 													/>
 												)}
 											/>
@@ -225,44 +240,52 @@ export default function EditProject() {
 														{...params}
 														label='Assigned To'
 														variant='outlined'
+														InputProps={{
+															readOnly: true,
+															style: {
+																cursor: 'default',
+																userSelect: 'none',
+																pointerEvents: 'none',
+																color: 'inherit',
+															},
+														}}
 													/>
 												)}
 											/>
 										</FormControl>
 									</Typography>
 									<FormControl fullWidth variant='outlined' margin='normal'>
-										<InputLabel>Priority</InputLabel>
-										<Select
+										<TextField
 											label='Priority'
 											value={task.priority}
-											onChange={(e) => {
-												console.log('Selected value:', e.target.value);
-												setTask({ ...task, priority: e.target.value });
+											InputProps={{
+												readOnly: true,
+												style: {
+													cursor: 'default',
+													userSelect: 'none',
+													pointerEvents: 'none',
+													color: 'inherit',
+												},
 											}}
-										>
-											<MenuItem value='Low'>Low</MenuItem>
-											<MenuItem value='Medium'>Medium</MenuItem>
-											<MenuItem value='High'>High</MenuItem>
-										</Select>
+										/>
 									</FormControl>
 									<Typography variant='body1' gutterBottom>
-										<LocalizationProvider dateAdapter={AdapterDateFns}>
-											<DateTimePicker
-												label='Due Date/Time'
-												value={new Date(task.due_date)}
-												onChange={(date) =>
-													setTask({ ...task, due_date: date.toISOString() })
-												}
-												sx={{ size: 'small' }}
-												textFieldProps={{
-													style: {
-														fontSize: '12px',
-														padding: '4px',
-														width: '150px',
-													},
-												}}
-											/>
-										</LocalizationProvider>
+										<TextField
+											fullWidth
+											margin='normal'
+											label='Due By'
+											size='small'
+											value={new Date(task.due_date).toLocaleString()}
+											InputProps={{
+												readOnly: true,
+												style: {
+													cursor: 'default',
+													userSelect: 'none',
+													pointerEvents: 'none',
+													color: 'inherit',
+												},
+											}}
+										/>
 									</Typography>
 								</Typography>
 								<Typography variant='h6' gutterBottom>
@@ -272,17 +295,23 @@ export default function EditProject() {
 										label='Project Description'
 										size='small'
 										value={task.task_description}
-										onChange={(e) =>
-											setTask({ ...task, task_description: e.target.value })
-										}
+										InputProps={{
+											readOnly: true,
+											style: {
+												cursor: 'default',
+												userSelect: 'none',
+												pointerEvents: 'none',
+												color: 'inherit',
+											},
+										}}
 									/>
 								</Typography>
 							</CardContent>
 							<CardContent>
 								<Typography variant='h6' gutterBottom>
-									Task Requirements
+									Update Status
 								</Typography>
-								{taskRequirements.map((requirement, index) => (
+								{statusUpdate.map((requirement, index) => (
 									<div
 										key={index}
 										style={{ display: 'flex', alignItems: 'center' }}
@@ -290,30 +319,23 @@ export default function EditProject() {
 										<TextField
 											fullWidth
 											margin='normal'
-											label={`Task Requirement ${index + 1}`}
+											label={`Status Update ${index + 1}`}
 											variant='outlined'
 											value={requirement}
 											onChange={(e) => {
-												const updatedRequirements = [...taskRequirements];
-												updatedRequirements[index] = e.target.value;
-												setTaskRequirements(updatedRequirements);
+												const updatedStatus = [...statusUpdate];
+												updatedStatus[index] = e.target.value;
+												setStatusUpdate(updatedStatus);
 											}}
 										/>
-										<Button
-											variant='contained'
-											color='error'
-											onClick={() => handleDeleteTaskRequirement(index)}
-										>
-											Delete
-										</Button>
 									</div>
 								))}
 								<Button
 									variant='contained'
 									color='primary'
-									onClick={handleAddTaskRequirement}
+									onClick={handleAddStatusUpdate}
 								>
-									Add Task Requirement
+									Add Status Update
 								</Button>
 							</CardContent>
 							<CardActions>

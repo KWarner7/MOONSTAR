@@ -195,6 +195,12 @@ app.patch('/tasks/:id', async (req, res) => {
 	if (req.body.is_active !== undefined) {
 		updates.is_active = req.body.is_active;
 	}
+	if (req.body.status_update !== undefined) {
+		updates.status_update = req.body.status_update;
+	}
+	if (req.body.status_update_timestamp !== undefined) {
+		updates.status_update_timestamp = req.body.status_update_timestamp;
+	}
 
 	try {
 		await knex('tasks_table').where({ id: taskId }).update(updates);

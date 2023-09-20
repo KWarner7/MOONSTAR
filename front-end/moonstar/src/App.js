@@ -9,9 +9,11 @@ import CompletedProjects from './CompletedProjects.js';
 import EditProject from './EditProject';
 import Signup from './Signup.js';
 import CreateProject from './CreateProject.js';
+import StatusUpdate from './StatusUpdate';
 import ProjectDetails from './ProjectDetails.js';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+
 
 function App() {
 	return (
@@ -22,11 +24,12 @@ function App() {
 					<Routes>
 						<Route path='/' element={<HomePage />} />
 						<Route path='/login' element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+						<Route path='/signup' element={<Signup />} />
 						<Route path='/active-projects' element={<ActiveProjects />} />
 						<Route path='/completed-projects' element={<CompletedProjects />} />
 						<Route path='/edit-project' element={<EditProject />} />
 						<Route path='/create-project' element={<CreateProject />} />
+						<Route path='/project-status' element={<StatusUpdate />} />
 						<Route path='/project-details/:id' element={<ProjectDetails />} />
 					</Routes>
 				</header>
