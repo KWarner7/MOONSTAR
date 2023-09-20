@@ -19,7 +19,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import { createTheme } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
 
 const defaultTheme = createTheme();
 
@@ -96,27 +95,16 @@ export default function CreateProject() {
 						align='center'
 						color='text.primary'
 						gutterBottom
-					>
-						Create A Project <Container sx={{
-          py: 1,
-          border: '1px solid #ffffff'
-        }}
-          maxWidth="lg">
-          <Grid container spacing={4}>
-                <Card
-                  sx={{
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column'
-                  }}
-                >
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2" align="left">
+					> 
+                    <Typography
+                      component="h3"
+                      variant="h3"
+                      align="center"
+                      color="white"
+                      gutterBottom
+                    >
+                      Create A New Project
                     </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-        </Container>
 					</Typography>
 
 					{(
@@ -195,6 +183,9 @@ export default function CreateProject() {
 									Add Task Requirement
 								</Button>
 							</CardContent>
+                            <Link to="/active-projects">
+							<Button sx={{ color: 'primary'}} variant= "contained"> Cancel</Button>
+						</Link>
 							<CardActions>
 								<Button
 									variant='contained'

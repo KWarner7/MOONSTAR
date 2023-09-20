@@ -29,7 +29,16 @@ function Copyright(props) {
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+    palette: {
+      primary: {
+        main: '#000000',
+      },
+      secondary: {
+        main: '#000000',
+      }
+  }
+  });
 
 export default function SignUp() {
   const handleSubmit = (event) => {
@@ -51,12 +60,13 @@ export default function SignUp() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            backgroundColor: '#ffffff',
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" color="#000000">
             Sign up
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
@@ -103,12 +113,7 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
+
             </Grid>
             <Button
               type="submit"
@@ -119,7 +124,6 @@ export default function SignUp() {
                 to="/Login"
             >
                 Sign Up
-              {/* <Link href="#" variant="body2" component={RouterLink} to="/Login">Sign Up</Link> */}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
