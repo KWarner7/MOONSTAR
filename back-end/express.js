@@ -192,6 +192,9 @@ app.patch('/tasks/:id', async (req, res) => {
 	if (req.body.priority !== undefined) {
 		updates.priority = req.body.priority;
 	}
+	if (req.body.is_active !== undefined) {
+		updates.is_active = req.body.is_active;
+	}
 
 	try {
 		await knex('tasks_table').where({ id: taskId }).update(updates);

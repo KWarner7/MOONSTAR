@@ -299,7 +299,7 @@ export default function EditProject() {
 										/>
 										<Button
 											variant='contained'
-											color='secondary'
+											color='error'
 											onClick={() => handleDeleteTaskRequirement(index)}
 										>
 											Delete
