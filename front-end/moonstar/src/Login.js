@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink } from 'react-router-dom';
+import HomePage from './HomePage.js';
 
 function Copyright(props) {
   return (
@@ -51,6 +52,7 @@ export default function SignIn() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            backgroundColor: '#cfe8fc',
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
@@ -89,8 +91,11 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              component={RouterLink}
+              to="/"
             >
-              Sign In
+              Login
+              {/* <Link href="#" variant="body2" component={RouterLink} to="/">Login</Link> */}
             </Button>
             <Grid container>
               <Grid item xs>

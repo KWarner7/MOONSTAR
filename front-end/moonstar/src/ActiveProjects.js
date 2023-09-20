@@ -1,4 +1,3 @@
-import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
@@ -16,13 +15,27 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Header from './Header.js';
+import React, { useState, useEffect } from 'react';
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function ActiveProjects() {
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch("http://localhost:8081/tasks");
+        const data = await response.json();
+        setTasks(data);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
@@ -30,91 +43,148 @@ export default function ActiveProjects() {
         <Header />
       </AppBar>
       <main>
-        {/* Hero unit */}
         <Box
           sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
+            bgcolor: 'transparent',
+            pt: 2,
+            pb: 1
           }}
         >
           <Container maxWidth="sm">
             <Typography
               component="h1"
-              variant="h2"
+              variant="h3"
               align="center"
-              color="text.primary"
+              color="white"
               gutterBottom
             >
               Active Projects
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Something short and leading about the collection below—its contents,
-              the creator, etc. Make it short and sweet, but not too short so folks
-              don&apos;t simply skip over it entirely.
-            </Typography>
-            <Stack
-              sx={{ pt: 4 }}
+          </Container>
+          <Stack
               direction="row"
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button>
+              <Link to="/create-project" style={{ textDecoration: 'none' }}>
+                <Button variant="contained">Create New Project</Button>
+              </Link>
             </Stack>
-          </Container>
         </Box>
-        <Container sx={{ py: 8 }} maxWidth="md">
-          {/* End hero unit */}
+        <Container
+          sx={{
+            py: 1,
+            border: '1px solid #ffffff',
+            maxHeight: '600px',
+            overflowY: 'auto',
+            padding: '2rem'
+          }}
+          maxWidth="lg"
+        >
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {tasks.map((task, index) => (
+              <Grid item key={task.id} xs={12}>
                 <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                  sx={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
                 >
-                  <CardMedia
-                    component="div"
+                  <CardContent
                     sx={{
-                      // 16:9
-                      pt: '56.25%',
+                      flexGrow: 1
                     }}
-                    image="https://source.unsplash.com/random?wallpapers"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
-                    </Typography>
+                  >
+                    <Grid container spacing={2}>
+                      <Container>
+                        <Typography
+                          sx={{
+                            fontSize: '2rem',
+                            textDecoration: 'underline'
+                          }}
+                          gutterBottom
+                          variant="h7"
+                          component="h2"
+                          align="left"
+                        >
+                          {task.task_name}
+                        </Typography>
+                      </Container>
+                      <Grid item xs={4}>
+                        <Container
+                          sx={{
+                            border: '1px solid #000',
+                            p: 6,
+                            maxHeight: '200px',
+                            overflowY: 'auto'
+                          }}
+                          align='left'
+                        >
+                          <Typography>
+                            {task.task_description}
+                          </Typography>
+                        </Container>
+                        <Container>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            component="h2"
+                            align="center">
+                            Description
+                          </Typography>
+                        </Container>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Container
+                          sx={{
+                            border: '1px solid #000',
+                            p: 6,
+                            maxHeight: '200px',
+                            overflowY: 'auto'
+                          }}
+                          align='left'
+                        >
+                          <Typography>
+                            {task.status_update}
+                          </Typography>
+                        </Container>
+                        <Container align='center'>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            component="h2" a
+                            lign="center"
+                          >
+                            Status Updates
+                          </Typography>
+                        </Container>
+                      </Grid>
+                    </Grid>
                   </CardContent>
-                  <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
-                  </CardActions>
                 </Card>
               </Grid>
             ))}
           </Grid>
         </Container>
       </main>
-      {/* Footer */}
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
+      <Box
+        sx={{
+          bgcolor: 'transparent',
+          p: 6
+        }}
+        component="footer"
+      >
         <Typography
           variant="subtitle1"
           align="center"
-          color="text.secondary"
+          color="white"
           component="p"
         >
           Take your projects to the moon!
         </Typography>
         <Copyright />
       </Box>
-      {/* End footer */}
     </ThemeProvider>
   );
 }

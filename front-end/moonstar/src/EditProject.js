@@ -18,6 +18,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
+import Autocomplete from '@mui/material/Autocomplete';
 
 function Copyright() {
 	return (
@@ -34,15 +35,67 @@ function Copyright() {
 
 export default function EditProject() {
 	const { data, error } = FetchData('http://localhost:8081/tasks/1');
+	const { data: userData, error: userError } = FetchData(
+		'http://localhost:8081/users'
+	);
+
 	const [taskRequirements, setTaskRequirements] = useState([]);
 	const [task, setTask] = useState(null);
+	const [assignedBy, setAssignedBy] = useState('');
+	const [assignedByUserId, setAssignedByUserId] = useState(null);
+	const [assignedTo, setAssignedTo] = useState('');
+	const [assignedToUserId, setAssignedToUserId] = useState(null);
 
 	useEffect(() => {
-		if (data) {
+		if (data && data.length > 0 && userData) {
 			setTask(data[0]);
 			setTaskRequirements(data[0].task_requirement.split(', '));
+
+			const initialAssignedByUser = userData.find(
+				(user) =>
+					`${user.first_name} ${user.last_name}` ===
+					`${data[0].assigned_by_first_name} ${data[0].assigned_by_last_name}`
+			);
+			const initialAssignedToUser = userData.find(
+				(user) =>
+					`${user.first_name} ${user.last_name}` ===
+					`${data[0].assigned_to_first_name} ${data[0].assigned_to_last_name}`
+			);
+
+			if (initialAssignedByUser) {
+				setAssignedByUserId(initialAssignedByUser.id);
+				setAssignedBy(
+					`${initialAssignedByUser.first_name} ${initialAssignedByUser.last_name}`
+				);
+			}
+			if (initialAssignedToUser) {
+				setAssignedToUserId(initialAssignedToUser.id);
+				setAssignedTo(
+					`${initialAssignedToUser.first_name} ${initialAssignedToUser.last_name}`
+				);
+			}
+
+			const uniqueAssignedByNames = [
+				...new Set(
+					data.map(
+						(item) =>
+							`${item.assigned_by_first_name} ${item.assigned_by_last_name}`
+					)
+				),
+			];
+			const uniqueAssignedToNames = [
+				...new Set(
+					data.map(
+						(item) =>
+							`${item.assigned_to_first_name} ${item.assigned_to_last_name}`
+					)
+				),
+			];
+
+			setAssignedBy(uniqueAssignedByNames[0] || '');
+			setAssignedTo(uniqueAssignedToNames[0] || '');
 		}
-	}, [data]);
+	}, [data, userData]);
 
 	async function handleSave() {
 		try {
@@ -54,15 +107,16 @@ export default function EditProject() {
 				body: JSON.stringify({
 					task_name: task.task_name,
 					task_description: task.task_description,
-					assigned_to: task.assigned_to,
+					assigned_by: assignedByUserId,
+					assigned_to: assignedToUserId,
 					task_requirement: taskRequirements.join(', '),
 					due_date: task.due_date,
 					priority: task.priority,
 				}),
 			});
 
-			const data = await response.json();
-			console.log('Response:', data);
+			const responseData = await response.json();
+			console.log('Response:', responseData);
 		} catch (error) {
 			console.error('Error:', error);
 		}
@@ -89,7 +143,7 @@ export default function EditProject() {
 						component='h1'
 						variant='h2'
 						align='center'
-						color='text.primary'
+						color='white'
 						gutterBottom
 					>
 						Edit Project
@@ -111,52 +165,68 @@ export default function EditProject() {
 										}
 									/>
 									<Typography variant='body2' gutterBottom>
-										<TextField
-											fullWidth
-											margin='normal'
-											size='small'
-											label='Assigned By'
-											value={
-												task.assigned_by_first_name !== undefined &&
-												task.assigned_by_last_name !== undefined
-													? `${task.assigned_by_first_name} ${task.assigned_by_last_name}`
-													: ''
-											}
-											onChange={(e) => {
-												const fullName = e.target.value;
-												const [first_name, last_name] = fullName.split(' ');
-
-												setTask({
-													...task,
-													assigned_by_first_name: first_name || '',
-													assigned_by_last_name: last_name || '',
-												});
-											}}
-										/>
+										<FormControl fullWidth variant='outlined' margin='normal'>
+											<Autocomplete
+												options={userData}
+												getOptionLabel={(option) =>
+													`${option.first_name} ${option.last_name}`
+												}
+												value={userData.find(
+													(user) => user.id === assignedByUserId
+												)}
+												onChange={(event, newValue) => {
+													setAssignedByUserId(newValue ? newValue.id : null);
+													setTask({
+														...task,
+														assigned_by_first_name: newValue
+															? newValue.first_name
+															: '',
+														assigned_by_last_name: newValue
+															? newValue.last_name
+															: '',
+													});
+												}}
+												renderInput={(params) => (
+													<TextField
+														{...params}
+														label='Assigned By'
+														variant='outlined'
+													/>
+												)}
+											/>
+										</FormControl>
 									</Typography>
 									<Typography variant='body2' gutterBottom>
-										<TextField
-											fullWidth
-											margin='normal'
-											size='small'
-											label='Assigned To'
-											value={
-												task.assigned_to_first_name !== undefined &&
-												task.assigned_to_last_name !== undefined
-													? `${task.assigned_to_first_name} ${task.assigned_to_last_name}`
-													: ''
-											}
-											onChange={(e) => {
-												const fullName = e.target.value;
-												const [first_name, last_name] = fullName.split(' ');
-
-												setTask({
-													...task,
-													assigned_to_first_name: first_name || '',
-													assigned_to_last_name: last_name || '',
-												});
-											}}
-										/>
+										<FormControl fullWidth variant='outlined' margin='normal'>
+											<Autocomplete
+												options={userData}
+												getOptionLabel={(option) =>
+													`${option.first_name} ${option.last_name}`
+												}
+												value={userData.find(
+													(user) => user.id === assignedToUserId
+												)}
+												onChange={(event, newValue) => {
+													setAssignedToUserId(newValue ? newValue.id : null);
+													setTask({
+														...task,
+														assigned_to_first_name: newValue
+															? newValue.first_name
+															: '',
+														assigned_to_last_name: newValue
+															? newValue.last_name
+															: '',
+													});
+												}}
+												renderInput={(params) => (
+													<TextField
+														{...params}
+														label='Assigned To'
+														variant='outlined'
+													/>
+												)}
+											/>
+										</FormControl>
 									</Typography>
 									<FormControl fullWidth variant='outlined' margin='normal'>
 										<InputLabel>Priority</InputLabel>
@@ -181,8 +251,13 @@ export default function EditProject() {
 												onChange={(date) =>
 													setTask({ ...task, due_date: date.toISOString() })
 												}
+												sx={{ size: 'small' }}
 												textFieldProps={{
-													size: 'small',
+													style: {
+														fontSize: '12px',
+														padding: '4px',
+														width: '150px',
+													},
 												}}
 											/>
 										</LocalizationProvider>
