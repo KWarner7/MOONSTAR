@@ -64,14 +64,14 @@ export default function ActiveProjects() {
             <FilterActive />
           </Container>
           <Stack
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              <Link to="/create-project" style={{ textDecoration: 'none' }}>
-                <Button variant="contained">Create New Project</Button>
-              </Link>
-            </Stack>
+            direction="row"
+            spacing={2}
+            justifyContent="center"
+          >
+            <Link to="/create-project" style={{ textDecoration: 'none' }}>
+              <Button variant="contained">Create New Project</Button>
+            </Link>
+          </Stack>
         </Box>
         <Container
           sx={{
@@ -84,89 +84,97 @@ export default function ActiveProjects() {
           maxWidth="lg"
         >
           <Grid container spacing={4}>
-            {tasks.map((task, index) => (
-              <Grid item key={task.id} xs={12}>
-                <Card
-                  sx={{
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <CardContent
-                    sx={{
-                      flexGrow: 1
-                    }}
-                  >
-                    <Grid container spacing={2}>
-                      <Container>
-                        <Typography
+            {tasks.map((task, index) => {
+              if (task.is_active) {
+                return (
+                  <Grid item key={task.id} xs={12}>
+                    <Link to={`/project-details/${task.id}`} style={{ textDecoration: 'none', width: '100%' }}>
+                      <Card
+                        sx={{
+                          height: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                        }}
+                        elevation={3}
+                      >
+                        <CardContent
                           sx={{
-                            fontSize: '2rem',
-                            textDecoration: 'underline'
+                            flexGrow: 1
                           }}
-                          gutterBottom
-                          variant="h7"
-                          component="h2"
-                          align="left"
                         >
-                          {task.task_name}
-                        </Typography>
-                      </Container>
-                      <Grid item xs={4}>
-                        <Container
-                          sx={{
-                            border: '1px solid #000',
-                            p: 6,
-                            maxHeight: '200px',
-                            overflowY: 'auto'
-                          }}
-                          align='left'
-                        >
-                          <Typography>
-                            {task.task_description}
-                          </Typography>
-                        </Container>
-                        <Container>
-                          <Typography
-                            gutterBottom
-                            variant="h5"
-                            component="h2"
-                            align="center">
-                            Description
-                          </Typography>
-                        </Container>
-                      </Grid>
-                      <Grid item xs={8}>
-                        <Container
-                          sx={{
-                            border: '1px solid #000',
-                            p: 6,
-                            maxHeight: '200px',
-                            overflowY: 'auto'
-                          }}
-                          align='left'
-                        >
-                          <Typography>
-                            {task.status_update}
-                          </Typography>
-                        </Container>
-                        <Container align='center'>
-                          <Typography
-                            gutterBottom
-                            variant="h5"
-                            component="h2" a
-                            lign="center"
-                          >
-                            Status Updates
-                          </Typography>
-                        </Container>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
+                          <Grid container spacing={2}>
+                            <Container>
+                              <Typography
+                                sx={{
+                                  fontSize: '2rem',
+                                  textDecoration: 'underline'
+                                }}
+                                gutterBottom
+                                variant="h7"
+                                component="h2"
+                                align="left"
+                              >
+                                {task.task_name}
+                              </Typography>
+                            </Container>
+                            <Grid item xs={4}>
+                              <Container
+                                sx={{
+                                  border: '1px solid #000',
+                                  p: 6,
+                                  maxHeight: '200px',
+                                  overflowY: 'auto'
+                                }}
+                                align='left'
+                              >
+                                <Typography>
+                                  {task.task_description}
+                                </Typography>
+                              </Container>
+                              <Container>
+                                <Typography
+                                  gutterBottom
+                                  variant="h5"
+                                  component="h2"
+                                  align="center">
+                                  Description
+                                </Typography>
+                              </Container>
+                            </Grid>
+                            <Grid item xs={8}>
+                              <Container
+                                sx={{
+                                  border: '1px solid #000',
+                                  p: 6,
+                                  maxHeight: '200px',
+                                  overflowY: 'auto'
+                                }}
+                                align='left'
+                              >
+                                <Typography>
+                                  {task.status_update}
+                                </Typography>
+                              </Container>
+                              <Container align='center'>
+                                <Typography
+                                  gutterBottom
+                                  variant="h5"
+                                  component="h2"
+                                  align="center"
+                                >
+                                  Status Updates
+                                </Typography>
+                              </Container>
+                            </Grid>
+                          </Grid>
+                        </CardContent>
+                      </Card>
+                      </Link>
+                  </Grid>
+                );
+              }
+              return null;
+            })}
           </Grid>
         </Container>
       </main>

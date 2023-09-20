@@ -86,7 +86,7 @@ export default function CompletedProjects() {
           maxWidth="lg"
         >
           <Grid container spacing={4}>
-            {tasks.map((task, index) => (
+            {tasks.filter(task => !task.is_active).map((task, index) => (
               <Grid item key={task.id} xs={12}>
                 <Card
                   sx={{
@@ -157,7 +157,7 @@ export default function CompletedProjects() {
                           <Typography
                             gutterBottom
                             variant="h5"
-                            component="h2" a
+                            component="h2"
                             lign="center"
                           >
                             Status Updates
