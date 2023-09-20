@@ -13,14 +13,13 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink } from 'react-router-dom';
-import HomePage from './HomePage.js';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography variant="body2" color="text.primary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Moonstar.com
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -30,7 +29,16 @@ function Copyright(props) {
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#000000',
+    },
+    secondary: {
+      main: '#000000',
+    }
+}
+});
 
 export default function SignIn() {
   const handleSubmit = (event) => {
@@ -52,13 +60,13 @@ export default function SignIn() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            backgroundColor: '#cfe8fc',
+            backgroundColor: '#ffffff',
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" color="#000000">
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -71,6 +79,7 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              backgroundColor="#000000"
             />
             <TextField
               margin="normal"
@@ -82,10 +91,6 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -95,7 +100,6 @@ export default function SignIn() {
               to="/"
             >
               Login
-              {/* <Link href="#" variant="body2" component={RouterLink} to="/">Login</Link> */}
             </Button>
             <Grid container>
               <Grid item xs>
