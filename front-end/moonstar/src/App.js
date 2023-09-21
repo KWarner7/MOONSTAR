@@ -27,10 +27,11 @@ function App() {
 						<Route path='/signup' element={<Signup />} />
 						<Route path='/active-projects' element={<ActiveProjects />} />
 						<Route path='/completed-projects' element={<CompletedProjects />} />
-						<Route path='/edit-project' element={<EditProject />} />
+						<Route path='/edit-project/:taskId' element={<EditProject />} />
 						<Route path='/create-project' element={<CreateProject />} />
-						<Route path='/project-status' element={<StatusUpdate />} />
+						<Route path='/project-status/:taskId' element={<StatusUpdate />} />
 						<Route path='/project-details/:id' element={<ProjectDetails />} />
+
 					</Routes>
 				</header>
 			</div>

@@ -9,12 +9,7 @@ import Link from '@mui/material/Link';
 import Header from './Header.js';
 import { useState, useEffect } from 'react';
 import FetchData from './FetchData.js';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
@@ -35,13 +30,17 @@ function Copyright() {
 }
 
 export default function StatusUpdate() {
-	// const { taskId } = useParams();
-	const { data, error } = FetchData(`http://localhost:8081/tasks/1`);
+	const { taskId } = useParams();
+	const { data, error } = FetchData(`http://localhost:8081/tasks/${taskId}`);
 	const { data: userData, error: userError } = FetchData(
 		'http://localhost:8081/users'
 	);
+	const { data: updateData, error: updateError } = FetchData(
+		`http://localhost:8081/status-updates/${taskId}`
+	);
 
 	const [statusUpdate, setStatusUpdate] = useState([]);
+	const [newStatusUpdate, setNewStatusUpdate] = useState('');
 	const [task, setTask] = useState(null);
 	const [assignedBy, setAssignedBy] = useState('');
 	const [assignedByUserId, setAssignedByUserId] = useState(null);
@@ -51,7 +50,6 @@ export default function StatusUpdate() {
 	useEffect(() => {
 		if (data && data.length > 0 && userData) {
 			setTask(data[0]);
-			setStatusUpdate(data[0].status_update.split(' || '));
 
 			const initialAssignedByUser = userData.find(
 				(user) =>
@@ -99,40 +97,51 @@ export default function StatusUpdate() {
 		}
 	}, [data, userData]);
 
-	async function handleSave() {
+	useEffect(() => {
+		if (updateData && updateData.length > 0) {
+			setStatusUpdate(updateData);
+		}
+	}, [updateData]);
+
+	async function handleAddStatusUpdate() {
+		if (newStatusUpdate.trim() === '') {
+			return;
+		}
+
 		try {
-			const response = await fetch(`http://localhost:8081/tasks/1`, {
-				method: 'PATCH',
+			const response = await fetch(`http://localhost:8081/status-updates/`, {
+				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					task_name: task.task_name,
-					task_description: task.task_description,
-					assigned_by: assignedByUserId,
-					assigned_to: assignedToUserId,
-					status_update: statusUpdate.join(' || '),
-					due_date: task.due_date,
-					priority: task.priority,
+					timestamp: new Date().toISOString(),
+					update_text: newStatusUpdate,
+					task_id: taskId,
 				}),
 			});
 
-			const responseData = await response.json();
-			console.log('Response:', responseData);
+			if (response.ok) {
+				const responseData = await response.json();
+				console.log('Response:', responseData);
+
+				setNewStatusUpdate('');
+
+				// Add the new status update to the statusUpdate state.
+				setStatusUpdate((prevStatuses) => [
+					...prevStatuses,
+					{
+						timestamp: new Date().toISOString(),
+						update_text: newStatusUpdate,
+					},
+				]);
+			} else {
+				console.error('Failed to save status update.');
+			}
 		} catch (error) {
 			console.error('Error:', error);
 		}
 	}
-
-	function handleAddStatusUpdate() {
-		setStatusUpdate([...statusUpdate, '']);
-	}
-
-	// function handleDeleteTaskRequirement(index) {
-	// 	const updatedStatus = [...statusUpdate];
-	// 	updatedStatus.splice(index, 1);
-	// 	setStatusUpdate(updatedStatus);
-	// }
 
 	return (
 		<>
@@ -182,18 +191,6 @@ export default function StatusUpdate() {
 												value={userData.find(
 													(user) => user.id === assignedByUserId
 												)}
-												onChange={(event, newValue) => {
-													setAssignedByUserId(newValue ? newValue.id : null);
-													setTask({
-														...task,
-														assigned_by_first_name: newValue
-															? newValue.first_name
-															: '',
-														assigned_by_last_name: newValue
-															? newValue.last_name
-															: '',
-													});
-												}}
 												renderInput={(params) => (
 													<TextField
 														{...params}
@@ -223,18 +220,6 @@ export default function StatusUpdate() {
 												value={userData.find(
 													(user) => user.id === assignedToUserId
 												)}
-												onChange={(event, newValue) => {
-													setAssignedToUserId(newValue ? newValue.id : null);
-													setTask({
-														...task,
-														assigned_to_first_name: newValue
-															? newValue.first_name
-															: '',
-														assigned_to_last_name: newValue
-															? newValue.last_name
-															: '',
-													});
-												}}
 												renderInput={(params) => (
 													<TextField
 														{...params}
@@ -309,45 +294,40 @@ export default function StatusUpdate() {
 							</CardContent>
 							<CardContent>
 								<Typography variant='h6' gutterBottom>
-									Update Status
+									Status Updates
 								</Typography>
-								{statusUpdate.map((requirement, index) => (
-									<div
-										key={index}
-										style={{ display: 'flex', alignItems: 'center' }}
-									>
-										<TextField
-											fullWidth
-											margin='normal'
-											label={`Status Update ${index + 1}`}
-											variant='outlined'
-											value={requirement}
-											onChange={(e) => {
-												const updatedStatus = [...statusUpdate];
-												updatedStatus[index] = e.target.value;
-												setStatusUpdate(updatedStatus);
-											}}
-										/>
-									</div>
-								))}
+								<div>
+									{statusUpdate &&
+										statusUpdate.map((update, index) => {
+											if (!update || !update.timestamp) return null;
+
+											return (
+												<div key={index} style={{ marginBottom: '16px' }}>
+													<div>
+														{new Date(update.timestamp).toLocaleString()}
+													</div>
+													<div>{update.update_text}</div>
+												</div>
+											);
+										})}
+								</div>
+
+								<TextField
+									fullWidth
+									margin='normal'
+									label='Add Status Update'
+									variant='outlined'
+									value={newStatusUpdate}
+									onChange={(e) => setNewStatusUpdate(e.target.value)}
+								/>
 								<Button
 									variant='contained'
 									color='primary'
 									onClick={handleAddStatusUpdate}
 								>
-									Add Status Update
+									Save Status Update
 								</Button>
 							</CardContent>
-							<CardActions>
-								<Button
-									variant='contained'
-									fullWidth
-									type='submit'
-									onClick={handleSave}
-								>
-									Save
-								</Button>
-							</CardActions>
 						</Card>
 					)}
 				</Container>
