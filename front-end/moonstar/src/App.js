@@ -10,9 +10,14 @@ import EditProject from './EditProject';
 import Signup from './Signup.js';
 import CreateProject from './CreateProject.js';
 import StatusUpdate from './StatusUpdate';
+import ProjectDetails from './ProjectDetails.js';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+
 
 function App() {
 	return (
+		<LocalizationProvider dateAdapter={AdapterDateFns}>
 		<Router>
 			<div className='App'>
 				<header className='App-header'>
@@ -25,10 +30,13 @@ function App() {
 						<Route path='/edit-project/:taskId' element={<EditProject />} />
 						<Route path='/create-project' element={<CreateProject />} />
 						<Route path='/project-status/:taskId' element={<StatusUpdate />} />
+						<Route path='/project-details/:id' element={<ProjectDetails />} />
+
 					</Routes>
 				</header>
 			</div>
 		</Router>
+		</LocalizationProvider>
 	);
 }
 
