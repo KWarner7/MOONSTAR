@@ -1,15 +1,11 @@
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import CameraIcon from '@mui/icons-material/PhotoCamera';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Link } from 'react-router-dom';
@@ -22,19 +18,23 @@ const defaultTheme = createTheme();
 
 export default function ActiveProjects() {
   const [tasks, setTasks] = useState([]);
+  const [statusUpdates, setStatusUpdates] = useState([]);
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await fetch("http://localhost:8081/tasks");
-        const data = await response.json();
-        setTasks(data);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-      }
-    };
+    async function fetchData() {
+      const [tasksResponse, statusUpdatesResponse] = await Promise.all([
+        fetch("http://localhost:8081/tasks"),
+        fetch("http://localhost:8081/status-updates")
+      ]);
 
-    fetchTasks();
+      const tasksData = await tasksResponse.json();
+      const statusUpdatesData = await statusUpdatesResponse.json();
+
+      setTasks(tasksData);
+      setStatusUpdates(statusUpdatesData);
+    }
+
+    fetchData();
   }, []);
 
   return (
@@ -44,30 +44,14 @@ export default function ActiveProjects() {
         <Header />
       </AppBar>
       <main>
-        <Box
-          sx={{
-            bgcolor: 'transparent',
-            pt: 2,
-            pb: 1
-          }}
-        >
+        <Box sx={{ bgcolor: 'transparent', pt: 2, pb: 1 }}>
           <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h3"
-              align="center"
-              color="white"
-              gutterBottom
-            >
+            <Typography component="h1" variant="h3" align="center" color="white" gutterBottom>
               Active Projects
             </Typography>
             <FilterActive />
           </Container>
-          <Stack
-            direction="row"
-            spacing={2}
-            justifyContent="center"
-          >
+          <Stack direction="row" spacing={2} justifyContent="center">
             <Link to="/create-project" style={{ textDecoration: 'none' }}>
               <Button variant="contained">Create New Project</Button>
             </Link>
@@ -97,11 +81,7 @@ export default function ActiveProjects() {
                         }}
                         elevation={3}
                       >
-                        <CardContent
-                          sx={{
-                            flexGrow: 1
-                          }}
-                        >
+                        <CardContent sx={{ flexGrow: 1 }}>
                           <Grid container spacing={2}>
                             <Container>
                               <Typography
@@ -151,9 +131,11 @@ export default function ActiveProjects() {
                                 }}
                                 align='left'
                               >
-                                <Typography>
-                                  {task.status_update}
-                                </Typography>
+                                {statusUpdates.filter(update => update.task_id === task.id).map(update => (
+                                  <Typography key={update.id}>
+                                    {update.timestamp}: {update.update_text}
+                                  </Typography>
+                                ))}
                               </Container>
                               <Container align='center'>
                                 <Typography
@@ -169,7 +151,7 @@ export default function ActiveProjects() {
                           </Grid>
                         </CardContent>
                       </Card>
-                      </Link>
+                    </Link>
                   </Grid>
                 );
               }
@@ -178,19 +160,8 @@ export default function ActiveProjects() {
           </Grid>
         </Container>
       </main>
-      <Box
-        sx={{
-          bgcolor: 'transparent',
-          p: 6
-        }}
-        component="footer"
-      >
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="white"
-          component="p"
-        >
+      <Box sx={{ bgcolor: 'transparent', p: 6 }} component="footer">
+        <Typography variant="subtitle1" align="center" color="white" component="p">
           Take your projects to the moon!
         </Typography>
         <Copyright />
