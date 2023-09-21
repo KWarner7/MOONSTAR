@@ -26,6 +26,7 @@ app.get('/users', function (req, res) {
 			})
 		);
 });
+
 app.get('/tasks', function (req, res) {
 	knex('tasks_table')
 		.select('*')
@@ -34,6 +35,18 @@ app.get('/tasks', function (req, res) {
 			res.status(404).json({
 				message:
 					'The tasks data you are looking for could not be found. Please try again',
+			})
+		);
+});
+
+app.get('/status-updates', function (req, res) {
+	knex('status_updates')
+		.select('*')
+		.then((data) => res.status(200).json(data))
+		.catch((err) =>
+			res.status(404).json({
+				message:
+					'The status update data you are looking for could not be found. Please try again',
 			})
 		);
 });
@@ -87,6 +100,34 @@ app.get('/users/:id', async (req, res) => {
 	} catch (err) {
 		res.status(500).json({
 			error: `Cannot retrieve user data by the given user ID: ${userId}`,
+		});
+	}
+});
+
+// app.get('/status-updates/:id', async (req, res) => {
+// 	const updateId = req.params.id;
+// 	try {
+// 		const updateData = await knex('status_updates').where({ id: updateId });
+// 		res.status(200).json(updateData);
+// 	} catch (err) {
+// 		res.status(500).json({
+// 			error: `Cannot retrieve status update data by the given update ID: ${updateId}`,
+// 		});
+// 	}
+// });
+
+app.get('/status-updates/:taskId', async (req, res) => {
+	const taskId = req.params.taskId;
+
+	try {
+		// Query the status_updates table to get all updates for the specified task ID
+		const updates = await knex('status_updates').where({ task_id: taskId });
+
+		// Return the updates in the response
+		res.status(200).json(updates);
+	} catch (err) {
+		res.status(500).json({
+			error: `Cannot retrieve status updates for the given task ID: ${taskId}`,
 		});
 	}
 });
@@ -149,6 +190,18 @@ app.post('/tasks', (req, res) => {
 		.catch((err) => res.status(500).json(err));
 });
 
+app.post('/status-updates', (req, res) => {
+	const newUpdate = req.body;
+	knex('status_updates')
+		.insert(newUpdate)
+		.then(() =>
+			res
+				.status(201)
+				.json(`The new update, ${newUpdate.update_text} has been added.`)
+		)
+		.catch((err) => res.status(500).json(err));
+});
+
 app.delete('/users/:id', (req, res) => {
 	const id = req.params.id;
 	knex('user_table')
@@ -205,6 +258,27 @@ app.patch('/tasks/:id', async (req, res) => {
 	try {
 		await knex('tasks_table').where({ id: taskId }).update(updates);
 		res.status(200).send({ message: 'Task updated successfully' });
+	} catch (error) {
+		console.error(error);
+		res.status(500).send({ message: 'Internal server error' });
+	}
+});
+
+app.patch('/status-updates/:id', async (req, res) => {
+	const statusUpdateId = req.params.id;
+	const updates = {};
+
+	const allowedFields = ['timestamp', 'update_text'];
+
+	for (const field of allowedFields) {
+		if (req.body[field] !== undefined) {
+			updates[field] = req.body[field];
+		}
+	}
+
+	try {
+		await db('status_updates').where({ id: statusUpdateId }).update(updates);
+		res.status(200).send({ message: 'Status update updated successfully' });
 	} catch (error) {
 		console.error(error);
 		res.status(500).send({ message: 'Internal server error' });
