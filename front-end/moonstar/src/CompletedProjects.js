@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Header from './Header.js';
 import React, { useState, useEffect } from 'react';
 import FilterCompleted from './FilterCompleted.js';
+import CardHeader from '@mui/material/CardHeader';
 
 const defaultTheme = createTheme();
 
@@ -95,6 +96,13 @@ export default function CompletedProjects() {
                     flexDirection: 'column',
                   }}
                 >
+                  <CardHeader
+                    action={
+                      <Typography variant="body2" color="textSecondary" component="p">
+                        Due Date: {task.due_date} -------------- Completion Date: {task.completion_date}
+                      </Typography>
+                    }
+                  />
                   <CardContent
                     sx={{
                       flexGrow: 1

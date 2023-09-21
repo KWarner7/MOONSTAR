@@ -32,10 +32,8 @@ const StyledMenu = styled((props) => (
     borderRadius: 6,
     marginTop: theme.spacing(1),
     minWidth: 180,
-    color:
-      theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
-    boxShadow:
-      'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+    color: theme.palette.mode === 'light' ? 'rgb(55, 65, 81)' : theme.palette.grey[300],
+    boxShadow: 'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
     '& .MuiMenu-list': {
       padding: '4px 0',
     },
@@ -46,10 +44,7 @@ const StyledMenu = styled((props) => (
         marginRight: theme.spacing(1.5),
       },
       '&:active': {
-        backgroundColor: alpha(
-          theme.palette.primary.main,
-          theme.palette.action.selectedOpacity,
-        ),
+        backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
       },
     },
   },
@@ -105,26 +100,25 @@ export default function FilterCompleted() {
       >
         <MenuItem onClick={handleClose} disableRipple>
           <PermContactCalendarOutlinedIcon />
-          Assigned By:
+          Assigned By
         </MenuItem>
         <MenuItem onClick={handleClose} disableRipple>
           <PermContactCalendarIcon />
-          Assigned To:
+          Assigned To
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
         <MenuItem onClick={handleClose} disableRipple>
           <CalendarMonthOutlinedIcon />
-          Year Assigned:
+          Year Assigned
         </MenuItem>
         <MenuItem onClick={handleClose} disableRipple>
           <CalendarMonthIcon />
-          Month Assigned:
+          Month Assigned
         </MenuItem>
-        <Divider sx={{ my: 0.5 }} />
         <Divider sx={{ my: 0.5 }} />
         <MenuItem disableRipple>
           <EventAvailableOutlinedIcon />
-          Start Date:
+          Filter Completed on Date - Start Date
           <DatePicker
             value={startDate}
             onChange={handleStartDateChange}
@@ -133,7 +127,7 @@ export default function FilterCompleted() {
         </MenuItem>
         <MenuItem disableRipple>
           <EventAvailableIcon />
-          End Date:
+          Filter Completed on Date - End Date
           <DatePicker
             value={endDate}
             onChange={handleEndDateChange}
