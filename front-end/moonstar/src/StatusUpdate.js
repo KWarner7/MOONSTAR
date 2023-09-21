@@ -9,12 +9,7 @@ import Link from '@mui/material/Link';
 import Header from './Header.js';
 import { useState, useEffect } from 'react';
 import FetchData from './FetchData.js';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
@@ -34,14 +29,18 @@ function Copyright() {
 	);
 }
 
-export default function EditProject() {
+export default function StatusUpdate() {
 	const { taskId } = useParams();
 	const { data, error } = FetchData(`http://localhost:8081/tasks/${taskId}`);
 	const { data: userData, error: userError } = FetchData(
 		'http://localhost:8081/users'
 	);
+	const { data: updateData, error: updateError } = FetchData(
+		`http://localhost:8081/status-updates/${taskId}`
+	);
 
-	const [taskRequirements, setTaskRequirements] = useState([]);
+	const [statusUpdate, setStatusUpdate] = useState([]);
+	const [newStatusUpdate, setNewStatusUpdate] = useState('');
 	const [task, setTask] = useState(null);
 	const [assignedBy, setAssignedBy] = useState('');
 	const [assignedByUserId, setAssignedByUserId] = useState(null);
@@ -51,7 +50,6 @@ export default function EditProject() {
 	useEffect(() => {
 		if (data && data.length > 0 && userData) {
 			setTask(data[0]);
-			setTaskRequirements(data[0].task_requirement.split(', '));
 
 			const initialAssignedByUser = userData.find(
 				(user) =>
@@ -99,39 +97,50 @@ export default function EditProject() {
 		}
 	}, [data, userData]);
 
-	async function handleSave() {
+	useEffect(() => {
+		if (updateData && updateData.length > 0) {
+			setStatusUpdate(updateData);
+		}
+	}, [updateData]);
+
+	async function handleAddStatusUpdate() {
+		if (newStatusUpdate.trim() === '') {
+			return;
+		}
+
 		try {
-			const response = await fetch(`http://localhost:8081/tasks/1`, {
-				method: 'PATCH',
+			const response = await fetch(`http://localhost:8081/status-updates/`, {
+				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					task_name: task.task_name,
-					task_description: task.task_description,
-					assigned_by: assignedByUserId,
-					assigned_to: assignedToUserId,
-					task_requirement: taskRequirements.join(', '),
-					due_date: task.due_date,
-					priority: task.priority,
+					timestamp: new Date().toISOString(),
+					update_text: newStatusUpdate,
+					task_id: taskId,
 				}),
 			});
 
-			const responseData = await response.json();
-			console.log('Response:', responseData);
+			if (response.ok) {
+				const responseData = await response.json();
+				console.log('Response:', responseData);
+
+				setNewStatusUpdate('');
+
+				// Add the new status update to the statusUpdate state.
+				setStatusUpdate((prevStatuses) => [
+					...prevStatuses,
+					{
+						timestamp: new Date().toISOString(),
+						update_text: newStatusUpdate,
+					},
+				]);
+			} else {
+				console.error('Failed to save status update.');
+			}
 		} catch (error) {
 			console.error('Error:', error);
 		}
-	}
-
-	function handleAddTaskRequirement() {
-		setTaskRequirements([...taskRequirements, '']);
-	}
-
-	function handleDeleteTaskRequirement(index) {
-		const updatedRequirements = [...taskRequirements];
-		updatedRequirements.splice(index, 1);
-		setTaskRequirements(updatedRequirements);
 	}
 
 	return (
@@ -148,7 +157,7 @@ export default function EditProject() {
 						color='white'
 						gutterBottom
 					>
-						Edit Project
+						Update Status
 					</Typography>
 
 					{task && (
@@ -162,9 +171,15 @@ export default function EditProject() {
 										margin='normal'
 										size='small'
 										value={task.task_name}
-										onChange={(e) =>
-											setTask({ ...task, task_name: e.target.value })
-										}
+										InputProps={{
+											readOnly: true,
+											style: {
+												cursor: 'default',
+												userSelect: 'none',
+												pointerEvents: 'none',
+												color: 'inherit',
+											},
+										}}
 									/>
 									<Typography variant='body2' gutterBottom>
 										<FormControl fullWidth variant='outlined' margin='normal'>
@@ -176,23 +191,20 @@ export default function EditProject() {
 												value={userData.find(
 													(user) => user.id === assignedByUserId
 												)}
-												onChange={(event, newValue) => {
-													setAssignedByUserId(newValue ? newValue.id : null);
-													setTask({
-														...task,
-														assigned_by_first_name: newValue
-															? newValue.first_name
-															: '',
-														assigned_by_last_name: newValue
-															? newValue.last_name
-															: '',
-													});
-												}}
 												renderInput={(params) => (
 													<TextField
 														{...params}
 														label='Assigned By'
 														variant='outlined'
+														InputProps={{
+															readOnly: true,
+															style: {
+																cursor: 'default',
+																userSelect: 'none',
+																pointerEvents: 'none',
+																color: 'inherit',
+															},
+														}}
 													/>
 												)}
 											/>
@@ -208,61 +220,57 @@ export default function EditProject() {
 												value={userData.find(
 													(user) => user.id === assignedToUserId
 												)}
-												onChange={(event, newValue) => {
-													setAssignedToUserId(newValue ? newValue.id : null);
-													setTask({
-														...task,
-														assigned_to_first_name: newValue
-															? newValue.first_name
-															: '',
-														assigned_to_last_name: newValue
-															? newValue.last_name
-															: '',
-													});
-												}}
 												renderInput={(params) => (
 													<TextField
 														{...params}
 														label='Assigned To'
 														variant='outlined'
+														InputProps={{
+															readOnly: true,
+															style: {
+																cursor: 'default',
+																userSelect: 'none',
+																pointerEvents: 'none',
+																color: 'inherit',
+															},
+														}}
 													/>
 												)}
 											/>
 										</FormControl>
 									</Typography>
 									<FormControl fullWidth variant='outlined' margin='normal'>
-										<InputLabel>Priority</InputLabel>
-										<Select
+										<TextField
 											label='Priority'
 											value={task.priority}
-											onChange={(e) => {
-												console.log('Selected value:', e.target.value);
-												setTask({ ...task, priority: e.target.value });
+											InputProps={{
+												readOnly: true,
+												style: {
+													cursor: 'default',
+													userSelect: 'none',
+													pointerEvents: 'none',
+													color: 'inherit',
+												},
 											}}
-										>
-											<MenuItem value='Low'>Low</MenuItem>
-											<MenuItem value='Medium'>Medium</MenuItem>
-											<MenuItem value='High'>High</MenuItem>
-										</Select>
+										/>
 									</FormControl>
 									<Typography variant='body1' gutterBottom>
-										<LocalizationProvider dateAdapter={AdapterDateFns}>
-											<DateTimePicker
-												label='Due Date/Time'
-												value={new Date(task.due_date)}
-												onChange={(date) =>
-													setTask({ ...task, due_date: date.toISOString() })
-												}
-												sx={{ size: 'small' }}
-												textFieldProps={{
-													style: {
-														fontSize: '12px',
-														padding: '4px',
-														width: '150px',
-													},
-												}}
-											/>
-										</LocalizationProvider>
+										<TextField
+											fullWidth
+											margin='normal'
+											label='Due By'
+											size='small'
+											value={new Date(task.due_date).toLocaleString()}
+											InputProps={{
+												readOnly: true,
+												style: {
+													cursor: 'default',
+													userSelect: 'none',
+													pointerEvents: 'none',
+													color: 'inherit',
+												},
+											}}
+										/>
 									</Typography>
 								</Typography>
 								<Typography variant='h6' gutterBottom>
@@ -272,60 +280,54 @@ export default function EditProject() {
 										label='Project Description'
 										size='small'
 										value={task.task_description}
-										onChange={(e) =>
-											setTask({ ...task, task_description: e.target.value })
-										}
+										InputProps={{
+											readOnly: true,
+											style: {
+												cursor: 'default',
+												userSelect: 'none',
+												pointerEvents: 'none',
+												color: 'inherit',
+											},
+										}}
 									/>
 								</Typography>
 							</CardContent>
 							<CardContent>
 								<Typography variant='h6' gutterBottom>
-									Task Requirements
+									Status Updates
 								</Typography>
-								{taskRequirements.map((requirement, index) => (
-									<div
-										key={index}
-										style={{ display: 'flex', alignItems: 'center' }}
-									>
-										<TextField
-											fullWidth
-											margin='normal'
-											label={`Task Requirement ${index + 1}`}
-											variant='outlined'
-											value={requirement}
-											onChange={(e) => {
-												const updatedRequirements = [...taskRequirements];
-												updatedRequirements[index] = e.target.value;
-												setTaskRequirements(updatedRequirements);
-											}}
-										/>
-										<Button
-											variant='contained'
-											color='error'
-											onClick={() => handleDeleteTaskRequirement(index)}
-										>
-											Delete
-										</Button>
-									</div>
-								))}
+								<div>
+									{statusUpdate &&
+										statusUpdate.map((update, index) => {
+											if (!update || !update.timestamp) return null;
+
+											return (
+												<div key={index} style={{ marginBottom: '16px' }}>
+													<div>
+														{new Date(update.timestamp).toLocaleString()}
+													</div>
+													<div>{update.update_text}</div>
+												</div>
+											);
+										})}
+								</div>
+
+								<TextField
+									fullWidth
+									margin='normal'
+									label='Add Status Update'
+									variant='outlined'
+									value={newStatusUpdate}
+									onChange={(e) => setNewStatusUpdate(e.target.value)}
+								/>
 								<Button
 									variant='contained'
 									color='primary'
-									onClick={handleAddTaskRequirement}
+									onClick={handleAddStatusUpdate}
 								>
-									Add Task Requirement
+									Save Status Update
 								</Button>
 							</CardContent>
-							<CardActions>
-								<Button
-									variant='contained'
-									fullWidth
-									type='submit'
-									onClick={handleSave}
-								>
-									Save
-								</Button>
-							</CardActions>
 						</Card>
 					)}
 				</Container>
