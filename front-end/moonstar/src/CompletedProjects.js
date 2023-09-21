@@ -74,16 +74,16 @@ export default function CompletedProjects() {
             {tasks.filter(task => !task.is_active).map((task) => (
               <Grid item key={task.id} xs={12}>
                 <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                  <CardHeader
-                    action={
-                      <Typography variant="body2" color="textSecondary" component="p">
-                        Due Date: {task.due_date} -------------- Completion Date: {task.completion_date}
-                      </Typography>
-                    }
-                  />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Grid container spacing={2}>
                       <Container>
+                        <CardHeader
+                          action={
+                            <Typography variant="body2" color="textSecondary" component="p">
+                              Creation Date: {task.creation_date} -------------- Due Date: {task.due_date} -------------- Completion Date: {task.completion_date}
+                            </Typography>
+                          }
+                        />
                         <Typography
                           sx={{ fontSize: '2rem', textDecoration: 'underline' }}
                           gutterBottom

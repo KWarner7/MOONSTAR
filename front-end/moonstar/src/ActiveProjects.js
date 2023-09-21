@@ -84,6 +84,9 @@ export default function ActiveProjects() {
                         <CardContent sx={{ flexGrow: 1 }}>
                           <Grid container spacing={2}>
                             <Container>
+                              <Typography variant="body2" color="textSecondary" component="p">
+                                Creation Date: {task.creation_date} -------------- Due Date: {task.due_date}
+                              </Typography>
                               <Typography
                                 sx={{
                                   fontSize: '2rem',

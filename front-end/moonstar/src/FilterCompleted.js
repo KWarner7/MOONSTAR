@@ -98,7 +98,7 @@ export default function FilterCompleted() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose} disableRipple>
+        {/* <MenuItem onClick={handleClose} disableRipple>
           <PermContactCalendarOutlinedIcon />
           Assigned By
         </MenuItem>
@@ -115,10 +115,10 @@ export default function FilterCompleted() {
           <CalendarMonthIcon />
           Month Assigned
         </MenuItem>
-        <Divider sx={{ my: 0.5 }} />
+        <Divider sx={{ my: 0.5 }} /> */}
         <MenuItem disableRipple>
           <EventAvailableOutlinedIcon />
-          Filter Completed on Date - Start Date
+          Filter by Completion Date - Start -
           <DatePicker
             value={startDate}
             onChange={handleStartDateChange}
@@ -127,7 +127,7 @@ export default function FilterCompleted() {
         </MenuItem>
         <MenuItem disableRipple>
           <EventAvailableIcon />
-          Filter Completed on Date - End Date
+          Filter by Completion Date - End -
           <DatePicker
             value={endDate}
             onChange={handleEndDateChange}
