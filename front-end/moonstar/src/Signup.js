@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink } from 'react-router-dom';
+import Header from './Header.js';
 
 function Copyright(props) {
   return (
@@ -53,6 +54,7 @@ export default function SignUp() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
+      <Header />
         <CssBaseline />
         <Box
           sx={{

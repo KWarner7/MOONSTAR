@@ -6,7 +6,7 @@ exports.up = function (knex) {
 		table.string('task_requirement', 550).notNullable();
 		table.timestamp('creation_date').notNullable();
 		table.dateTime('due_date').notNullable();
-		table.timestamp('completion_date').notNullable();
+		table.timestamp('completion_date');
 		table.boolean('is_active').notNullable();
 		table.string('priority', 250).notNullable();
 		table.integer('assigned_to').notNullable();
