@@ -11,8 +11,6 @@
   width: 25%;
 }
 
-
-
 @media (max-width: 500px) {
   .flexFieldsContainer>.flexField {
     flex: 0 0 48%;
@@ -20,10 +18,7 @@
   }
 }
 
-
 @media (max-width: 100px) {
-
-
   .flexFieldsContainer>.flexField {
     flex: 1 1 100%;
     margin-right: 0;
@@ -40,11 +35,17 @@
   align-items: flex-start;
 }
 
-.projectDescription {
-  width: 25%;
+.addStatusUpdateContainer {
+  flex: 1;
+
+  max-width: 50%;
+
   margin-right: 2%;
 }
 
-.taskRequirements {
-  width: 72%;
+.statusUpdatesContainer {
+  flex: 1;
+
+  max-width: 50%;
+
 }

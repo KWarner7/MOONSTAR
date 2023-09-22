@@ -15,6 +15,8 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useParams } from 'react-router-dom';
+import './projectStatus.css';
+import { TextareaAutosize } from '@mui/base';
 
 function Copyright() {
 	return (
@@ -149,7 +151,7 @@ export default function StatusUpdate() {
 				<Header />
 			</AppBar>
 			<main>
-				<Container maxWidth='sm'>
+				<Container>
 					<Typography
 						component='h1'
 						variant='h2'
@@ -165,24 +167,11 @@ export default function StatusUpdate() {
 							<CardContent>
 								<Typography variant='h6' gutterBottom>
 									Project "{task.task_name}"
-									<TextField
-										fullWidth
-										label='Project Name'
-										margin='normal'
-										size='small'
-										value={task.task_name}
-										InputProps={{
-											readOnly: true,
-											style: {
-												cursor: 'default',
-												userSelect: 'none',
-												pointerEvents: 'none',
-												color: 'inherit',
-											},
-										}}
-									/>
-									<Typography variant='body2' gutterBottom>
-										<FormControl fullWidth variant='outlined' margin='normal'>
+								</Typography>
+
+								<div className='flexFieldsContainer'>
+									<div className='flexField'>
+										<FormControl variant='outlined' margin='normal' fullWidth>
 											<Autocomplete
 												options={userData}
 												getOptionLabel={(option) =>
@@ -209,9 +198,10 @@ export default function StatusUpdate() {
 												)}
 											/>
 										</FormControl>
-									</Typography>
-									<Typography variant='body2' gutterBottom>
-										<FormControl fullWidth variant='outlined' margin='normal'>
+									</div>
+
+									<div className='flexField'>
+										<FormControl variant='outlined' margin='normal' fullWidth>
 											<Autocomplete
 												options={userData}
 												getOptionLabel={(option) =>
@@ -238,28 +228,32 @@ export default function StatusUpdate() {
 												)}
 											/>
 										</FormControl>
-									</Typography>
-									<FormControl fullWidth variant='outlined' margin='normal'>
+									</div>
+
+									<div className='flexField'>
+										<FormControl variant='outlined' margin='normal' fullWidth>
+											<TextField
+												label='Priority'
+												value={task.priority}
+												InputProps={{
+													readOnly: true,
+													style: {
+														cursor: 'default',
+														userSelect: 'none',
+														pointerEvents: 'none',
+														color: 'inherit',
+													},
+												}}
+											/>
+										</FormControl>
+									</div>
+
+									<div className='flexField'>
 										<TextField
-											label='Priority'
-											value={task.priority}
-											InputProps={{
-												readOnly: true,
-												style: {
-													cursor: 'default',
-													userSelect: 'none',
-													pointerEvents: 'none',
-													color: 'inherit',
-												},
-											}}
-										/>
-									</FormControl>
-									<Typography variant='body1' gutterBottom>
-										<TextField
-											fullWidth
 											margin='normal'
 											label='Due By'
-											size='small'
+											size='large'
+											fullWidth
 											value={new Date(task.due_date).toLocaleString()}
 											InputProps={{
 												readOnly: true,
@@ -271,62 +265,79 @@ export default function StatusUpdate() {
 												},
 											}}
 										/>
-									</Typography>
-								</Typography>
-								<Typography variant='h6' gutterBottom>
-									<TextField
-										fullWidth
-										margin='normal'
-										label='Project Description'
-										size='small'
-										value={task.task_description}
-										InputProps={{
-											readOnly: true,
-											style: {
-												cursor: 'default',
-												userSelect: 'none',
-												pointerEvents: 'none',
-												color: 'inherit',
-											},
-										}}
-									/>
-								</Typography>
-							</CardContent>
-							<CardContent>
-								<Typography variant='h6' gutterBottom>
-									Status Updates
-								</Typography>
-								<div>
-									{statusUpdate &&
-										statusUpdate.map((update, index) => {
-											if (!update || !update.timestamp) return null;
-
-											return (
-												<div key={index} style={{ marginBottom: '16px' }}>
-													<div>
-														{new Date(update.timestamp).toLocaleString()}
-													</div>
-													<div>{update.update_text}</div>
-												</div>
-											);
-										})}
+									</div>
 								</div>
+								<div className='flexDescriptionContainer'>
+									<div className='taskRequirements'>
+										<CardContent>
+											<div
+												className='flexDescriptionContainer'
+												style={{ display: 'flex', width: '100%' }}
+											>
+												<div
+													className='addStatusUpdateContainer'
+													style={{ width: '50%', paddingRight: '10px' }}
+												>
+													<Typography variant='h6' gutterBottom>
+														Add Status Update
+													</Typography>
+													<TextField
+														fullWidth
+														margin='normal'
+														variant='outlined'
+														value={newStatusUpdate}
+														onChange={(e) => setNewStatusUpdate(e.target.value)}
+													/>
+													<Button
+														variant='contained'
+														color='primary'
+														onClick={handleAddStatusUpdate}
+														style={{ marginTop: '10px' }}
+													>
+														Save Status Update
+													</Button>
+												</div>
 
-								<TextField
-									fullWidth
-									margin='normal'
-									label='Add Status Update'
-									variant='outlined'
-									value={newStatusUpdate}
-									onChange={(e) => setNewStatusUpdate(e.target.value)}
-								/>
-								<Button
-									variant='contained'
-									color='primary'
-									onClick={handleAddStatusUpdate}
-								>
-									Save Status Update
-								</Button>
+												<div
+													className='existingStatusUpdates'
+													style={{ paddingLeft: '10px' }}
+												>
+													<Typography variant='h6' gutterBottom>
+														Status Updates
+													</Typography>
+													<div
+														style={{
+															maxHeight: '200px',
+															minWidth: '300px',
+															overflowY: 'auto',
+															padding: '10px',
+															border: '1px solid rgb(0,0,0,0.2)',
+															borderRadius: '5px',
+														}}
+													>
+														{statusUpdate &&
+															statusUpdate.map((update, index) => {
+																if (!update || !update.timestamp) return null;
+																return (
+																	<div
+																		key={index}
+																		style={{ marginBottom: '16px' }}
+																	>
+																		<div>
+																			{new Date(
+																				update.timestamp
+																			).toLocaleString()}
+																		</div>
+																		<div>{update.update_text}</div>
+																	</div>
+																);
+															})}
+													</div>
+												</div>
+											</div>
+										</CardContent>
+									</div>
+								</div>
 							</CardContent>
 						</Card>
 					)}
