@@ -20,6 +20,9 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useParams } from 'react-router-dom';
+import './editproject.css';
+import './App.css';
+import { TextareaAutosize } from '@mui/base';
 
 function Copyright() {
 	return (
@@ -101,7 +104,7 @@ export default function EditProject() {
 
 	async function handleSave() {
 		try {
-			const response = await fetch(`http://localhost:8081/tasks/1`, {
+			const response = await fetch(`http://localhost:8081/tasks/${taskId}`, {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json',
@@ -140,7 +143,7 @@ export default function EditProject() {
 				<Header />
 			</AppBar>
 			<main>
-				<Container maxWidth='sm'>
+				<Container>
 					<Typography
 						component='h1'
 						variant='h2'
@@ -166,155 +169,162 @@ export default function EditProject() {
 											setTask({ ...task, task_name: e.target.value })
 										}
 									/>
-									<Typography variant='body2' gutterBottom>
-										<FormControl fullWidth variant='outlined' margin='normal'>
-											<Autocomplete
-												options={userData}
-												getOptionLabel={(option) =>
-													`${option.first_name} ${option.last_name}`
-												}
-												value={userData.find(
-													(user) => user.id === assignedByUserId
-												)}
-												onChange={(event, newValue) => {
-													setAssignedByUserId(newValue ? newValue.id : null);
-													setTask({
-														...task,
-														assigned_by_first_name: newValue
-															? newValue.first_name
-															: '',
-														assigned_by_last_name: newValue
-															? newValue.last_name
-															: '',
-													});
-												}}
-												renderInput={(params) => (
-													<TextField
-														{...params}
-														label='Assigned By'
-														variant='outlined'
-													/>
-												)}
-											/>
-										</FormControl>
-									</Typography>
-									<Typography variant='body2' gutterBottom>
-										<FormControl fullWidth variant='outlined' margin='normal'>
-											<Autocomplete
-												options={userData}
-												getOptionLabel={(option) =>
-													`${option.first_name} ${option.last_name}`
-												}
-												value={userData.find(
-													(user) => user.id === assignedToUserId
-												)}
-												onChange={(event, newValue) => {
-													setAssignedToUserId(newValue ? newValue.id : null);
-													setTask({
-														...task,
-														assigned_to_first_name: newValue
-															? newValue.first_name
-															: '',
-														assigned_to_last_name: newValue
-															? newValue.last_name
-															: '',
-													});
-												}}
-												renderInput={(params) => (
-													<TextField
-														{...params}
-														label='Assigned To'
-														variant='outlined'
-													/>
-												)}
-											/>
-										</FormControl>
-									</Typography>
-									<FormControl fullWidth variant='outlined' margin='normal'>
-										<InputLabel>Priority</InputLabel>
-										<Select
-											label='Priority'
-											value={task.priority}
-											onChange={(e) => {
-												console.log('Selected value:', e.target.value);
-												setTask({ ...task, priority: e.target.value });
+								</Typography>
+
+								<div className='flexFieldsContainer'>
+									<div className='flexField autocompleteAssignedBy'>
+										<Autocomplete
+											options={userData}
+											getOptionLabel={(option) =>
+												`${option.first_name} ${option.last_name}`
+											}
+											value={userData.find(
+												(user) => user.id === assignedByUserId
+											)}
+											onChange={(event, newValue) => {
+												setAssignedByUserId(newValue ? newValue.id : null);
+												setTask({
+													...task,
+													assigned_by_first_name: newValue
+														? newValue.first_name
+														: '',
+													assigned_by_last_name: newValue
+														? newValue.last_name
+														: '',
+												});
 											}}
-										>
-											<MenuItem value='Low'>Low</MenuItem>
-											<MenuItem value='Medium'>Medium</MenuItem>
-											<MenuItem value='High'>High</MenuItem>
-										</Select>
-									</FormControl>
-									<Typography variant='body1' gutterBottom>
+											renderInput={(params) => (
+												<TextField
+													{...params}
+													label='Assigned By'
+													variant='outlined'
+													fullWidth
+												/>
+											)}
+										/>
+									</div>
+									<div className='flexField autocompleteAssignedTo'>
+										<Autocomplete
+											options={userData}
+											getOptionLabel={(option) =>
+												`${option.first_name} ${option.last_name}`
+											}
+											value={userData.find(
+												(user) => user.id === assignedToUserId
+											)}
+											onChange={(event, newValue) => {
+												setAssignedToUserId(newValue ? newValue.id : null);
+												setTask({
+													...task,
+													assigned_to_first_name: newValue
+														? newValue.first_name
+														: '',
+													assigned_to_last_name: newValue
+														? newValue.last_name
+														: '',
+												});
+											}}
+											renderInput={(params) => (
+												<TextField
+													{...params}
+													label='Assigned To'
+													variant='outlined'
+												/>
+											)}
+										/>
+									</div>
+									<div className='flexField priorityControl'>
+										<FormControl variant='outlined' fullWidth>
+											<InputLabel>Priority</InputLabel>
+											<Select
+												label='Priority'
+												value={task.priority}
+												onChange={(e) =>
+													setTask({ ...task, priority: e.target.value })
+												}
+											>
+												<MenuItem value='Low'>Low</MenuItem>
+												<MenuItem value='Medium'>Medium</MenuItem>
+												<MenuItem value='High'>High</MenuItem>
+											</Select>
+										</FormControl>
+									</div>
+									<div className='flexField dueDateControl'>
 										<LocalizationProvider dateAdapter={AdapterDateFns}>
 											<DateTimePicker
+												slotProps={{
+													textField: { size: 'large' },
+												}}
+												fullWidth
 												label='Due Date/Time'
 												value={new Date(task.due_date)}
 												onChange={(date) =>
 													setTask({ ...task, due_date: date.toISOString() })
 												}
-												sx={{ size: 'small' }}
-												textFieldProps={{
-													style: {
-														fontSize: '12px',
-														padding: '4px',
-														width: '150px',
-													},
-												}}
 											/>
 										</LocalizationProvider>
-									</Typography>
-								</Typography>
-								<Typography variant='h6' gutterBottom>
-									<TextField
-										fullWidth
-										margin='normal'
-										label='Project Description'
-										size='small'
-										value={task.task_description}
-										onChange={(e) =>
-											setTask({ ...task, task_description: e.target.value })
-										}
-									/>
-								</Typography>
-							</CardContent>
-							<CardContent>
-								<Typography variant='h6' gutterBottom>
-									Task Requirements
-								</Typography>
-								{taskRequirements.map((requirement, index) => (
-									<div
-										key={index}
-										style={{ display: 'flex', alignItems: 'center' }}
-									>
-										<TextField
-											fullWidth
-											margin='normal'
-											label={`Task Requirement ${index + 1}`}
-											variant='outlined'
-											value={requirement}
-											onChange={(e) => {
-												const updatedRequirements = [...taskRequirements];
-												updatedRequirements[index] = e.target.value;
-												setTaskRequirements(updatedRequirements);
+									</div>
+								</div>
+								<div className='flexDescriptionContainer'>
+									<div className='projectDescription'>
+										<Typography variant='h6' gutterBottom>
+											Project Description
+										</Typography>
+										<TextareaAutosize
+											minRows={6}
+											style={{
+												fontFamily: 'Arial',
+												fontSize: '1rem',
+												width: '100%',
+												padding: '10px',
+												resize: 'vertical',
 											}}
+											value={task.task_description}
+											onChange={(e) =>
+												setTask({ ...task, task_description: e.target.value })
+											}
 										/>
+									</div>
+
+									<div className='taskRequirements'>
+										<Typography variant='h6' gutterBottom>
+											Task Requirements
+										</Typography>
+										{taskRequirements.map((requirement, index) => (
+											<div
+												key={index}
+												style={{ display: 'flex', alignItems: 'center' }}
+											>
+												<TextField
+													fullWidth
+													margin='normal'
+													label={`Task Requirement ${index + 1}`}
+													variant='outlined'
+													value={requirement}
+													onChange={(e) => {
+														const updatedRequirements = [...taskRequirements];
+														updatedRequirements[index] = e.target.value;
+														setTaskRequirements(updatedRequirements);
+													}}
+												/>
+												<Button
+													variant='contained'
+													color='error'
+													onClick={() => handleDeleteTaskRequirement(index)}
+												>
+													Delete
+												</Button>
+											</div>
+										))}
 										<Button
 											variant='contained'
-											color='error'
-											onClick={() => handleDeleteTaskRequirement(index)}
+											color='primary'
+											onClick={handleAddTaskRequirement}
 										>
-											Delete
+											Add Task Requirement
 										</Button>
 									</div>
-								))}
-								<Button
-									variant='contained'
-									color='primary'
-									onClick={handleAddTaskRequirement}
-								>
-									Add Task Requirement
-								</Button>
+								</div>
 							</CardContent>
 							<CardActions>
 								<Button

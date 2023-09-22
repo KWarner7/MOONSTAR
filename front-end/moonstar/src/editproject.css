@@ -1,0 +1,59 @@
+.flexFieldsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.flexField {
+  flex: 1;
+  margin-right: 2px;
+  min-width: 200px;
+  width: 25%;
+}
+
+
+/* To ensure each item takes up 50% width (2 in a row) */
+@media (max-width: 500px) {
+  /* Adjust 1200px as needed */
+  .flexFieldsContainer>.flexField {
+    flex: 0 0 48%;
+    /* Considering a 2% gap, adjust as needed */
+    margin-right: 8px;
+    /* Maintain spacing */
+  }
+}
+
+/* To stack them full width */
+@media (max-width: 100px) {
+
+  /* Adjust 800px as needed */
+  .flexFieldsContainer>.flexField {
+    flex: 1 1 100%;
+    margin-right: 0;
+    /* Remove spacing when full width */
+  }
+}
+
+.autocompleteField {
+  min-width: 200px;
+  /* Adjusted as per the previous discussion */
+}
+
+.flexDescriptionContainer {
+  display: flex;
+  justify-content: space-between;
+  /* Or use flex-start if you don't want space between the items */
+  align-items: flex-start;
+  /* So they align at the top */
+}
+
+.projectDescription {
+  width: 25%;
+  margin-right: 2%;
+  /* Optional, for some spacing between the two fields */
+}
+
+.taskRequirements {
+  width: 72%;
+  /* 75% minus the 2% margin we added to the left item */
+}
