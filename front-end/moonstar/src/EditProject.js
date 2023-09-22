@@ -23,6 +23,7 @@ import { useParams } from 'react-router-dom';
 import './editproject.css';
 import './App.css';
 import { TextareaAutosize } from '@mui/base';
+import { green } from '@mui/material/colors';
 
 function Copyright() {
 	return (
@@ -38,6 +39,7 @@ function Copyright() {
 }
 
 export default function EditProject() {
+	const color = green[500];
 	const { taskId } = useParams();
 	const { data, error } = FetchData(`http://localhost:8081/tasks/${taskId}`);
 	const { data: userData, error: userError } = FetchData(
@@ -50,6 +52,7 @@ export default function EditProject() {
 	const [assignedByUserId, setAssignedByUserId] = useState(null);
 	const [assignedTo, setAssignedTo] = useState('');
 	const [assignedToUserId, setAssignedToUserId] = useState(null);
+	const [isCompleted, setIsCompleted] = useState(false);
 
 	useEffect(() => {
 		if (data && data.length > 0 && userData) {
@@ -157,19 +160,21 @@ export default function EditProject() {
 					{task && (
 						<Card variant='outlined'>
 							<CardContent>
-								<Typography variant='h6' gutterBottom>
-									Project "{task.task_name}"
-									<TextField
-										fullWidth
-										label='Project Name'
-										margin='normal'
-										size='small'
-										value={task.task_name}
-										onChange={(e) =>
-											setTask({ ...task, task_name: e.target.value })
-										}
-									/>
-								</Typography>
+								<div className='flexFieldsContainer'>
+									<Typography variant='h6' gutterBottom>
+										Project "{task.task_name}"
+										<TextField
+											fullWidth
+											label='Project Name'
+											margin='normal'
+											size='small'
+											value={task.task_name}
+											onChange={(e) =>
+												setTask({ ...task, task_name: e.target.value })
+											}
+										/>
+									</Typography>
+								</div>
 
 								<div className='flexFieldsContainer'>
 									<div className='flexField autocompleteAssignedBy'>
@@ -304,6 +309,9 @@ export default function EditProject() {
 													label={`Task Requirement ${index + 1}`}
 													variant='outlined'
 													value={requirement}
+													style={{
+														backgroundColor: isCompleted ? 'grey' : 'white',
+													}}
 													onChange={(e) => {
 														const updatedRequirements = [...taskRequirements];
 														updatedRequirements[index] = e.target.value;
@@ -315,8 +323,14 @@ export default function EditProject() {
 													color='error'
 													onClick={() => handleDeleteTaskRequirement(index)}
 												>
-													Delete
+													Remove
 												</Button>
+												{/* <Button
+													variant='contained'
+													onClick={() => setIsCompleted(true)}
+												>
+													Complete
+												</Button> */}
 											</div>
 										))}
 										<Button
