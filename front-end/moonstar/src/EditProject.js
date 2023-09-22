@@ -278,6 +278,9 @@ export default function EditProject() {
 												width: '100%',
 												padding: '10px',
 												resize: 'vertical',
+												marginTop: '15px',
+												borderColor: 'rgb(0,0,0,0.2)',
+												borderRadius: '5px',
 											}}
 											value={task.task_description}
 											onChange={(e) =>
