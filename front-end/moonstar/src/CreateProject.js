@@ -100,13 +100,13 @@ export default function CreateProject() {
                       component="h3"
                       variant="h3"
                       align="center"
-                      color="white"
+                      color="black"
                       gutterBottom
                     >
                       Create A New Project
                     </Typography>
 					</Typography>
-
+                
 					{(
 						<Card variant='outlined'>
 							<CardContent>
