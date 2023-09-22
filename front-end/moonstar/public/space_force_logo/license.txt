@@ -1,0 +1,11 @@
+Model Information:
+* title:	Space Force Logo
+* source:	https://sketchfab.com/3d-models/space-force-logo-b64201152ba646c0b85024fcaaa9f8d0
+* author:	Marijus (https://sketchfab.com/marijus.sugajevas)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Space Force Logo" (https://sketchfab.com/3d-models/space-force-logo-b64201152ba646c0b85024fcaaa9f8d0) by Marijus (https://sketchfab.com/marijus.sugajevas) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
