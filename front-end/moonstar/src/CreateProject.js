@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-import Header from './Header.js';
+import LoggedInHeader from './LoggedInComponents/LoggedInHeader.js';
 import { useState, useEffect } from 'react';
 import FetchData from './FetchData.js';
 import Select from '@mui/material/Select';
@@ -85,7 +85,7 @@ export default function CreateProject() {
 	return (
 		<>
 			<AppBar position='relative'>
-				<Header />
+				<LoggedInHeader />
 			</AppBar>
 			<main>
 				<Container maxWidth='sm'>
@@ -95,7 +95,7 @@ export default function CreateProject() {
 						align='center'
 						color='text.primary'
 						gutterBottom
-					> 
+					>
                     <Typography
                       component="h3"
                       variant="h3"
@@ -106,7 +106,7 @@ export default function CreateProject() {
                       Create A New Project
                     </Typography>
 					</Typography>
-                
+
 					{(
 						<Card variant='outlined'>
 							<CardContent>
