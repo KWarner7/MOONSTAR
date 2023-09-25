@@ -272,18 +272,26 @@ export default function StatusUpdate() {
 										<CardContent>
 											<div
 												className='flexDescriptionContainer'
-												style={{ display: 'flex', width: '100%' }}
+												style={{
+													display: 'flex',
+
+													flexDirection: 'row',
+												}}
 											>
 												<div
 													className='addStatusUpdateContainer'
-													style={{ width: '50%', paddingRight: '10px' }}
+													style={{
+														width: '40%',
+														paddingRight: '10px',
+														minWidth: '40%',
+													}}
 												>
 													<Typography variant='h6' gutterBottom>
 														Add Status Update
 													</Typography>
 													<TextField
 														fullWidth
-														margin='normal'
+														label='Add Status Update'
 														variant='outlined'
 														value={newStatusUpdate}
 														onChange={(e) => setNewStatusUpdate(e.target.value)}
@@ -292,30 +300,30 @@ export default function StatusUpdate() {
 														variant='contained'
 														color='primary'
 														onClick={handleAddStatusUpdate}
-														style={{ marginTop: '10px' }}
+														style={{ marginTop: '10px', width: '60%' }}
 													>
 														Save Status Update
 													</Button>
 												</div>
 
-												<div
-													className='existingStatusUpdates'
-													style={{ paddingLeft: '10px' }}
-												>
+												<div className='existingStatusUpdates' style={{}}>
 													<Typography variant='h6' gutterBottom>
 														Status Updates
 													</Typography>
 													<div
 														style={{
 															maxHeight: '200px',
-															minWidth: '300px',
+															minWidth: '55%',
 															overflowY: 'auto',
 															padding: '10px',
 															border: '1px solid rgb(0,0,0,0.2)',
 															borderRadius: '5px',
+															wordWrap: 'break-word',
+															overflowWrap: 'break-word',
+															whiteSpace: 'pre-wrap',
 														}}
 													>
-														{statusUpdate &&
+														{statusUpdate && statusUpdate.length > 0 ? (
 															statusUpdate.map((update, index) => {
 																if (!update || !update.timestamp) return null;
 																return (
@@ -331,7 +339,10 @@ export default function StatusUpdate() {
 																		<div>{update.update_text}</div>
 																	</div>
 																);
-															})}
+															})
+														) : (
+															<div>No updates yet.</div>
+														)}
 													</div>
 												</div>
 											</div>
