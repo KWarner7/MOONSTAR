@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import Header from "./Header.js";
 import AppBar from "@mui/material/AppBar";
 
+
 function ProjectDetails() {
   const { id } = useParams();
   const [task, setTask] = useState(null);
@@ -65,7 +66,7 @@ function ProjectDetails() {
             <div>Loading...</div>
           ) : task ? (
             <>
-              <Card sx={{ width: 1200, height: 600 }}>
+              <Card sx={{ width: 1250, height: 625 }}>
                 <CardContent>
                   <Typography variant="h5">
                     Task Name: {task.task_name}

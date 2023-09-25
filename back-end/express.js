@@ -150,8 +150,10 @@ app.get('/tasks/:id', async (req, res) => {
             .where('tasks_table.id', taskId)
             .select(
                 'tasks_table.*',
+                'assignedBy.rank as assigned_by_rank',
                 'assignedBy.first_name as assigned_by_first_name',
                 'assignedBy.last_name as assigned_by_last_name',
+                'assignedTo.rank as assigned_to_rank',
                 'assignedTo.first_name as assigned_to_first_name',
                 'assignedTo.last_name as assigned_to_last_name'
             );
