@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Header from './Header.js';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import FetchData from './FetchData.js';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -24,6 +24,8 @@ import './editproject.css';
 import './App.css';
 import { TextareaAutosize } from '@mui/base';
 import { green } from '@mui/material/colors';
+import { useNavigate } from 'react-router-dom';
+import { useSnackbar } from './SnackbarContext';
 
 function Copyright() {
 	return (
@@ -39,6 +41,9 @@ function Copyright() {
 }
 
 export default function EditProject() {
+	const navigate = useNavigate();
+	const { showSnackbar } = useSnackbar();
+
 	const color = green[500];
 	const { taskId } = useParams();
 	const { data, error } = FetchData(`http://localhost:8081/tasks/${taskId}`);
@@ -125,6 +130,15 @@ export default function EditProject() {
 
 			const responseData = await response.json();
 			console.log('Response:', responseData);
+
+			if (response.ok) {
+				navigate(-1);
+				setTimeout(() => {
+					showSnackbar('Project updated successfully!');
+				}, 500);
+			} else {
+				console.error('Failed to save changes:', responseData);
+			}
 		} catch (error) {
 			console.error('Error:', error);
 		}
@@ -161,7 +175,7 @@ export default function EditProject() {
 						<Card variant='outlined'>
 							<CardContent>
 								<div className='flexFieldsContainer'>
-									<Typography variant='h6' gutterBottom>
+									<Typography variant='h6' gutterBottom fullWidth>
 										Project "{task.task_name}"
 										<TextField
 											fullWidth
@@ -325,12 +339,6 @@ export default function EditProject() {
 												>
 													Remove
 												</Button>
-												{/* <Button
-													variant='contained'
-													onClick={() => setIsCompleted(true)}
-												>
-													Complete
-												</Button> */}
 											</div>
 										))}
 										<Button
@@ -343,6 +351,7 @@ export default function EditProject() {
 									</div>
 								</div>
 							</CardContent>
+
 							<CardActions>
 								<Button
 									variant='contained'
@@ -351,6 +360,15 @@ export default function EditProject() {
 									onClick={handleSave}
 								>
 									Save
+								</Button>
+
+								<Button
+									variant='contained'
+									color='error'
+									fullWidth
+									onClick={() => navigate(-1)}
+								>
+									Cancel
 								</Button>
 							</CardActions>
 						</Card>
