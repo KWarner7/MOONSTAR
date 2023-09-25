@@ -15,21 +15,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import Header from './Header.js';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.primary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-      M.O.O.N.S.T.A.R.
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme({
   palette: {
     primary: {
@@ -115,5 +100,19 @@ export default function SignIn() {
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
+  );
+}
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="white" align="center">
+      {'Copyright © '}
+      <a href="https://mui.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'rgb(0,0,990,1)' }}>
+  M.O.O.N.S.T.A.R.
+</a>
+{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
   );
 }

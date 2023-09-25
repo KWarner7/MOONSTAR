@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Link } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Header from './Header.js';
+import LoggedInHeader from './LoggedInComponents/LoggedInHeader.js';
 import React, { useState, useEffect } from 'react';
 import FilterActive from './FilterActive.js';
 
@@ -41,7 +41,7 @@ export default function ActiveProjects() {
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       <AppBar position="relative">
-        <Header />
+        <LoggedInHeader />
       </AppBar>
       <main>
         <Box sx={{ bgcolor: 'transparent', pt: 2, pb: 1 }}>
@@ -177,9 +177,10 @@ function Copyright() {
   return (
     <Typography variant="body2" color="white" align="center">
       {'Copyright © '}
-      <Link color="rgb(0,0,990,1)" href="https://mui.com/">
-        M.O.O.N.S.T.A.R.
-      </Link>{' '}
+      <a href="https://mui.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'rgb(0,0,990,1)' }}>
+  M.O.O.N.S.T.A.R.
+</a>
+{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
