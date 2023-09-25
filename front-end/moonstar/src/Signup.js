@@ -20,7 +20,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        M.O.O.N.S.T.A.R.
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -92,6 +92,42 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="rank"
+                  label="Rank"
+                  name="rank"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="role"
+                  label="Role"
+                  name="role"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="flight"
+                  label="Flight"
+                  name="flight"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="section"
+                  label="Section"
+                  name="section"
                 />
               </Grid>
               <Grid item xs={12}>
