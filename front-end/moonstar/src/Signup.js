@@ -94,6 +94,42 @@ export default function SignUp() {
                   autoComplete="family-name"
                 />
               </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="rank"
+                  label="Rank"
+                  name="rank"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="role"
+                  label="Role"
+                  name="role"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="flight"
+                  label="Flight"
+                  name="flight"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="section"
+                  label="Section"
+                  name="section"
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
