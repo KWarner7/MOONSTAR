@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Header from './Header.js';
 import { useState, useEffect, useContext } from 'react';
+import LoggedInHeader from './LoggedInComponents/LoggedInHeader.js';
 import FetchData from './FetchData.js';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -157,7 +158,7 @@ export default function EditProject() {
 	return (
 		<>
 			<AppBar position='relative'>
-				<Header />
+				<LoggedInHeader />
 			</AppBar>
 			<main>
 				<Container>

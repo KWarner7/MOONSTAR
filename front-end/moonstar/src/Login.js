@@ -20,7 +20,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.primary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Moonstar.com
+      M.O.O.N.S.T.A.R.
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -104,11 +104,6 @@ export default function SignIn() {
               Login
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
                 <Link href="#" variant="body2" component={RouterLink} to="/Signup">
                   {"Don't have an account? Sign Up"}

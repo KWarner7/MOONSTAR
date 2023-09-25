@@ -14,9 +14,11 @@ import ProjectDetails from './ProjectDetails.js';
 import { SnackbarProvider } from './SnackbarContext';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { OrbitControls } from 'three/addons/controls/OrbitControls';
-import * as THREE from 'three';
+import { GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
+import { OrbitControls } from 'three/addons/controls/OrbitControls'
+import * as THREE from 'three'
+import LoggedOutHomePage from './LoggedInComponents/LoggedOutHomePage.js';
+
 
 const scene = new THREE.Scene();
 scene.add(new THREE.AxesHelper(5));
@@ -104,34 +106,26 @@ animate();
 function App() {
 	return (
 		<LocalizationProvider dateAdapter={AdapterDateFns}>
-			<SnackbarProvider>
-				<Router>
-					<div className='App'>
-						<header className='App-header'>
-							<Routes>
-								<Route path='/' element={<HomePage />} />
-								<Route path='/login' element={<Login />} />
-								<Route path='/signup' element={<Signup />} />
-								<Route path='/active-projects' element={<ActiveProjects />} />
-								<Route
-									path='/completed-projects'
-									element={<CompletedProjects />}
-								/>
-								<Route path='/edit-project/:taskId' element={<EditProject />} />
-								<Route path='/create-project' element={<CreateProject />} />
-								<Route
-									path='/project-status/:taskId'
-									element={<StatusUpdate />}
-								/>
-								<Route
-									path='/project-details/:id'
-									element={<ProjectDetails />}
-								/>
-							</Routes>
-						</header>
-					</div>
-				</Router>
-			</SnackbarProvider>
+   <SnackbarProvider>
+		<Router>
+			<div className='App'>
+				<header className='App-header'>
+					<Routes>
+						<Route path='/' element={<HomePage />} />
+						<Route path='/login' element={<Login />} />
+						<Route path='/signup' element={<Signup />} />
+						<Route path='/active-projects' element={<ActiveProjects />} />
+						<Route path='/completed-projects' element={<CompletedProjects />} />
+						<Route path='/edit-project/:taskId' element={<EditProject />} />
+						<Route path='/create-project' element={<CreateProject />} />
+						<Route path='/project-status/:taskId' element={<StatusUpdate />} />
+						<Route path='/project-details/:id' element={<ProjectDetails />} />
+						<Route path='/Home' element={<LoggedOutHomePage />} />
+					</Routes>
+				</header>
+			</div>
+		</Router>
+  </SnackbarProvider>
 		</LocalizationProvider>
 	);
 }
