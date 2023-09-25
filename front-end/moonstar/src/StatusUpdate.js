@@ -129,7 +129,6 @@ export default function StatusUpdate() {
 
 				setNewStatusUpdate('');
 
-				// Add the new status update to the statusUpdate state.
 				setStatusUpdate((prevStatuses) => [
 					...prevStatuses,
 					{
@@ -268,14 +267,13 @@ export default function StatusUpdate() {
 									</div>
 								</div>
 								<div className='flexDescriptionContainer'>
-									<div className='taskRequirements'>
+									<div>
 										<CardContent>
 											<div
 												className='flexDescriptionContainer'
 												style={{
 													display: 'flex',
-
-													flexDirection: 'row',
+													width: '100%',
 												}}
 											>
 												<div
@@ -283,7 +281,6 @@ export default function StatusUpdate() {
 													style={{
 														width: '40%',
 														paddingRight: '10px',
-														minWidth: '40%',
 													}}
 												>
 													<Typography variant='h6' gutterBottom>
@@ -300,13 +297,13 @@ export default function StatusUpdate() {
 														variant='contained'
 														color='primary'
 														onClick={handleAddStatusUpdate}
-														style={{ marginTop: '10px', width: '60%' }}
+														style={{ marginTop: '10px' }}
 													>
 														Save Status Update
 													</Button>
 												</div>
 
-												<div className='existingStatusUpdates' style={{}}>
+												<div className='statusUpdatesContainer' style={{}}>
 													<Typography variant='h6' gutterBottom>
 														Status Updates
 													</Typography>
@@ -324,22 +321,24 @@ export default function StatusUpdate() {
 														}}
 													>
 														{statusUpdate && statusUpdate.length > 0 ? (
-															statusUpdate.map((update, index) => {
-																if (!update || !update.timestamp) return null;
-																return (
-																	<div
-																		key={index}
-																		style={{ marginBottom: '16px' }}
-																	>
-																		<div>
-																			{new Date(
-																				update.timestamp
-																			).toLocaleString()}
+															[...statusUpdate]
+																.reverse()
+																.map((update, index) => {
+																	if (!update || !update.timestamp) return null;
+																	return (
+																		<div
+																			key={index}
+																			style={{ marginBottom: '16px' }}
+																		>
+																			<div>
+																				{new Date(
+																					update.timestamp
+																				).toLocaleString()}
+																			</div>
+																			<div>{update.update_text}</div>
 																		</div>
-																		<div>{update.update_text}</div>
-																	</div>
-																);
-															})
+																	);
+																})
 														) : (
 															<div>No updates yet.</div>
 														)}

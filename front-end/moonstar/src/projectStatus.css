@@ -36,16 +36,14 @@
 }
 
 .addStatusUpdateContainer {
-  flex: 1;
+  flex: 1 0 40%;
 
-  max-width: 50%;
 
-  margin-right: 2%;
 }
 
 .statusUpdatesContainer {
-  flex: 1;
+  flex: 1 0 60%;
 
-  max-width: 50%;
+
 
 }
