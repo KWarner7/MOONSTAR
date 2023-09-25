@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Link } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Header from './Header.js';
+import LoggedInHeader from './LoggedInComponents/LoggedInHeader.js';
 import React, { useState, useEffect } from 'react';
 import FilterCompleted from './FilterCompleted.js';
 import CardHeader from '@mui/material/CardHeader';
@@ -42,7 +42,7 @@ export default function CompletedProjects() {
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       <AppBar position="relative">
-        <Header />
+        <LoggedInHeader />
       </AppBar>
       <main>
         <Box sx={{ bgcolor: 'transparent', pt: 2, pb: 1 }}>

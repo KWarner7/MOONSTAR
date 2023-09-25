@@ -16,6 +16,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 import { OrbitControls } from 'three/addons/controls/OrbitControls'
 import * as THREE from 'three'
+import LoggedOutHomePage from './LoggedInComponents/LoggedOutHomePage.js';
 
 const scene = new THREE.Scene();
 scene.add(new THREE.AxesHelper(5));
@@ -110,7 +111,7 @@ function App() {
 						<Route path='/create-project' element={<CreateProject />} />
 						<Route path='/project-status/:taskId' element={<StatusUpdate />} />
 						<Route path='/project-details/:id' element={<ProjectDetails />} />
-
+						<Route path='/Home' element={<LoggedOutHomePage />} />
 					</Routes>
 				</header>
 			</div>

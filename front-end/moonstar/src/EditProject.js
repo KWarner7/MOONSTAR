@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-import Header from './Header.js';
+import LoggedInHeader from './LoggedInComponents/LoggedInHeader.js';
 import { useState, useEffect } from 'react';
 import FetchData from './FetchData.js';
 import Select from '@mui/material/Select';
@@ -143,7 +143,7 @@ export default function EditProject() {
 	return (
 		<>
 			<AppBar position='relative'>
-				<Header />
+				<LoggedInHeader />
 			</AppBar>
 			<main>
 				<Container>

@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import LoggedInHeader from './LoggedInComponents/LoggedInHeader.js';
+import Header from '../Header.js';
 import { Link } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,7 +18,7 @@ export default function HomePage() {
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       <AppBar>
-        <LoggedInHeader />
+        <Header />
       </AppBar>
       <main>
         <Box
