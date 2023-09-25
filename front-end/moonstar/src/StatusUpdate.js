@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-import Header from './Header.js';
+import LoggedInHeader from './LoggedInComponents/LoggedInHeader.js';
 import { useState, useEffect } from 'react';
 import FetchData from './FetchData.js';
 import FormControl from '@mui/material/FormControl';
@@ -17,6 +17,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { useParams } from 'react-router-dom';
 import './projectStatus.css';
 import { TextareaAutosize } from '@mui/base';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright() {
 	return (
@@ -33,6 +34,7 @@ function Copyright() {
 
 export default function StatusUpdate() {
 	const { taskId } = useParams();
+	const navigate = useNavigate();
 	const { data, error } = FetchData(`http://localhost:8081/tasks/${taskId}`);
 	const { data: userData, error: userError } = FetchData(
 		'http://localhost:8081/users'
@@ -147,7 +149,7 @@ export default function StatusUpdate() {
 	return (
 		<>
 			<AppBar position='relative'>
-				<Header />
+				<LoggedInHeader />
 			</AppBar>
 			<main>
 				<Container>
@@ -301,6 +303,14 @@ export default function StatusUpdate() {
 													>
 														Save Status Update
 													</Button>
+													<Button
+									variant='contained'
+									color='error'
+									fullWidth
+									onClick={() => navigate(-1)}
+								>
+									Back to Project Details
+								</Button>
 												</div>
 
 												<div className='statusUpdatesContainer' style={{}}>

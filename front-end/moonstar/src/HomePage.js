@@ -84,9 +84,10 @@ function Copyright() {
   return (
     <Typography variant="body2" color="white" align="center">
       {'Copyright © '}
-      <Link color="rgb(0,0,990,1)" href="https://mui.com/">
-        M.O.O.N.S.T.A.R.
-      </Link>{' '}
+      <a href="https://mui.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'rgb(0,0,990,1)' }}>
+  M.O.O.N.S.T.A.R.
+</a>
+{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
