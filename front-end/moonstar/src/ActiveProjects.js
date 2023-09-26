@@ -35,7 +35,9 @@ export default function ActiveProjects() {
 	const [filters, setFilters] = useState({
 		assignedTo: 'all',
 		assignedBy: 'all',
+		priority: 'all',
 	});
+
 	const [anchorEl, setAnchorEl] = useState(null);
 	const openMenu = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -62,6 +64,8 @@ export default function ActiveProjects() {
 
 		fetchData();
 	}, []);
+
+	const priorities = [...new Set(tasks.map((task) => task.priority))];
 
 	const assignedToNames = [
 		...new Set(
@@ -96,6 +100,8 @@ export default function ActiveProjects() {
 			return false;
 		if (startDate && taskDueDate < new Date(startDate)) return false;
 		if (endDate && taskDueDate > new Date(endDate)) return false;
+		if (filters.priority !== 'all' && task.priority !== filters.priority)
+			return false;
 
 		return true;
 	});
@@ -134,6 +140,7 @@ export default function ActiveProjects() {
 							<Grid
 								container
 								spacing={2}
+								justifyContent={'center'}
 								style={{
 									backgroundColor: 'white',
 									padding: '8px',
@@ -143,7 +150,9 @@ export default function ActiveProjects() {
 							>
 								<Grid item xs={6} style={{ maxWidth: '200px' }}>
 									<FormControl variant='outlined' fullWidth margin='normal'>
-										<InputLabel>Assigned To</InputLabel>
+										<InputLabel shrink style={{ marginTop: '-10px' }}>
+											Assigned To
+										</InputLabel>
 										<Select
 											value={filters.assignedTo}
 											onChange={(event) =>
@@ -162,7 +171,9 @@ export default function ActiveProjects() {
 
 								<Grid item xs={6} style={{ maxWidth: '200px' }}>
 									<FormControl variant='outlined' fullWidth margin='normal'>
-										<InputLabel>Assigned By</InputLabel>
+										<InputLabel shrink style={{ marginTop: '-10px' }}>
+											Assigned By
+										</InputLabel>
 										<Select
 											value={filters.assignedBy}
 											onChange={(event) =>
@@ -179,23 +190,45 @@ export default function ActiveProjects() {
 									</FormControl>
 								</Grid>
 
+								<Grid item xs={6} style={{ maxWidth: '200px' }}>
+									<FormControl variant='outlined' fullWidth margin='normal'>
+										<InputLabel shrink style={{ marginTop: '-10px' }}>
+											Priority
+										</InputLabel>
+										<Select
+											value={filters.priority}
+											onChange={(event) =>
+												handleFilterChange('priority', event.target.value)
+											}
+										>
+											<MenuItem value={'all'}>All</MenuItem>
+											{priorities.map((priority) => (
+												<MenuItem key={priority} value={priority}>
+													{priority}
+												</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</Grid>
+
 								<Grid item xs={12} style={{ marginTop: '16px' }}>
-									<Typography>Due Date</Typography>
-									<div style={{ display: 'flex', alignItems: 'center' }}>
-										<label htmlFor='start-date' style={{ marginRight: '8px' }}>
-											Start Date:
-										</label>
+									<div
+										style={{
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center',
+										}}
+									>
+										<InputLabel>Due Date Start</InputLabel>
 										<input
 											type='date'
 											id='start-date'
-											value={startDate} // Assuming you manage this in a state
+											value={startDate}
 											onChange={(e) => setStartDate(e.target.value)}
 											style={{ marginRight: '16px' }}
 										/>
 
-										<label htmlFor='end-date' style={{ marginRight: '8px' }}>
-											End Date:
-										</label>
+										<InputLabel>Due Date end</InputLabel>
 										<input
 											type='date'
 											id='end-date'
