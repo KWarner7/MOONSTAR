@@ -145,7 +145,7 @@ function ProjectDetails() {
                       <CardContent
                         sx={{ maxHeight: "200px", overflowY: "auto" }}
                       >
-                        <Typography>Requirement:</Typography>
+                        <Typography>Requirements:</Typography>
                         {task && task.task_requirement ? (
                           <Typography>{task.task_requirement}</Typography>
                         ) : (
@@ -202,7 +202,7 @@ function ProjectDetails() {
                       to={`/project-status/${id}`}
                       style={{ marginRight: "20px" }}
                     >
-                      Project Status
+                      Update Project Status
                     </Button>
                     <Button
                       variant="contained"
