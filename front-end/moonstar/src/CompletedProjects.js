@@ -18,7 +18,13 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+
 const defaultTheme = createTheme();
+
 export default function ActiveProjects() {
 	const [startDate, setStartDate] = useState('');
 	const [endDate, setEndDate] = useState('');
@@ -32,12 +38,8 @@ export default function ActiveProjects() {
 	});
 
 	const [anchorEl, setAnchorEl] = useState(null);
-	const openMenu = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-	const closeMenu = () => {
-		setAnchorEl(null);
-	};
+	const openDialog = () => setAnchorEl(true);
+	const closeDialog = () => setAnchorEl(false);
 
 	useEffect(() => {
 		async function fetchData() {
@@ -128,121 +130,127 @@ export default function ActiveProjects() {
 							Completed Projects
 						</Typography>
 						<Button
-							onClick={openMenu}
+							onClick={openDialog}
 							startIcon={<FilterListIcon color='primary' />}
 							color='inherit'
 						>
 							Filter
 						</Button>
 
-						<Menu
-							anchorEl={anchorEl}
-							open={Boolean(anchorEl)}
-							onClose={closeMenu}
-						>
-							<Grid
-								container
-								spacing={2}
-								justifyContent={'center'}
-								style={{
-									backgroundColor: 'white',
-									padding: '8px',
-									maxHeight: '500px',
-									overflowY: 'auto',
-								}}
-							>
-								<Grid item xs={6} style={{ maxWidth: '200px' }}>
-									<FormControl variant='outlined' fullWidth margin='normal'>
-										<InputLabel shrink style={{ marginTop: '-10px' }}>
-											Assigned To
-										</InputLabel>
-										<Select
-											value={filters.assignedTo}
-											onChange={(event) =>
-												handleFilterChange('assignedTo', event.target.value)
-											}
+						<Dialog open={anchorEl} onClose={closeDialog} fullWidth>
+							<DialogTitle>Filter Tasks</DialogTitle>
+							<DialogContent>
+								<Grid
+									container
+									spacing={2}
+									justifyContent={'center'}
+									style={{
+										backgroundColor: 'white',
+										padding: '8px',
+										maxHeight: '500px',
+										overflowY: 'auto',
+									}}
+								>
+									<Grid item xs={6} style={{ maxWidth: '200px' }}>
+										<FormControl variant='outlined' fullWidth margin='normal'>
+											<InputLabel shrink style={{ marginTop: '-10px' }}>
+												Assigned To
+											</InputLabel>
+											<Select
+												value={filters.assignedTo}
+												onChange={(event) =>
+													handleFilterChange('assignedTo', event.target.value)
+												}
+											>
+												<MenuItem value={'all'}>All</MenuItem>
+												{assignedToNames.map((name) => (
+													<MenuItem key={name} value={name}>
+														{name}
+													</MenuItem>
+												))}
+											</Select>
+										</FormControl>
+									</Grid>
+
+									<Grid item xs={6} style={{ maxWidth: '200px' }}>
+										<FormControl variant='outlined' fullWidth margin='normal'>
+											<InputLabel shrink style={{ marginTop: '-10px' }}>
+												Assigned By
+											</InputLabel>
+											<Select
+												value={filters.assignedBy}
+												onChange={(event) =>
+													handleFilterChange('assignedBy', event.target.value)
+												}
+											>
+												<MenuItem value={'all'}>All</MenuItem>
+												{assignedByNames.map((name) => (
+													<MenuItem key={name} value={name}>
+														{name}
+													</MenuItem>
+												))}
+											</Select>
+										</FormControl>
+									</Grid>
+
+									<Grid item xs={6} style={{ maxWidth: '200px' }}>
+										<FormControl variant='outlined' fullWidth margin='normal'>
+											<InputLabel shrink style={{ marginTop: '-10px' }}>
+												Priority
+											</InputLabel>
+											<Select
+												value={filters.priority}
+												onChange={(event) =>
+													handleFilterChange('priority', event.target.value)
+												}
+											>
+												<MenuItem value={'all'}>All</MenuItem>
+												{priorities.map((priority) => (
+													<MenuItem key={priority} value={priority}>
+														{priority}
+													</MenuItem>
+												))}
+											</Select>
+										</FormControl>
+									</Grid>
+
+									<Grid item xs={12} style={{ marginTop: '16px' }}>
+										<div
+											style={{
+												display: 'flex',
+												alignItems: 'center',
+												justifyContent: 'center',
+											}}
 										>
-											<MenuItem value={'all'}>All</MenuItem>
-											{assignedToNames.map((name) => (
-												<MenuItem key={name} value={name}>
-													{name}
-												</MenuItem>
-											))}
-										</Select>
-									</FormControl>
-								</Grid>
+											<InputLabel>Beginning Completion Date</InputLabel>
+											<input
+												type='date'
+												id='start-date'
+												value={startDate}
+												onChange={(e) => setStartDate(e.target.value)}
+												style={{ marginRight: '16px' }}
+											/>
 
-								<Grid item xs={6} style={{ maxWidth: '200px' }}>
-									<FormControl variant='outlined' fullWidth margin='normal'>
-										<InputLabel shrink style={{ marginTop: '-10px' }}>
-											Assigned By
-										</InputLabel>
-										<Select
-											value={filters.assignedBy}
-											onChange={(event) =>
-												handleFilterChange('assignedBy', event.target.value)
-											}
-										>
-											<MenuItem value={'all'}>All</MenuItem>
-											{assignedByNames.map((name) => (
-												<MenuItem key={name} value={name}>
-													{name}
-												</MenuItem>
-											))}
-										</Select>
-									</FormControl>
+											<InputLabel>End Completion Date</InputLabel>
+											<input
+												type='date'
+												id='end-date'
+												value={endDate}
+												onChange={(e) => setEndDate(e.target.value)}
+											/>
+										</div>
+									</Grid>
 								</Grid>
-
-								<Grid item xs={6} style={{ maxWidth: '200px' }}>
-									<FormControl variant='outlined' fullWidth margin='normal'>
-										<InputLabel shrink style={{ marginTop: '-10px' }}>
-											Priority
-										</InputLabel>
-										<Select
-											value={filters.priority}
-											onChange={(event) =>
-												handleFilterChange('priority', event.target.value)
-											}
-										>
-											<MenuItem value={'all'}>All</MenuItem>
-											{priorities.map((priority) => (
-												<MenuItem key={priority} value={priority}>
-													{priority}
-												</MenuItem>
-											))}
-										</Select>
-									</FormControl>
-								</Grid>
-
-								<Grid item xs={12} style={{ marginTop: '16px' }}>
-									<div
-										style={{
-											display: 'flex',
-											alignItems: 'center',
-											justifyContent: 'center',
-										}}
-									>
-										<InputLabel>Beginning Completion Date</InputLabel>
-										<input
-											type='date'
-											id='start-date'
-											value={startDate}
-											onChange={(e) => setStartDate(e.target.value)}
-											style={{ marginRight: '16px' }}
-										/>
-
-										<InputLabel>End Completion Date</InputLabel>
-										<input
-											type='date'
-											id='end-date'
-											value={endDate}
-											onChange={(e) => setEndDate(e.target.value)}
-										/>
-									</div>
-								</Grid>
-							</Grid>
-							<button onClick={handleResetFilters}>Reset Filters</button>
-						</Menu>
+							</DialogContent>
+							<DialogActions>
+								<Button onClick={handleResetFilters} color='primary'>
+									Reset Filters
+								</Button>
+								<Button onClick={closeDialog} color='primary'>
+									Close
+								</Button>
+							</DialogActions>
+						</Dialog>
 					</Container>
 					<Stack direction='row' spacing={2} justifyContent='center'>
 						<Link to='/create-project' style={{ textDecoration: 'none' }}>
@@ -260,7 +268,11 @@ export default function ActiveProjects() {
 					}}
 					maxWidth='lg'
 				>
-					<Grid container spacing={4}>
+					<Grid
+						container
+						spacing={4}
+						justifyContent={filteredTasks.length >= 2 ? 'center' : 'start'}
+					>
 						{filteredTasks.map((task, index) => {
 							if (!task.is_active) {
 								return (
@@ -271,7 +283,8 @@ export default function ActiveProjects() {
 										>
 											<Card
 												sx={{
-													minWidth: '370px',
+													minWidth:
+														filteredTasks.length < 2 ? '370px' : '170px',
 													height: '100%',
 													display: 'flex',
 													flexDirection: 'column',
