@@ -4,7 +4,6 @@ import { useParams, Link } from "react-router-dom";
 import Header from "./Header.js";
 import AppBar from "@mui/material/AppBar";
 
-
 function ProjectDetails() {
   const { id } = useParams();
   const [task, setTask] = useState(null);
@@ -77,8 +76,9 @@ function ProjectDetails() {
                       {/* Card for Assigned By */}
                       <Card sx={{ marginBottom: 2 }}>
                         <CardContent>
+                          <Typography>Assigned By:</Typography>
                           <Typography>
-                            Assigned By: {task.assigned_by_rank}{" "}
+                            {task.assigned_by_rank}{" "}
                             {task.assigned_by_first_name}{" "}
                             {task.assigned_by_last_name}
                           </Typography>
@@ -90,6 +90,7 @@ function ProjectDetails() {
                       {/* Card for Priority */}
                       <Card sx={{ marginBottom: 2 }}>
                         <CardContent>
+                          <Typography>Priority:</Typography>
                           <Typography>Priority: {task.priority}</Typography>
                         </CardContent>
                       </Card>
@@ -99,8 +100,9 @@ function ProjectDetails() {
                       {/* Card for Assigned To */}
                       <Card sx={{ marginBottom: 2 }}>
                         <CardContent>
+                          <Typography>Assigned To:</Typography>
                           <Typography>
-                            Assigned To: {task.assigned_to_rank}{" "}
+                            {task.assigned_to_rank}{" "}
                             {task.assigned_to_first_name}{" "}
                             {task.assigned_to_last_name}
                           </Typography>
@@ -112,8 +114,8 @@ function ProjectDetails() {
                       {/* Card for Due Date */}
                       <Card sx={{ marginBottom: 2 }}>
                         <CardContent>
+                          <Typography>Due Date:</Typography>
                           <Typography>
-                            Due Date:{" "}
                             {new Date(task.due_date).toLocaleDateString()}
                           </Typography>
                         </CardContent>
@@ -128,7 +130,10 @@ function ProjectDetails() {
                         sx={{ maxHeight: "200px", overflowY: "auto" }}
                       >
                         <Typography>
-                          Description: {task.task_description}
+                          Description:
+                        </Typography>
+                        <Typography>
+                         {task.task_description}
                         </Typography>
                       </CardContent>
                     </Card>
@@ -156,16 +161,32 @@ function ProjectDetails() {
                       <CardContent
                         sx={{ maxHeight: "200px", overflowY: "auto" }}
                       >
-                        <Typography>Status Updates:</Typography>
+                        <Typography
+                          sx={{
+                            position: "sticky",
+                            top: "0",
+                            backgroundColor: "white",
+                            zIndex: "1",
+                          }}
+                        >
+                          Status Updates:
+                        </Typography>
                         {statusUpdates.length > 0 ? (
-                          statusUpdates.map((update, index) => (
-                            <div key={index}>
-                              <Typography>
-                                -{update.update_text} {update.timestamp}{" "}
-                              </Typography>
-                              <Typography> {update.timestamp} </Typography>
-                            </div>
-                          ))
+                          <ul
+                            style={{
+                              paddingLeft: "20px",
+                              listStyleType: "disc",
+                            }}
+                          >
+                            {statusUpdates.map((update, index) => (
+                              <li key={index} style={{ textAlign: "left" }}>
+                                <Typography>
+                                  {update.update_text}{" "}
+                                  {new Date(update.timestamp).toLocaleString()}
+                                </Typography>
+                              </li>
+                            ))}
+                          </ul>
                         ) : (
                           <Typography>No updates yet.</Typography>
                         )}
@@ -179,7 +200,7 @@ function ProjectDetails() {
                       variant="contained"
                       component={Link}
                       to={`/project-status/${id}`}
-                      style={{ marginRight: "10px" }}
+                      style={{ marginRight: "20px" }}
                     >
                       Project Status
                     </Button>
@@ -187,7 +208,7 @@ function ProjectDetails() {
                       variant="contained"
                       component={Link}
                       to={`/edit-project/${id}`}
-                      style={{ marginRight: "10px" }}
+                      style={{ marginRight: "20px" }}
                     >
                       Edit Project
                     </Button>

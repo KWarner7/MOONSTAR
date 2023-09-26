@@ -86,7 +86,7 @@ export default function SignUp() {
 
       return (
         <ThemeProvider theme={defaultTheme}>
-          <Container component="main" maxWidth="xs">
+          <Container component="main" maxWidth="l">
             <Header />
             <CssBaseline />
             <Box
@@ -95,7 +95,6 @@ export default function SignUp() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                backgroundColor: '#ffffff',
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -195,7 +194,7 @@ export default function SignUp() {
                 </Button>
                 <Grid container justifyContent="flex-end">
                   <Grid item>
-                    <Link href="#" variant="body2" component={RouterLink} to="/Login">
+                    <Link href="#" variant="body2" align="center" component={RouterLink} to="/Login" >
                       Already have an account? Sign in
                     </Link>
                   </Grid>

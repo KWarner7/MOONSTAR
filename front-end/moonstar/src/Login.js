@@ -38,7 +38,7 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="l">
       <Header />
         <CssBaseline />
         <Box
@@ -47,7 +47,6 @@ export default function SignIn() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            backgroundColor: '#ffffff',
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
