@@ -142,7 +142,7 @@ export default function ActiveProjects() {
 						</Button>
 
 						<Dialog open={anchorEl} onClose={closeDialog} fullWidth>
-							<DialogTitle>Filter Tasks</DialogTitle>
+							<DialogTitle>Filter Projects</DialogTitle>
 							<DialogContent>
 								<Grid
 									container
