@@ -14,10 +14,11 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Header from './Header.js';
+import AppBar from '@mui/material/AppBar';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography variant="body2" color="black" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         M.O.O.N.S.T.A.R.
@@ -86,17 +87,10 @@ export default function SignUp() {
 
       return (
         <ThemeProvider theme={defaultTheme}>
-          <Container component="main" maxWidth="l">
-            <Header />
-            <CssBaseline />
-            <Box
-              sx={{
-                marginTop: 8,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
+          <Container component="main" maxWidth="xs">
+          <AppBar position="fixed">
+        <Header />
+      </AppBar>
               <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                 <LockOutlinedIcon />
               </Avatar>
@@ -192,15 +186,14 @@ export default function SignUp() {
                 >
                   Sign Up
                 </Button>
-                <Grid container justifyContent="flex-end">
+                <Grid container justifyContent="center">
                   <Grid item>
-                    <Link href="#" variant="body2" align="center" component={RouterLink} to="/Login" >
+                    <Link href="#" variant="body1" align="center" component={RouterLink} to="/Login" >
                       Already have an account? Sign in
                     </Link>
                   </Grid>
                 </Grid>
               </Box>
-            </Box>
             <Copyright sx={{ mt: 5 }} />
           </Container>
         </ThemeProvider>
