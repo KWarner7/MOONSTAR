@@ -61,6 +61,7 @@ export default function EditProject() {
 	const [assignedTo, setAssignedTo] = useState('');
 	const [assignedToUserId, setAssignedToUserId] = useState(null);
 	const [isCompleted, setIsCompleted] = useState(false);
+	const [completionDate, setCompletionDate] = useState(null);
 
 	useEffect(() => {
 		if (data && data.length > 0 && userData) {
@@ -130,6 +131,7 @@ export default function EditProject() {
 					due_date: task.due_date,
 					priority: task.priority,
 					is_active: !isCompleted,
+					completion_date: completionDate,
 				}),
 			});
 
@@ -315,7 +317,15 @@ export default function EditProject() {
 											control={
 												<Checkbox
 													checked={isCompleted}
-													onChange={() => setIsCompleted(!isCompleted)}
+													onChange={() => {
+														const newCompletionStatus = !isCompleted;
+														setIsCompleted(newCompletionStatus);
+														setCompletionDate(
+															newCompletionStatus
+																? new Date().toISOString()
+																: null
+														);
+													}}
 													name='completedCheckbox'
 													color='primary'
 												/>
