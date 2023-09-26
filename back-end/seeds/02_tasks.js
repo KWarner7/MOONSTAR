@@ -7,7 +7,6 @@ exports.seed = async function (knex) {
 	await knex('tasks_table').del();
 	await knex('tasks_table').insert([
 		{
-			id: 1,
 			task_name: 'sweep',
 			task_description: 'Clean the living room',
 			task_requirement: 'get it done fast',
@@ -20,7 +19,6 @@ exports.seed = async function (knex) {
 			assigned_by: 2,
 		},
 		{
-			id: 2,
 			task_name: 'hack',
 			task_description: 'Work on coding project',
 			task_requirement: 'get it done fast',
@@ -33,7 +31,6 @@ exports.seed = async function (knex) {
 			assigned_by: 3,
 		},
 		{
-			id: 3,
 			task_name: 'eat',
 			task_description: 'Have lunch',
 			task_requirement: 'get it done fast',
@@ -46,7 +43,6 @@ exports.seed = async function (knex) {
 			assigned_by: 3,
 		},
 		{
-			id: 4,
 			task_name: 'read',
 			task_description: 'Read a book',
 			task_requirement: 'Finish 2 chapters',
@@ -59,7 +55,6 @@ exports.seed = async function (knex) {
 			assigned_by: 1,
 		},
 		{
-			id: 5,
 			task_name: 'run',
 			task_description: 'Morning jog',
 			task_requirement: 'Complete 5km',
@@ -72,7 +67,6 @@ exports.seed = async function (knex) {
 			assigned_by: 2,
 		},
 		{
-			id: 6,
 			task_name: 'write',
 			task_description: 'Write a report',
 			task_requirement: 'Include all details',
@@ -85,7 +79,6 @@ exports.seed = async function (knex) {
 			assigned_by: 2,
 		},
 		{
-			id: 7,
 			task_name: 'shop',
 			task_description: 'Grocery shopping',
 			task_requirement: 'Buy all essentials',
@@ -98,7 +91,6 @@ exports.seed = async function (knex) {
 			assigned_by: 1,
 		},
 		{
-			id: 8,
 			task_name: 'study',
 			task_description: 'Prepare for the exam',
 			task_requirement: 'Cover all topics',
@@ -111,7 +103,6 @@ exports.seed = async function (knex) {
 			assigned_by: 2,
 		},
 		{
-			id: 9,
 			task_name: 'cook',
 			task_description: 'Prepare dinner',
 			task_requirement: 'Make something special',
@@ -124,7 +115,6 @@ exports.seed = async function (knex) {
 			assigned_by: 3,
 		},
 		{
-			id: 10,
 			task_name: 'travel',
 			task_description: 'Plan a weekend trip',
 			task_requirement: 'Book all necessary accommodations',
@@ -137,7 +127,6 @@ exports.seed = async function (knex) {
 			assigned_by: 1,
 		},
 		{
-			id: 11,
 			task_name: 'paint',
 			task_description: 'Decorate the living room',
 			task_requirement: 'Choose vibrant colors',
@@ -150,7 +139,6 @@ exports.seed = async function (knex) {
 			assigned_by: 1,
 		},
 		{
-			id: 12,
 			task_name: 'gym',
 			task_description: 'Hit the gym',
 			task_requirement: 'Complete full-body workout',
@@ -163,7 +151,6 @@ exports.seed = async function (knex) {
 			assigned_by: 3,
 		},
 		{
-			id: 13,
 			task_name: 'dance',
 			task_description: 'Attend dance class',
 			task_requirement: 'Practice the new routine',
