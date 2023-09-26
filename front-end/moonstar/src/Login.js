@@ -40,11 +40,11 @@ export default function SignIn() {
   return (
     <>
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
       <AppBar position="fixed">
         <Header />
       </AppBar>
-          <Avatar sx={{ m: 1, bgcolor: 'primary.main', align: 'center' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main'}}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5" color="#000000">
