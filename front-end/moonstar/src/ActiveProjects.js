@@ -16,16 +16,9 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
-import TextField from '@mui/material/TextField';
 import Menu from '@mui/material/Menu';
-import IconButton from '@mui/material/IconButton';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-
 const defaultTheme = createTheme();
-
 export default function ActiveProjects() {
 	const [startDate, setStartDate] = useState('');
 	const [endDate, setEndDate] = useState('');
@@ -48,12 +41,11 @@ export default function ActiveProjects() {
 
 	useEffect(() => {
 		async function fetchData() {
-			const [tasksResponse, statusUpdatesResponse, userResponse] =
-				await Promise.all([
-					fetch('http://localhost:8081/tasks'),
-					fetch('http://localhost:8081/status-updates'),
-					fetch('http://localhost:8081/users'),
-				]);
+			const [tasksResponse, statusUpdatesResponse] = await Promise.all([
+				fetch('http://localhost:8081/tasks'),
+				fetch('http://localhost:8081/status-updates'),
+				fetch('http://localhost:8081/users'),
+			]);
 
 			const tasksData = await tasksResponse.json();
 			const statusUpdatesData = await statusUpdatesResponse.json();
