@@ -17,18 +17,52 @@ export default function Header() {
 			<ThemeProvider theme={defaultTheme}>
 				<CssBaseline />
 				<Box sx={{ flexGrow: 1 }}>
-					<AppBar position='static'>
+					<AppBar
+						position='static'
+						sx={{
+							backgroundImage: 'url(/pexels-visit-greenland-360912.jpg)',
+							backgroundSize: 'cover',
+							backgroundRepeat: 'repeat',
+							backgroundPosition: '50px center',
+						}}
+					>
 						<Toolbar>
-							<Typography variant='h6' component='div' align='left' sx={{ flexGrow: 1 }}>
-								<Link to="/Home" style={{ textDecoration: 'none' }}>
+							<Typography
+								variant='h6'
+								component='div'
+								align='left'
+								sx={{ flexGrow: 1 }}
+							>
+								<Link to='/' style={{ textDecoration: 'none' }}>
 									<Button sx={{ color: 'white', fontSize: '2rem' }}>
-										<Brightness4TwoToneIcon sx={{ marginRight: '8px', fontSize: '3rem' }} />
-										M.O.O.N.S.T.A.R.
+										<Brightness4TwoToneIcon
+											sx={{
+												marginRight: '8px',
+												fontSize: '3rem',
+												filter:
+													'drop-shadow(0px 0px 10px rgba(178, 243, 172, 0.9))',
+											}}
+										/>
+										<span
+											style={{
+												color: 'white',
+												textShadow: '0px 0px 10px rgba(178, 243, 172, 0.9)',
+											}}
+										>
+											M.O.O.N.S.T.A.R.
+										</span>
 									</Button>
 								</Link>
 							</Typography>
-							<Link to="/login" style={{ textDecoration: 'none' }}>
-								<Button sx={{ color: 'white' }}>Login</Button>
+							<Link to='/login' style={{ textDecoration: 'none' }}>
+								<Button
+									sx={{
+										color: 'white',
+										textShadow: '0px 0px 10px rgba(178, 243, 172, 0.9)',
+									}}
+								>
+									Login
+								</Button>
 							</Link>
 						</Toolbar>
 					</AppBar>
