@@ -7,8 +7,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Autocomplete } from '@mui/material';
 import { Link } from 'react-router-dom';
+// import Link from '@mui/material/Link';
 import LoggedInHeader from './LoggedInComponents/LoggedInHeader.js';
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 import FetchData from './FetchData.js';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -19,20 +20,35 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { green } from '@mui/material/colors';
 
 
-function CreateProject() {
-	const [task, setTask] = useState({});
-	const [taskRequirements, setTaskRequirements] = useState([]);
-	const [userData, setUserData] = useState(null);
-	const [error, setError] = useState(null);
+export default function NewTask() {
+// const navigate = useNavigate();
+// const { showSnackbar } = useSnackbar();
+
+
+const [error, setError] = useState(null);
+const [task, setTask] = useState(null);
+const { taskId } = useParams();
+const color = green[500];
+
+const { data } = FetchData(`http://localhost:8081/tasks/${taskId}`);
+const { data: taskData, error: userError } = FetchData(
+	'http://localhost:8081/users'
+);
+
+const [taskRequirements, setTaskRequirements] = useState([]);
+
+
 
 	useEffect(() => {
 		fetch('http://localhost:8081/users')
 			.then(response => response.json())
 			.then(data => {
-				setUserData(data);
+				setTask(data);
 			})
 			.catch(error => {
 				console.error("There was an error fetching the user data:", error);
@@ -49,6 +65,46 @@ function CreateProject() {
 		updatedRequirements.splice(index, 1);
 		setTaskRequirements(updatedRequirements);
 	}
+
+	const navigate = useNavigate();
+
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		const data = new FormData(event.currentTarget);
+
+		const taskData = {
+			project_name: data.get('Project Name'),
+			assigned_by: data.get('Assigned By'),
+			assigned_to: data.get('Assigned To'),
+			priority: data.get('Priority'),
+			due_date_time: data.get('Due Date/Time'),
+			project_description: data.get('Project Description'),
+		};
+
+		console.log(taskData);
+
+		try {
+			const response = await fetch('http://localhost:8081/users', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(taskData)
+			});
+
+			const result = await response.json();
+
+			if (response.ok) {
+				console.log("New task posted successfully:", result);
+				navigate("/active-projects");
+			} else {
+				console.error("Error creating new task:", result);
+			}
+
+		} catch (error) {
+			console.error("There was an error:", error);
+		}
+	};
 
 	return (
 		<>
@@ -71,31 +127,31 @@ function CreateProject() {
 								onChange={e => setTask({ ...task, task_name: e.target.value })}
 							/>
 							<br></br>
-							<>
-							<Autocomplete
-								options={userData || []}
-								getOptionLabel={(option) => `${option.first_name} ${option.last_name}`}
-								value={userData?.find((user) => user.email === task?.assigned_by)}
-								onChange={(event, newValue) => {
-									setTask({ ...task, assigned_by: newValue?.email });
-								}}
-								renderInput={(params) => (
-									<TextField {...params} label='Assigned By' variant='outlined' fullWidth />
-								)}
-							/>
-<br></br>
-							<Autocomplete
-								options={userData || []}
-								getOptionLabel={(option) => `${option.first_name} ${option.last_name}`}
-								value={userData?.find((user) => user.email === task?.assigned_to)}
-								onChange={(event, newValue) => {
-									setTask({ ...task, assigned_to: newValue?.email });
-								}}
-								renderInput={(params) => (
-									<TextField {...params} label='Assigned To' variant='outlined' fullWidth />
-								)}
-							/>
-						</>
+							{/* <>
+								<Autocomplete
+									options= taskData || []}
+									getOptionLabel={(option) => `${option.first_name} ${option.last_name}`}
+									value= taskData?.find((user) => user.email === task?.assigned_by)}
+									onChange={(event, newValue) => {
+										setTask({ ...task, assigned_by: newValue?.email });
+									}}
+									renderInput={(params) => (
+										<TextField {...params} label='Assigned By' variant='outlined' fullWidth />
+									)}
+								/>
+	<br></br>
+								<Autocomplete
+									options= taskData || []}
+									getOptionLabel={(option) => `${option.first_name} ${option.last_name}`}
+									value= taskData?.find((user) => user.email === task?.assigned_to)}
+									onChange={(event, newValue) => {
+										setTask({ ...task, assigned_to: newValue?.email });
+									}}
+									renderInput={(params) => (
+										<TextField {...params} label='Assigned To' variant='outlined' fullWidth />
+									)}
+								/> */}
+							{/* </> */}
 
 							<FormControl fullWidth variant='outlined' margin='normal'>
 								<InputLabel>Priority</InputLabel>
@@ -168,8 +224,6 @@ function CreateProject() {
 		</>
 	);
 }
-export default CreateProject;
-
 function Copyright() {
 	return (
 		<Typography variant="body2" color="white" align="center">
