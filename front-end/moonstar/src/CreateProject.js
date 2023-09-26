@@ -42,8 +42,6 @@ const { data: taskData, error: userError } = FetchData(
 
 const [taskRequirements, setTaskRequirements] = useState([]);
 
-
-
 	useEffect(() => {
 		fetch('http://localhost:8081/users')
 			.then(response => response.json())
@@ -127,11 +125,11 @@ const [taskRequirements, setTaskRequirements] = useState([]);
 								onChange={e => setTask({ ...task, task_name: e.target.value })}
 							/>
 							<br></br>
-							{/* <>
+							<>
 								<Autocomplete
-									options= taskData || []}
+									options= {taskData || []}
 									getOptionLabel={(option) => `${option.first_name} ${option.last_name}`}
-									value= taskData?.find((user) => user.email === task?.assigned_by)}
+									value= {taskData?.find((user) => user.email === task?.assigned_by)}
 									onChange={(event, newValue) => {
 										setTask({ ...task, assigned_by: newValue?.email });
 									}}
@@ -141,17 +139,17 @@ const [taskRequirements, setTaskRequirements] = useState([]);
 								/>
 	<br></br>
 								<Autocomplete
-									options= taskData || []}
+									options= {taskData || []}
 									getOptionLabel={(option) => `${option.first_name} ${option.last_name}`}
-									value= taskData?.find((user) => user.email === task?.assigned_to)}
+									value= {taskData?.find((user) => user.email === task?.assigned_to)}
 									onChange={(event, newValue) => {
 										setTask({ ...task, assigned_to: newValue?.email });
 									}}
 									renderInput={(params) => (
 										<TextField {...params} label='Assigned To' variant='outlined' fullWidth />
 									)}
-								/> */}
-							{/* </> */}
+								/> 
+							</>
 
 							<FormControl fullWidth variant='outlined' margin='normal'>
 								<InputLabel>Priority</InputLabel>
