@@ -59,7 +59,6 @@ const taskData = {
   assigned_by: parseInt(assignedBy),
 };
 
-
     try {
       const response = await fetch('http://localhost:8081/tasks', {
         method: 'POST',

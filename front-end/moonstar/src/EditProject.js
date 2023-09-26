@@ -27,6 +27,8 @@ import { TextareaAutosize } from '@mui/base';
 import { green } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from './SnackbarContext';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 function Copyright() {
 	return (
@@ -59,9 +61,11 @@ export default function EditProject() {
 	const [assignedTo, setAssignedTo] = useState('');
 	const [assignedToUserId, setAssignedToUserId] = useState(null);
 	const [isCompleted, setIsCompleted] = useState(false);
+	const [completionDate, setCompletionDate] = useState(null);
 
 	useEffect(() => {
 		if (data && data.length > 0 && userData) {
+			setIsCompleted(!data[0].is_active);
 			setTask(data[0]);
 			setTaskRequirements(data[0].task_requirement.split(', '));
 
@@ -126,6 +130,8 @@ export default function EditProject() {
 					task_requirement: taskRequirements.join(', '),
 					due_date: task.due_date,
 					priority: task.priority,
+					is_active: !isCompleted,
+					completion_date: completionDate,
 				}),
 			});
 
@@ -306,6 +312,25 @@ export default function EditProject() {
 											onChange={(e) =>
 												setTask({ ...task, task_description: e.target.value })
 											}
+										/>
+										<FormControlLabel
+											control={
+												<Checkbox
+													checked={isCompleted}
+													onChange={() => {
+														const newCompletionStatus = !isCompleted;
+														setIsCompleted(newCompletionStatus);
+														setCompletionDate(
+															newCompletionStatus
+																? new Date().toISOString()
+																: null
+														);
+													}}
+													name='completedCheckbox'
+													color='primary'
+												/>
+											}
+											label='Mark As Complete'
 										/>
 									</div>
 

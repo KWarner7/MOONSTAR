@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import Header from './Header.js';
+import AppBar from '@mui/material/AppBar';
 
 const defaultTheme = createTheme({
   palette: {
@@ -37,19 +38,13 @@ export default function SignIn() {
   };
 
   return (
+    <>
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="l">
-      <Header />
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+      <Container component="main" maxWidth="xs" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      <AppBar position="fixed">
+        <Header />
+      </AppBar>
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main'}}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5" color="#000000">
@@ -89,22 +84,22 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="#" variant="body2" component={RouterLink} to="/Signup">
+                <Link href="#" variant="body2" component={RouterLink} to="/Signup" align="center">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
           </Box>
-        </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
+    </>
   );
 }
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="white" align="center">
+    <Typography variant="body2" color="black" align="center">
       {'Copyright © '}
       <a href="https://mui.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'rgb(0,0,990,1)' }}>
   M.O.O.N.S.T.A.R.
