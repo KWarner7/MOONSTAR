@@ -65,16 +65,16 @@ function ProjectDetails() {
             <div>Loading...</div>
           ) : task ? (
             <>
-              <Card sx={{ width: 1250, height: 625 }}>
+              <Card sx={{ width: 1250, height: 650 , borderRadius: "8px" }}>
                 <CardContent>
-                  <Typography variant="h5">
+                  <Typography variant="h5" sx={{ marginBottom: "16px" }}>
                     Task Name: {task.task_name}
                   </Typography>
 
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={3}>
                       {/* Card for Assigned By */}
-                      <Card sx={{ marginBottom: 2 }}>
+                      <Card sx={{ marginBottom: 2,border: "1px solid #e0e0e0" }}>
                         <CardContent>
                           <Typography>Assigned By:</Typography>
                           <Typography>
@@ -88,7 +88,7 @@ function ProjectDetails() {
 
                     <Grid item xs={12} md={3}>
                       {/* Card for Priority */}
-                      <Card sx={{ marginBottom: 2 }}>
+                      <Card sx={{ marginBottom: 2 , border: "1px solid #e0e0e0"}}>
                         <CardContent>
                           <Typography>Priority:</Typography>
                           <Typography>Priority: {task.priority}</Typography>
@@ -98,7 +98,7 @@ function ProjectDetails() {
 
                     <Grid item xs={12} md={3}>
                       {/* Card for Assigned To */}
-                      <Card sx={{ marginBottom: 2 }}>
+                      <Card sx={{ marginBottom: 2, border: "1px solid #e0e0e0" }}>
                         <CardContent>
                           <Typography>Assigned To:</Typography>
                           <Typography>
@@ -112,7 +112,7 @@ function ProjectDetails() {
 
                     <Grid item xs={12} md={3}>
                       {/* Card for Due Date */}
-                      <Card sx={{ marginBottom: 2 }}>
+                      <Card sx={{ marginBottom: 2 , border: "1px solid #e0e0e0"}}>
                         <CardContent>
                           <Typography>Due Date:</Typography>
                           <Typography>
@@ -125,7 +125,7 @@ function ProjectDetails() {
 
                   <Grid item xs={12} md={6}>
                     {/* Description card with scroll */}
-                    <Card sx={{ marginBottom: 2 }}>
+                    <Card sx={{ marginBottom: 2, border: "1px solid #e0e0e0" }}>
                       <CardContent
                         sx={{ maxHeight: "200px", overflowY: "auto" }}
                       >
@@ -141,11 +141,18 @@ function ProjectDetails() {
 
                   <Grid item xs={12} md={6}>
                     {/* Requirements card with scroll */}
-                    <Card sx={{ marginBottom: 2 }}>
+                    <Card sx={{ marginBottom: 2 , border: "1px solid #e0e0e0"}}>
                       <CardContent
                         sx={{ maxHeight: "200px", overflowY: "auto" }}
                       >
-                        <Typography>Requirement:</Typography>
+                       <Typography
+                          sx={{
+                            position: "sticky",
+                            top: "0",
+                            backgroundColor: "white",
+                            zIndex: "1",
+                          }}
+                        >Requirement:</Typography>
                         {task && task.task_requirement ? (
                           <Typography>{task.task_requirement}</Typography>
                         ) : (
@@ -157,7 +164,7 @@ function ProjectDetails() {
 
                   <Grid item xs={2} md={2}>
                     {/* Status updates card with scroll */}
-                    <Card sx={{ marginBottom: 2 }}>
+                    <Card sx={{ marginBottom: 2 , border: "1px solid #e0e0e0"}}>
                       <CardContent
                         sx={{ maxHeight: "200px", overflowY: "auto" }}
                       >
@@ -216,6 +223,7 @@ function ProjectDetails() {
                       variant="contained"
                       component={Link}
                       to="/active-projects"
+                      
                     >
                       Return to Active Projects
                     </Button>
