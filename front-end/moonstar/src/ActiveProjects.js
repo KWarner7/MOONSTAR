@@ -29,6 +29,8 @@ export default function ActiveProjects() {
 		assignedTo: 'all',
 		assignedBy: 'all',
 		priority: 'all',
+		startDate: '',
+		endDate: '',
 	});
 
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -79,24 +81,38 @@ export default function ActiveProjects() {
 		setFilters((prevFilters) => ({ ...prevFilters, [type]: value }));
 	};
 
-	const filteredTasks = tasks.filter((task) => {
-		const assignedToName =
-			task.assigned_to_first_name + ' ' + task.assigned_to_last_name;
-		const assignedByName =
-			task.assigned_by_first_name + ' ' + task.assigned_by_last_name;
-		const taskDueDate = new Date(task.due_date);
+	const handleResetFilters = () => {
+		setFilters({
+			assignedTo: 'all',
+			assignedBy: 'all',
+			priority: 'all',
+		});
+		setStartDate('');
+		setEndDate('');
+	};
 
-		if (filters.assignedTo !== 'all' && assignedToName !== filters.assignedTo)
-			return false;
-		if (filters.assignedBy !== 'all' && assignedByName !== filters.assignedBy)
-			return false;
-		if (startDate && taskDueDate < new Date(startDate)) return false;
-		if (endDate && taskDueDate > new Date(endDate)) return false;
-		if (filters.priority !== 'all' && task.priority !== filters.priority)
-			return false;
+	const filteredTasks = tasks
+		.filter((task) => {
+			const assignedToName =
+				task.assigned_to_first_name + ' ' + task.assigned_to_last_name;
+			const assignedByName =
+				task.assigned_by_first_name + ' ' + task.assigned_by_last_name;
+			const taskDueDate = new Date(task.due_date);
 
-		return true;
-	});
+			if (filters.assignedTo !== 'all' && assignedToName !== filters.assignedTo)
+				return false;
+			if (filters.assignedBy !== 'all' && assignedByName !== filters.assignedBy)
+				return false;
+			if (startDate && taskDueDate < new Date(startDate)) return false;
+			if (endDate && taskDueDate > new Date(`${endDate} 23:59:59`))
+				return false;
+
+			if (filters.priority !== 'all' && task.priority !== filters.priority)
+				return false;
+
+			return true;
+		})
+		.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
 
 	return (
 		<ThemeProvider theme={defaultTheme}>
@@ -211,7 +227,7 @@ export default function ActiveProjects() {
 											justifyContent: 'center',
 										}}
 									>
-										<InputLabel>Due Date Start</InputLabel>
+										<InputLabel>Beginning Due Date</InputLabel>
 										<input
 											type='date'
 											id='start-date'
@@ -220,7 +236,7 @@ export default function ActiveProjects() {
 											style={{ marginRight: '16px' }}
 										/>
 
-										<InputLabel>Due Date end</InputLabel>
+										<InputLabel>End Due Date</InputLabel>
 										<input
 											type='date'
 											id='end-date'
@@ -230,9 +246,7 @@ export default function ActiveProjects() {
 									</div>
 								</Grid>
 							</Grid>
-							<Button variant='contained' color='primary' onClick={closeMenu}>
-								Show Results
-							</Button>
+							<button onClick={handleResetFilters}>Reset Filters</button>
 						</Menu>
 					</Container>
 					<Stack direction='row' spacing={2} justifyContent='center'>
@@ -255,98 +269,73 @@ export default function ActiveProjects() {
 						{filteredTasks.map((task, index) => {
 							if (task.is_active) {
 								return (
-									<Grid item key={task.id} xs={12}>
+									<Grid item key={task.id} xs={12} sm={6} md={4}>
 										<Link
 											to={`/project-details/${task.id}`}
 											style={{ textDecoration: 'none', width: '100%' }}
 										>
 											<Card
 												sx={{
+													minWidth: '370px',
 													height: '100%',
 													display: 'flex',
 													flexDirection: 'column',
+													backgroundColor: 'white',
+													transition: 'all 0.3s ease',
+													'&:hover': {
+														transform: 'scale(1.1)',
+														backgroundColor: 'lightgrey',
+														zIndex: 1,
+													},
 												}}
 												elevation={3}
 											>
 												<CardContent sx={{ flexGrow: 1 }}>
-													<Grid container spacing={2}>
-														<Container>
-															<Typography
-																variant='body2'
-																color='textSecondary'
-																component='p'
-															>
-																Creation Date: {task.creation_date}{' '}
-																-------------- Due Date: {task.due_date}
-															</Typography>
-															<Typography
-																sx={{
-																	fontSize: '2rem',
-																	textDecoration: 'underline',
-																}}
-																gutterBottom
-																variant='h7'
-																component='h2'
-																align='left'
-															>
-																{task.task_name}
-															</Typography>
-														</Container>
-														<Grid item xs={4}>
-															<Container
-																sx={{
-																	border: '1px solid #000',
-																	p: 6,
-																	maxHeight: '200px',
-																	overflowY: 'auto',
-																}}
-																align='left'
-															>
-																<Typography>{task.task_description}</Typography>
-															</Container>
-															<Container>
-																<Typography
-																	gutterBottom
-																	variant='h5'
-																	component='h2'
-																	align='center'
-																>
-																	Description
-																</Typography>
-															</Container>
-														</Grid>
-														<Grid item xs={8}>
-															<Container
-																sx={{
-																	border: '1px solid #000',
-																	p: 6,
-																	maxHeight: '200px',
-																	overflowY: 'auto',
-																}}
-																align='left'
-															>
-																{statusUpdates
+													<Typography
+														gutterBottom
+														variant='h6'
+														component='h2'
+														align='center'
+													>
+														{task.task_name}
+													</Typography>
+													<Typography
+														variant='body2'
+														color='textSecondary'
+														component='p'
+													>
+														{task.task_description}
+													</Typography>
+													<br />
+													<Typography
+														variant='body2'
+														color='textSecondary'
+														component='p'
+													>
+														Latest Update:{' '}
+														{
+															(
+																statusUpdates
 																	.filter(
 																		(update) => update.task_id === task.id
 																	)
-																	.map((update) => (
-																		<Typography key={update.id}>
-																			{update.timestamp}: {update.update_text}
-																		</Typography>
-																	))}
-															</Container>
-															<Container align='center'>
-																<Typography
-																	gutterBottom
-																	variant='h5'
-																	component='h2'
-																	align='center'
-																>
-																	Status Updates
-																</Typography>
-															</Container>
-														</Grid>
-													</Grid>
+																	.sort(
+																		(a, b) =>
+																			new Date(b.timestamp) -
+																			new Date(a.timestamp)
+																	)[0] || {}
+															).update_text
+														}
+													</Typography>
+													<br />
+													<Typography
+														variant='body2'
+														color='textSecondary'
+														component='p'
+													>
+														Due By:{' '}
+														{new Date(task.due_date).toLocaleDateString()}
+													</Typography>
 												</CardContent>
 											</Card>
 										</Link>
