@@ -362,6 +362,9 @@ app.patch('/tasks/:id', async (req, res) => {
 	if (req.body.is_active !== undefined) {
 		updates.is_active = req.body.is_active;
 	}
+	if (req.body.completion_date !== undefined) {
+		updates.completion_date = req.body.completion_date;
+	}
 	if (req.body.status_update !== undefined) {
 		updates.status_update = req.body.status_update;
 	}
