@@ -199,7 +199,7 @@ export default function ActiveProjects() {
 										<input
 											type='date'
 											id='end-date'
-											value={endDate} // Assuming you manage this in a state
+											value={endDate}
 											onChange={(e) => setEndDate(e.target.value)}
 										/>
 									</div>
