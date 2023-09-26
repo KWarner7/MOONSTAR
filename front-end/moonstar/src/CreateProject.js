@@ -1,184 +1,223 @@
 import * as React from 'react';
+import { TextField, Button, Grid, Box, Container, Typography, ThemeProvider, MenuItem, Select } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import Header from './Header.js';
 import AppBar from '@mui/material/AppBar';
-import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { Autocomplete } from '@mui/material';
-import { Link } from 'react-router-dom';
-import LoggedInHeader from './LoggedInComponents/LoggedInHeader.js';
-import { useState, useEffect } from 'react';
-import FetchData from './FetchData.js';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { useSnackbar } from './SnackbarContext';
+
+const defaultTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#000000',
+    },
+    secondary: {
+      main: '#000000',
+    }
+  }
+});
+
+function CreateTask() {
+  const navigate = useNavigate();
+  const { showSnackbar } = useSnackbar();
+  const [usersData, setUsersData] = React.useState([]);
+  const [assignedTo, setAssignedTo] = React.useState('');
+  const [assignedBy, setAssignedBy] = React.useState('');
+  const [priority, setPriority] = React.useState('');
+
+  React.useEffect(() => {
+    // Fetch user data from the API
+    const fetchUsersData = async () => {
+      try {
+        const response = await fetch('http://localhost:8081/users');
+        const data = await response.json();
+        setUsersData(data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUsersData();
+  }, []);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+
+    const currentDate = new Date(); // Get the current date and time
+const taskData = {
+  task_name: data.get('task_name'),
+  task_description: data.get('task_description'),
+  task_requirement: data.get('task_requirement'),
+  creation_date: currentDate.toISOString(), // Convert to ISO string format
+  due_date: data.get('due_date'),
+  completion_date: null,
+  is_active: true,
+  priority: data.get('priority'),
+  assigned_to: parseInt(assignedTo),
+  assigned_by: parseInt(assignedBy),
+};
 
 
-function CreateProject() {
-	const [task, setTask] = useState({});
-	const [taskRequirements, setTaskRequirements] = useState([]);
-	const [userData, setUserData] = useState(null);
-	const [error, setError] = useState(null);
+    try {
+      const response = await fetch('http://localhost:8081/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(taskData),
+      });
 
-	useEffect(() => {
-		fetch('http://localhost:8081/users')
-			.then(response => response.json())
-			.then(data => {
-				setUserData(data);
-			})
-			.catch(error => {
-				console.error("There was an error fetching the user data:", error);
-				setError(error);
-			});
-	}, []);
+      if (response.ok) {
+        const newTask = await response.json();
+        console.log("Task created successfully:", newTask);
+        navigate(`/active-projects`);
+        setTimeout(() => {
+				showSnackbar('Project Created Successfully!');
+				}, 500);
+      } else {
+        const errorData = await response.json();
+        console.error("Error creating task:", errorData);
+      }
 
-	function handleAddTaskRequirement() {
-		setTaskRequirements([...taskRequirements, '']);
-	}
+    } catch (error) {
+      console.error("There was an error:", error);
+    }
+  };
 
-	function handleDeleteTaskRequirement(index) {
-		const updatedRequirements = [...taskRequirements];
-		updatedRequirements.splice(index, 1);
-		setTaskRequirements(updatedRequirements);
-	}
-
-	return (
-		<>
-			<AppBar position='relative'>
-				<LoggedInHeader />
-			</AppBar>
-			<main>
-				<Container maxWidth='sm'>
-					<Typography component="h3" variant="h3" align="center" color="white" gutterBottom>
-						Create A New Project
-					</Typography>
-
-					<Card variant='outlined'>
-						<CardContent>
-							<TextField
-								fullWidth
-								label='Project Name'
-								margin='normal'
-								size='small'
-								onChange={e => setTask({ ...task, task_name: e.target.value })}
-							/>
-							<br></br>
-							<>
-							<Autocomplete
-								options={userData || []}
-								getOptionLabel={(option) => `${option.first_name} ${option.last_name}`}
-								value={userData?.find((user) => user.email === task?.assigned_by)}
-								onChange={(event, newValue) => {
-									setTask({ ...task, assigned_by: newValue?.email });
-								}}
-								renderInput={(params) => (
-									<TextField {...params} label='Assigned By' variant='outlined' fullWidth />
-								)}
-							/>
-<br></br>
-							<Autocomplete
-								options={userData || []}
-								getOptionLabel={(option) => `${option.first_name} ${option.last_name}`}
-								value={userData?.find((user) => user.email === task?.assigned_to)}
-								onChange={(event, newValue) => {
-									setTask({ ...task, assigned_to: newValue?.email });
-								}}
-								renderInput={(params) => (
-									<TextField {...params} label='Assigned To' variant='outlined' fullWidth />
-								)}
-							/>
-						</>
-
-							<FormControl fullWidth variant='outlined' margin='normal'>
-								<InputLabel>Priority</InputLabel>
-								<Select
-									label='Priority'
-									value={task?.priority}
-									onChange={e => setTask({ ...task, priority: e.target.value })}
-								>
-									<MenuItem value='Low'>Low</MenuItem>
-									<MenuItem value='Medium'>Medium</MenuItem>
-									<MenuItem value='High'>High</MenuItem>
-								</Select>
-							</FormControl>
-
-							<LocalizationProvider dateAdapter={AdapterDateFns}>
-								<DateTimePicker
-									label='Due Date/Time'
-									textFieldProps={{ size: 'small' }}
-									value={task?.due_date}
-									onChange={date => setTask({ ...task, due_date: date })}
-								/>
-							</LocalizationProvider>
-
-							<TextField
-								fullWidth
-								margin='normal'
-								label='Project Description'
-								size='small'
-								onChange={e => setTask({ ...task, task_description: e.target.value })}
-							/>
-
-							<Typography variant='h6' gutterBottom>
-								Task Requirements
-							</Typography>
-							{taskRequirements.map((req, index) => (
-								<div key={index}>
-									<TextField
-										value={req}
-										onChange={e => {
-											const newReqs = [...taskRequirements];
-											newReqs[index] = e.target.value;
-											setTaskRequirements(newReqs);
-										}}
-									/>
-									<Button onClick={() => handleDeleteTaskRequirement(index)}>Delete</Button>
-								</div>
-							))}
-							<Button variant='contained' color='primary' onClick={handleAddTaskRequirement}>
-								Add Task Requirement
-							</Button>
-						</CardContent>
-
-						<CardActions>
-							<Link to="/active-projects">
-								<Button sx={{ color: 'primary' }} variant="contained"> Cancel</Button>
-							</Link>
-							<Button variant='contained' fullWidth type='submit' onClick={console.log('save clicked')}>
-								Save
-							</Button>
-						</CardActions>
-					</Card>
-					<Box sx={{ bgcolor: 'transparent', p: 6 }} component="footer">
-						<Typography variant="subtitle1" align="center" color="white" component="p">
-							Take your projects to the moon!
-						</Typography>
-						<Copyright />
-					</Box>
-				</Container>
-			</main>
-		</>
-	);
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <CssBaseline />
+      <AppBar position='relative'>
+        <Header />
+      </AppBar>
+      <Container component="main" maxWidth="lg">
+        <Typography component="h1" variant="h4" align="center">
+          Create New Task
+        </Typography>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ bgcolor: 'white', mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="task_name"
+                label="Task Name"
+                name="task_name"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="task_description"
+                label="Task Description"
+                name="task_description"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="task_requirement"
+                label="Task Requirement"
+                name="task_requirement"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                type="datetime-local"
+                id="due_date"
+                label="Due Date"
+                name="due_date"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography component="h1" variant="h6" align="left" color="black">
+                Priority
+              </Typography>
+              <Select
+                required
+                fullWidth
+                id="priority"
+                label="Priority"
+                name="priority"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                value={priority}
+                onChange={(event) => setPriority(event.target.value)}
+              >
+                <MenuItem value="Low">Low</MenuItem>
+                <MenuItem value="Medium">Medium</MenuItem>
+                <MenuItem value="High">High</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography component="h1" variant="h6" align="left" color="black">
+                Assigned To
+              </Typography>
+              <Select
+                required
+                fullWidth
+                id="assignedTo"
+                label="Assigned To"
+                name="assignedTo"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                value={assignedTo}
+                onChange={(event) => setAssignedTo(event.target.value)}
+              >
+                {usersData.map((user) => (
+                  <MenuItem key={user.id} value={user.id}>
+                    {user.rank} {user.first_name} {user.last_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography component="h1" variant="h6" align="left" color="black">
+                Assigned By
+              </Typography>
+              <Select
+                required
+                fullWidth
+                id="assignedBy"
+                label="Assigned By"
+                name="assignedBy"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                value={assignedBy}
+                onChange={(event) => setAssignedBy(event.target.value)}
+              >
+                {usersData.map((user) => (
+                  <MenuItem key={user.id} value={user.id}>
+                    {user.rank} {user.first_name} {user.last_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Create Task
+          </Button>
+        </Box>
+      </Container>
+    </ThemeProvider>
+  );
 }
-export default CreateProject;
 
-function Copyright() {
-	return (
-		<Typography variant="body2" color="white" align="center">
-			{'Copyright © '}
-			<Link color="rgb(0,0,990,1)" href="https://mui.com/">
-				M.O.O.N.S.T.A.R.
-			</Link>{' '}
-			{new Date().getFullYear()}
-			{'.'}
-		</Typography>
-	);
-}
+export default CreateTask;
