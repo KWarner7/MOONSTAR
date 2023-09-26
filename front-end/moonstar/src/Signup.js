@@ -183,6 +183,8 @@ export default function SignUp() {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
+                  component={RouterLink}
+                  to="/Login"
                 >
                   Sign Up
                 </Button>
