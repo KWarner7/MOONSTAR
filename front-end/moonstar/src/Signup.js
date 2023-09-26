@@ -87,7 +87,7 @@ export default function SignUp() {
 
       return (
         <ThemeProvider theme={defaultTheme}>
-          <Container component="main" maxWidth="xs">
+          <Container component="main" maxWidth="xs" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
           <AppBar position="fixed">
         <Header />
       </AppBar>
