@@ -7,29 +7,33 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import Brightness4TwoToneIcon from '@mui/icons-material/Brightness4TwoTone';
 
 const defaultTheme = createTheme();
 
 export default function Header() {
 	return (
 		<>
-    <ThemeProvider theme={defaultTheme}>
-      <CssBaseline />
-		<Box sx={{ flexGrow: 1 }}>
-			<AppBar position='static'>
-				<Toolbar>
-					<Typography variant='h6' component='div' align='left' sx={{ flexGrow: 1 }}>
-						<Link to="/" style={{ textDecoration: 'none' }}>
-							<Button sx={{ color: 'white', fontSize: '2rem' }}> M.O.O.N.S.T.A.R.</Button>
-						</Link>
-					</Typography>
-					<Link to="/login" style={{ textDecoration: 'none' }}>
-						<Button sx={{ color: 'white' }}>Login</Button>
-					</Link>
-				</Toolbar>
-			</AppBar>
-		</Box>
-		</ThemeProvider>
+			<ThemeProvider theme={defaultTheme}>
+				<CssBaseline />
+				<Box sx={{ flexGrow: 1 }}>
+					<AppBar position='static'>
+						<Toolbar>
+							<Typography variant='h6' component='div' align='left' sx={{ flexGrow: 1 }}>
+								<Link to="/Home" style={{ textDecoration: 'none' }}>
+									<Button sx={{ color: 'white', fontSize: '2rem' }}>
+										<Brightness4TwoToneIcon sx={{ marginRight: '8px', fontSize: '3rem' }} />
+										M.O.O.N.S.T.A.R.
+									</Button>
+								</Link>
+							</Typography>
+							<Link to="/login" style={{ textDecoration: 'none' }}>
+								<Button sx={{ color: 'white' }}>Login</Button>
+							</Link>
+						</Toolbar>
+					</AppBar>
+				</Box>
+			</ThemeProvider>
 		</>
 	);
 }

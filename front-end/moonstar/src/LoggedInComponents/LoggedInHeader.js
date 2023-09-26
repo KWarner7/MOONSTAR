@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import Brightness4TwoToneIcon from '@mui/icons-material/Brightness4TwoTone';
 
 const defaultTheme = createTheme();
 
@@ -34,7 +35,7 @@ export default function Header() {
 						<Toolbar>
 							<Typography variant='h6' component='div' align='left' sx={{ flexGrow: 1 }}>
 								<Link to="/" style={{ textDecoration: 'none' }}>
-									<Button sx={{ color: 'white', fontSize: '2rem' }}> M.O.O.N.S.T.A.R.</Button>
+									<Button sx={{ color: 'white', fontSize: '2rem' }}> <Brightness4TwoToneIcon sx={{ marginRight: '8px', fontSize: '3rem' }} />M.O.O.N.S.T.A.R.</Button>
 								</Link>
 							</Typography>
 							{highestIdUser && (
