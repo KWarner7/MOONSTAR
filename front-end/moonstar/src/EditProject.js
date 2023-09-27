@@ -163,7 +163,7 @@ export default function EditProject() {
 
 	return (
 		<>
-			<AppBar position='relative'>
+			<AppBar position='absolute'>
 				<LoggedInHeader />
 			</AppBar>
 			<main>

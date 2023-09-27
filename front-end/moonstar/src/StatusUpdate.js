@@ -148,7 +148,7 @@ export default function StatusUpdate() {
 
 	return (
 		<>
-			<AppBar position='relative'>
+			<AppBar position='absolute'>
 				<LoggedInHeader />
 			</AppBar>
 			<main>
