@@ -22,6 +22,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { FadeIn, DropIn } from './Animations.js';
+import Badge from '@mui/material/Badge';
 
 const defaultTheme = createTheme();
 
@@ -129,6 +130,19 @@ export default function ActiveProjects() {
 			return true;
 		})
 		.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+
+	const determineBadgeColor = (priority) => {
+		switch (priority) {
+			case 'High':
+				return 'error';
+			case 'Medium':
+				return 'warning';
+			case 'Low':
+				return 'success';
+			default:
+				return 'default';
+		}
+	};
 
 	return (
 		<ThemeProvider theme={defaultTheme}>
@@ -302,59 +316,78 @@ export default function ActiveProjects() {
 										>
 											<DropIn show={true} key={task.id}>
 												<FadeIn show={true} key={task.id}>
-													<Card sx={CardStyle}>
-														<CardContent sx={{ flexGrow: 1 }}>
-															<Typography
-																gutterBottom
-																variant='h4'
-																component='div'
-																align='center'
-																style={{ fontWeight: 'bold' }}
-															>
-																{task.task_name}
-															</Typography>
-															<Typography
-																variant='body1'
-																color='textSecondary'
-																component='p'
-																style={{ fontWeight: 'bold' }}
-															>
-																{task.task_description}
-															</Typography>
-															<br />
-															<Typography
-																variant='body1'
-																color='textSecondary'
-																component='p'
-																style={{ fontWeight: 'bold' }}
-															>
-																Latest Update:{' '}
-																{
-																	(
-																		statusUpdates
-																			.filter(
-																				(update) => update.task_id === task.id
-																			)
-																			.sort(
-																				(a, b) =>
-																					new Date(b.timestamp) -
-																					new Date(a.timestamp)
-																			)[0] || {}
-																	).update_text
-																}
-															</Typography>
-															<br />
-															<Typography
-																variant='body1'
-																color='textSecondary'
-																component='p'
-																style={{ fontWeight: 'bold' }}
-															>
-																Due By:{' '}
-																{new Date(task.due_date).toLocaleDateString()}
-															</Typography>
-														</CardContent>
-													</Card>
+													<Badge
+														badgeContent={task.priority}
+														color={determineBadgeColor(task.priority)}
+														overlap='circular'
+														anchorOrigin={{
+															vertical: 'top',
+															horizontal: 'right',
+														}}
+														sx={{
+															'& .MuiBadge-badge': {
+																right: 0,
+																top: 0,
+																border: '1px solid white',
+																marginRight: '15px',
+																marginTop: '5px',
+															},
+														}}
+													>
+														<Card sx={CardStyle}>
+															<CardContent sx={{ flexGrow: 1 }}>
+																<Typography
+																	gutterBottom
+																	variant='h4'
+																	component='div'
+																	align='center'
+																	style={{ fontWeight: 'bold' }}
+																>
+																	{task.task_name}
+																</Typography>
+																<Typography
+																	variant='body1'
+																	color='textSecondary'
+																	component='p'
+																	style={{ fontWeight: 'bold' }}
+																>
+																	{task.task_description}
+																</Typography>
+																<br />
+																<Typography
+																	variant='body1'
+																	color='textSecondary'
+																	component='p'
+																	style={{ fontWeight: 'bold' }}
+																>
+																	Latest Update:{' '}
+																	{
+																		(
+																			statusUpdates
+																				.filter(
+																					(update) => update.task_id === task.id
+																				)
+																				.sort(
+																					(a, b) =>
+																						new Date(b.timestamp) -
+																						new Date(a.timestamp)
+																				)[0] || {}
+																		).update_text
+																	}
+																</Typography>
+																<br />
+																<Typography
+																	variant='body1'
+																	color='textSecondary'
+																	component='p'
+																	style={{ fontWeight: 'bold' }}
+																>
+																	Due By:{' '}
+																	{new Date(task.due_date).toLocaleDateString()}
+																</Typography>
+															</CardContent>
+														</Card>
+													</Badge>
 												</FadeIn>
 											</DropIn>
 										</Link>
