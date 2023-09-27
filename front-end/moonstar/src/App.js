@@ -15,7 +15,7 @@ import { SnackbarProvider } from './SnackbarContext';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import LoggedOutHomePage from './LoggedInComponents/LoggedOutHomePage.js';
-
+import CompletedProjectDetails from './CompletedProjectDetails';
 
 
 function App() {
@@ -35,6 +35,7 @@ function App() {
 						<Route path='/create-project' element={<CreateProject />} />
 						<Route path='/project-status/:taskId' element={<StatusUpdate />} />
 						<Route path='/project-details/:id' element={<ProjectDetails />} />
+						<Route path="/completed-project-details/:id" element={<CompletedProjectDetails />} />
 						<Route path='/Home' element={<LoggedOutHomePage />} />
 					</Routes>
 				</header>
