@@ -23,61 +23,73 @@ export default function HomePage() {
 					<Header />
 				</AppBar>
 				<main>
-					<Box
-						sx={{
-							borderColor: '#ddd',
-							background:
-								'linear-gradient(45deg, #B0C4DE 0%, #CFCFCF 40%, #808080 70%, #696969 100%)',
-							pt: 8,
-							pb: 6,
-						}}
+					<Box style={{
+						// minHeight: '600px',
+						paddingTop: '90px',
+					}}
 					>
-						<Container maxWidth='sm'>
-							<Typography
-								component='h1'
-								variant='h2'
-								align='center'
-								color='text.primary'
-								gutterBottom
-							>
-								Welcome to M.O.O.N.S.T.A.R.
-							</Typography>
-							<SpinningIcon show={true}>
-								<Brightness4TwoToneIcon
-									sx={{
-										marginRight: '8px',
-										fontSize: '3rem',
-										filter:
-											'drop-shadow(0px 0px 10px rgba(178, 243, 172, 0.9))',
-									}}
-								/>
-							</SpinningIcon>
-							<Typography
-								variant='h5'
-								align='center'
-								color='text.secondary'
-								paragraph
-							>
-								Mission Oversight and Organization Network for Space Task
-								Assignment and Resource Allocation
-							</Typography>
-							<Stack
-								sx={{ pt: 4 }}
-								direction='row'
-								spacing={2}
-								justifyContent='center'
-							>
-								<Link to='/active-projects' style={{ textDecoration: 'none' }}>
-									<Button variant='contained'>View Active Projects</Button>
-								</Link>
-								<Link
-									to='/completed-projects'
-									style={{ textDecoration: 'none' }}
+						<Box
+							maxWidth='sm'
+							style={{
+								backgroundImage: 'url(https://www.pngall.com/wp-content/uploads/2016/03/Moon-Vector-PNG.png)',
+								backgroundPosition: 'center',
+								backgroundSize: 'cover',
+								backgroundRepeat: 'no-repeat',
+								minHeight: '600px',
+								paddingTop: '90px',
+							}}
+						>
+							<Container maxWidth='sm'>
+								<Typography
+									component='h1'
+									variant='h2'
+									align='center'
+									color='white'
+									gutterBottom
+									style={{ textShadow: '10px 10px 15px rgba(0, 0, 0, 5)' }}
 								>
-									<Button variant='contained'>View Completed Projects</Button>
-								</Link>
-							</Stack>
-						</Container>
+									Welcome to M.O.O.N.S.T.A.R.
+								</Typography>
+
+								<SpinningIcon show={true}>
+									<Brightness4TwoToneIcon
+										sx={{
+											marginRight: '8px',
+											fontSize: '3rem',
+											filter:
+												'drop-shadow(0px 0px 10px rgba(178, 243, 172, 0.9))',
+										}}
+									/>
+								</SpinningIcon>
+								<Typography
+									variant='h5'
+									align='center'
+									color='white'
+									paragraph
+									style={{ textShadow: '2px 2px 6px rgba(0, 0, 0, 5)' }}
+								>
+									Mission Oversight and Organization Network for Space Task
+									Assignment and Resource Allocation
+								</Typography>
+								<Stack
+									sx={{ pt: 4 }}
+									direction='row'
+									spacing={2}
+									justifyContent='center'
+								>
+									<Link to='/active-projects' style={{ textDecoration: 'none' }}>
+										<Button variant='contained' color="primary" sx={{ backgroundColor: 'black' }}>
+											View Active Projects
+										</Button>
+									</Link>
+									<Link to='/completed-projects' style={{ textDecoration: 'none' }}>
+										<Button variant='contained' color="primary" sx={{ backgroundColor: 'black' }}>
+											View Completed Projects
+										</Button>
+									</Link>
+								</Stack>
+							</Container>
+						</Box>
 					</Box>
 				</main>
 				<Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
