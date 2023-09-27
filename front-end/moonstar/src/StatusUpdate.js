@@ -297,6 +297,7 @@ export default function StatusUpdate() {
 													/>
 													<Button
 														variant='contained'
+														fullWidth
 														color='primary'
 														onClick={handleAddStatusUpdate}
 														style={{ marginTop: '10px' }}
@@ -304,13 +305,13 @@ export default function StatusUpdate() {
 														Save Status Update
 													</Button>
 													<Button
-									variant='contained'
-									color='error'
-									fullWidth
-									onClick={() => navigate(-1)}
-								>
-									Back to Project Details
-								</Button>
+														variant='contained'
+														color='error'
+														fullWidth
+														onClick={() => navigate(-1)}
+													>
+														Back to Project Details
+													</Button>
 												</div>
 
 												<div className='statusUpdatesContainer' style={{}}>
