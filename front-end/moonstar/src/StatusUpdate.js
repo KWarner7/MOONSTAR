@@ -19,6 +19,14 @@ import './projectStatus.css';
 import { TextareaAutosize } from '@mui/base';
 import { useNavigate } from 'react-router-dom';
 
+const CardStyle = {
+	boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+	borderRadius: '10px',
+	borderColor: '#ddd',
+	background:
+		'linear-gradient(45deg, #B0C4DE 0%, #CFCFCF 40%, #808080 70%, #696969 100%)',
+};
+
 function Copyright() {
 	return (
 		<Typography variant='body2' color='white' align='center'>
@@ -164,7 +172,7 @@ export default function StatusUpdate() {
 					</Typography>
 
 					{task && (
-						<Card variant='outlined'>
+						<Card variant='outlined' sx={CardStyle}>
 							<CardContent>
 								<Typography variant='h6' gutterBottom>
 									Project "{task.task_name}"

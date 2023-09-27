@@ -30,6 +30,14 @@ import { useSnackbar } from './SnackbarContext';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
+const CardStyle = {
+	boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+	borderRadius: '10px',
+	borderColor: '#ddd',
+	background:
+		'linear-gradient(45deg, #B0C4DE 0%, #CFCFCF 40%, #808080 70%, #696969 100%)',
+};
+
 function Copyright() {
 	return (
 		<Typography variant='body2' color='white' align='center'>
@@ -179,7 +187,7 @@ export default function EditProject() {
 					</Typography>
 
 					{task && (
-						<Card variant='outlined'>
+						<Card variant='outlined' sx={CardStyle}>
 							<CardContent>
 								<div className='flexFieldsContainer'>
 									<Typography variant='h6' gutterBottom fullWidth>
@@ -307,6 +315,7 @@ export default function EditProject() {
 												marginTop: '15px',
 												borderColor: 'rgb(0,0,0,0.2)',
 												borderRadius: '5px',
+												backgroundColor: 'transparent',
 											}}
 											value={task.task_description}
 											onChange={(e) =>
@@ -350,7 +359,9 @@ export default function EditProject() {
 													variant='outlined'
 													value={requirement}
 													style={{
-														backgroundColor: isCompleted ? 'grey' : 'white',
+														backgroundColor: isCompleted
+															? 'grey'
+															: 'transparent',
 													}}
 													onChange={(e) => {
 														const updatedRequirements = [...taskRequirements];
