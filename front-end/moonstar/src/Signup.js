@@ -17,21 +17,34 @@ import Header from './Header.js';
 import AppBar from '@mui/material/AppBar';
 import Card from '@mui/material/Card';
 
+const CardStyle = {
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  transition: '0.3s',
+  borderRadius: '10px',
+  borderColor: '#ddd',
+  background:
+    'linear-gradient(45deg, #B0C4DE 0%, #CFCFCF 40%, #808080 70%, #696969 100%)',
+  transform: 'scale(0.98)',
+  '&:hover': {
+    boxShadow: '0 0 16px rgba(255, 255, 255, 0.9)',
+    transform: 'scale(1.0)',
+  },
+};
+
+const defaultTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#000000',
+    },
+    secondary: {
+      main: '#000000',
+    }
+  }
+});
+
 export default function SignUp() {
   const navigate = useNavigate();
-  const CardStyle = {
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    transition: '0.3s',
-    borderRadius: '10px',
-    borderColor: '#ddd',
-    background:
-      'linear-gradient(45deg, #B0C4DE 0%, #CFCFCF 40%, #808080 70%, #696969 100%)',
-    transform: 'scale(0.98)',
-    '&:hover': {
-      boxShadow: '0 0 16px rgba(255, 255, 255, 0.9)',
-      transform: 'scale(1.0)',
-    },
-  };
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -63,7 +76,7 @@ export default function SignUp() {
 
       if (response.ok) {
         console.log("User registered successfully:", result);
-        navigate("/login");
+        navigate("/Signin");
       } else {
         console.error("Error registering user:", result);
       }
@@ -80,6 +93,7 @@ export default function SignUp() {
       </AppBar>
       <Box>
         <Card sx={CardStyle}>
+        <ThemeProvider theme={defaultTheme}>
           <Container component="main" maxWidth="xs" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
@@ -98,6 +112,7 @@ export default function SignUp() {
                     id="firstName"
                     label="First Name"
                     autoFocus
+                    backgroundColor="#000000"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -128,24 +143,6 @@ export default function SignUp() {
                     name="role"
                   />
                 </Grid>
-                {/* <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="flight"
-                    label="Flight"
-                    name="flight"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="section"
-                    label="Section"
-                    name="section"
-                  />
-                </Grid> */}
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -178,15 +175,26 @@ export default function SignUp() {
               </Button>
               <Grid container justifyContent="center">
                 <Grid item>
-                  <Link href="#" variant="body1" align="center" component={RouterLink} to="/Login" >
+                  <Link href="#" variant="body1" align="center" component={RouterLink} to="/Signin" >
                     Already have an account? Sign in
                   </Link>
                 </Grid>
               </Grid>
             </Box>
-            <Copyright sx={{ mt: 5 }} />
           </Container>
+          </ThemeProvider>
         </Card>
+      </Box>
+      <Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
+					<Typography
+						variant='subtitle1'
+						align='center'
+						color='white'
+						component='p'
+					>
+						Take your projects to the moon!
+					</Typography>
+        <Copyright />
       </Box>
     </>
   );

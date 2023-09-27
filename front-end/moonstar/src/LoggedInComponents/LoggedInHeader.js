@@ -93,7 +93,7 @@ export default function Header() {
 										textShadow: '0px 0px 10px rgba(178, 243, 172, 0.9)',
 									}}
 								>
-									Log Out
+									Sign Out
 								</Button>
 							</Link>
 						</Toolbar>
