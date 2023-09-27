@@ -146,6 +146,19 @@ export default function ActiveProjects() {
 	};
 
 	return (
+		<>
+		<Box
+			bgcolor="black"
+			style={{
+				backgroundImage: 'url(https://cdn.pixabay.com/photo/2016/10/20/18/35/earth-1756274_1280.jpg)',
+				backgroundPosition: 'center',
+				backgroundSize: 'cover',
+				backgroundRepeat: 'no-repeat',
+				minHeight: '100%',
+				minWidth: '100%',
+
+			}}
+			>
 		<ThemeProvider theme={defaultTheme}>
 			<CssBaseline />
 			<AppBar position='relative'>
@@ -414,6 +427,8 @@ export default function ActiveProjects() {
 					<Copyright />
 				</Box>
 		</ThemeProvider>
+		</Box>
+		</>
 	);
 }
 
