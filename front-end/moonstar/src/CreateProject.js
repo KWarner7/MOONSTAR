@@ -16,6 +16,21 @@ import Header from './Header.js';
 import AppBar from '@mui/material/AppBar';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useSnackbar } from './SnackbarContext';
+import { Link } from 'react-router-dom';
+
+const CardStyle = {
+	boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+	transition: '0.3s',
+	borderRadius: '10px',
+	borderColor: '#ddd',
+	background:
+		'linear-gradient(45deg, #B0C4DE 0%, #CFCFCF 40%, #808080 70%, #696969 100%)',
+	transform: 'scale(0.98)',
+	// '&:hover': {
+	// 	boxShadow: '0 0 16px rgba(255, 255, 255, 0.9)',
+	// 	transform: 'scale(1.0)',
+	// },
+};
 
 const CardStyle = {
 	boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
@@ -33,8 +48,10 @@ const defaultTheme = createTheme({
 		},
 		secondary: {
 			main: '#000000',
+
 		},
 	},
+
 });
 
 function CreateTask() {
@@ -89,13 +106,16 @@ function CreateTask() {
 
 			if (response.ok) {
 				const newTask = await response.json();
+
 				console.log('Task created successfully:', newTask);
+
 				navigate(`/active-projects`);
 				setTimeout(() => {
 					showSnackbar('Project Created Successfully!');
 				}, 500);
 			} else {
 				const errorData = await response.json();
+
 				console.error('Error creating task:', errorData);
 			}
 		} catch (error) {
@@ -125,68 +145,82 @@ function CreateTask() {
 						...CardStyle,
 					}}
 				>
+
 					<Grid container spacing={2}>
 						<Grid item xs={12}>
 							<TextField
 								required
 								fullWidth
+
 								id='task_name'
 								label='Task Name'
 								name='task_name'
+
 							/>
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
 								required
 								fullWidth
+
 								id='task_description'
 								label='Task Description'
 								name='task_description'
+
 							/>
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
 								required
 								fullWidth
+
 								id='task_requirement'
 								label='Task Requirement'
 								name='task_requirement'
+
 							/>
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
 								required
 								fullWidth
+
 								type='datetime-local'
 								id='due_date'
 								label='Due Date'
 								name='due_date'
+
 								InputLabelProps={{
 									shrink: true,
 								}}
 							/>
 						</Grid>
 						<Grid item xs={12}>
+
 							<Typography
 								component='h1'
 								variant='h6'
 								align='left'
 								color='black'
 							>
+
 								Priority
 							</Typography>
 							<Select
 								required
 								fullWidth
+
 								id='priority'
 								label='Priority'
 								name='priority'
+
 								InputLabelProps={{
 									shrink: true,
 								}}
 								value={priority}
 								onChange={(event) => setPriority(event.target.value)}
 							>
+
 								<MenuItem value='Low'>Low</MenuItem>
 								<MenuItem value='Medium'>Medium</MenuItem>
 								<MenuItem value='High'>High</MenuItem>
@@ -199,14 +233,17 @@ function CreateTask() {
 								align='left'
 								color='black'
 							>
+
 								Assigned To
 							</Typography>
 							<Select
 								required
 								fullWidth
+
 								id='assignedTo'
 								label='Assigned To'
 								name='assignedTo'
+
 								InputLabelProps={{
 									shrink: true,
 								}}
@@ -221,20 +258,24 @@ function CreateTask() {
 							</Select>
 						</Grid>
 						<Grid item xs={12}>
+
 							<Typography
 								component='h1'
 								variant='h6'
 								align='left'
 								color='black'
 							>
+
 								Assigned By
 							</Typography>
 							<Select
 								required
 								fullWidth
+
 								id='assignedBy'
 								label='Assigned By'
 								name='assignedBy'
+
 								InputLabelProps={{
 									shrink: true,
 								}}
@@ -249,6 +290,7 @@ function CreateTask() {
 							</Select>
 						</Grid>
 					</Grid>
+
 					<Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
 						Create Task
 					</Button>
@@ -259,6 +301,7 @@ function CreateTask() {
 					>
 						Cancel
 					</Button>
+
 				</Box>
 			</Container>
 		</ThemeProvider>
