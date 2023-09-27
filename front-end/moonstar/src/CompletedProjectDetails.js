@@ -1,75 +1,72 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, Button, Grid } from '@mui/material';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Header from './Header.js';
 import AppBar from '@mui/material/AppBar';
 
 const CardStyle = {
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-  transition: '0.3s',
-  borderRadius: '10px',
-  borderColor: '#ddd',
-  background:
-    'linear-gradient(45deg, #B0C4DE 0%, #CFCFCF 40%, #808080 70%, #696969 100%)',
-  transform: 'scale(0.98)',
+	boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+	transition: '0.3s',
+	borderRadius: '10px',
+	borderColor: '#ddd',
+	background:
+		'linear-gradient(45deg, #B0C4DE 0%, #CFCFCF 40%, #808080 70%, #696969 100%)',
+	transform: 'scale(0.98)',
+	// '&:hover': {
+	// 	boxShadow: '0 0 16px rgba(255, 255, 255, 0.9)',
+	// 	transform: 'scale(1.0)',
+	// },
 };
 
-function ProjectDetails() {
-  const { id } = useParams();
-  const [task, setTask] = useState(null);
-  const [statusUpdates, setStatusUpdates] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+function CompletedProjectDetails() {
+	const { id } = useParams();
+	const [task, setTask] = useState(null);
+	const [statusUpdates, setStatusUpdates] = useState([]);
+	const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Fetch the project details based on the provided id
-    fetch(`http://localhost:8081/tasks/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Access the data within the array
-        if (data.length > 0) {
-          setTask(data[0]);
-          // Check if the project is active or not
-          if (!data[0].is_active) {
-            // If not active, navigate to the completed project details page
-            navigate(`/completed-project-details/${id}`);
-          }
-        } else {
-          // Handle the case when no data is found for the given id
-          console.error(`No data found for task with id ${id}`);
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching project details:', error);
-        // Handle the error or display an error message
-      });
+	useEffect(() => {
+		// Fetch the project details based on the provided id
+		fetch(`http://localhost:8081/tasks/${id}`)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				return response.json();
+			})
+			.then((data) => {
+				// Access the data within the array
+				if (data.length > 0) {
+					setTask(data[0]);
+				} else {
+					// Handle the case when no data is found for the given id
+					console.error(`No data found for task with id ${id}`);
+				}
+			})
+			.catch((error) => {
+				console.error('Error fetching project details:', error);
+				// Handle the error or display an error message
+			});
 
-    // Fetch the status updates based on the provided id
-    fetch(`http://localhost:8081/status-updates/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Set the status updates data in the state
-        setStatusUpdates(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching status updates:', error);
-        // Handle the error or display an error message
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [id, navigate]);
-
+		// Fetch the status updates based on the provided id
+		fetch(`http://localhost:8081/status-updates/${id}`)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				return response.json();
+			})
+			.then((data) => {
+				// Set the status updates data in the state
+				setStatusUpdates(data);
+			})
+			.catch((error) => {
+				console.error('Error fetching status updates:', error);
+				// Handle the error or display an error message
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	}, [id]);
 
   return (
     <>
@@ -83,7 +80,7 @@ function ProjectDetails() {
           ) : task ? (
             <>
             <Typography   style={{ fontWeight: 'bold' }} variant="h4" sx={{ marginBottom: "16px" }}>
-                    Active Project Details
+                   Completed Project Details
                   </Typography>
               <Card sx={{ ...CardStyle, width: 1250, height: 675 , borderRadius: "8px" , backgroundColor: "#f5f5f5", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)"}}>
                 <CardContent>
@@ -242,10 +239,10 @@ function ProjectDetails() {
                     <Button
                       variant="contained"
                       component={Link}
-                      to="/active-projects"
+                      to="/completed-projects"
                       style={{ marginRight: "20px", backgroundColor: "red", color: "white" , boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)", }}
                     >
-                      Return to Active Projects
+                      Return to Completed Projects
                     </Button>
                   </div>
                 </CardContent>
@@ -260,4 +257,4 @@ function ProjectDetails() {
   );
 }
 
-export default ProjectDetails;
+export default CompletedProjectDetails;
