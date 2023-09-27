@@ -5,23 +5,28 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme } from '@mui/material/styles';
 import Brightness4TwoToneIcon from '@mui/icons-material/Brightness4TwoTone';
 import { SpinningIcon } from './Animations';
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  palette: {
+    background: {
+      default: "transparent"
+    }
+  }
+});
 
 export default function Header() {
 	return (
 		<>
-			<ThemeProvider theme={defaultTheme}>
-				<CssBaseline />
-				<Box sx={{ flexGrow: 1 }}>
+				<Box
+				bgcolor="black"
+				sx={{ flexGrow: 1 }}>
 					<AppBar
 						position='static'
 						sx={{
-							backgroundImage: 'url(/pexels-visit-greenland-360912.jpg)',
+							backgroundColor: 'transparent',
 							backgroundSize: 'cover',
 							backgroundRepeat: 'repeat',
 							backgroundPosition: '50px center',
@@ -70,7 +75,7 @@ export default function Header() {
 						</Toolbar>
 					</AppBar>
 				</Box>
-			</ThemeProvider>
+
 		</>
 	);
 }
