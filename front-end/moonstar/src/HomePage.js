@@ -11,6 +11,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Brightness4TwoToneIcon from '@mui/icons-material/Brightness4TwoTone';
 import { SpinningIcon } from './Animations';
+import { TaskStatistics } from './Stats';
+import { OverdueTasksChart } from './Overdue.js';
+import { Card } from '@mui/material';
 
 const defaultTheme = createTheme();
 
