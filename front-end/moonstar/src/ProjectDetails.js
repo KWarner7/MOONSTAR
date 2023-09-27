@@ -227,7 +227,7 @@ function ProjectDetails() {
                       variant="contained"
                       component={Link}
                       to={`/project-status/${id}`}
-                      style={{ marginRight: "20px", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",  }}
+                      style={{ marginRight: "20px", border: "2px #595959", backgroundColor: "black", color: "white" , boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",borderRadius: "8px"  }}
                     >
                       Project Status
                     </Button>
@@ -235,7 +235,7 @@ function ProjectDetails() {
                       variant="contained"
                       component={Link}
                       to={`/edit-project/${id}`}
-                      style={{ marginRight: "20px", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)", }}
+                      style={{ marginRight: "20px", border: "2px #595959", backgroundColor: "black", color: "white" , boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",borderRadius: "8px" }}
                     >
                       Edit Project
                     </Button>
@@ -243,7 +243,7 @@ function ProjectDetails() {
                       variant="contained"
                       component={Link}
                       to="/active-projects"
-                      style={{ marginRight: "20px", backgroundColor: "red", color: "white" , boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)", }}
+                      style={{ marginRight: "20px",border: "2px #f44336", backgroundColor: "red", color: "white" , boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",borderRadius: "8px" }}
                     >
                       Return to Active Projects
                     </Button>
