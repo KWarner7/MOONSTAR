@@ -33,6 +33,17 @@ export default function SignUp() {
     },
   };
 
+  const defaultTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#000000',
+    },
+    secondary: {
+      main: '#000000',
+    }
+  }
+});
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -80,11 +91,12 @@ export default function SignUp() {
       </AppBar>
       <Box>
         <Card sx={CardStyle}>
+          <ThemeProvider theme={defaultTheme}></ThemeProvider>
           <Container component="main" maxWidth="xs" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 1, bgcolor: 'black' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5" color="#000000">
+            <Typography component="h1" variant="h5" color="black">
               Sign up
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
@@ -128,24 +140,6 @@ export default function SignUp() {
                     name="role"
                   />
                 </Grid>
-                {/* <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="flight"
-                    label="Flight"
-                    name="flight"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="section"
-                    label="Section"
-                    name="section"
-                  />
-                </Grid> */}
                 <Grid item xs={12}>
                   <TextField
                     required
@@ -172,14 +166,15 @@ export default function SignUp() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, backgroundColor: "#000000", color: "#ffffff" }}
+                
               >
                 Sign Up
               </Button>
               <Grid container justifyContent="center">
                 <Grid item>
-                  <Link href="#" variant="body1" align="center" component={RouterLink} to="/Login" >
-                    Already have an account? Sign in
+                  <Link href="#" variant="body1" sx={{ color: 'black'}} align="center" component={RouterLink} to="/Login" >
+                    {"Already have an account? Sign in"}
                   </Link>
                 </Grid>
               </Grid>
@@ -194,7 +189,7 @@ export default function SignUp() {
 
 function Copyright() {
   return (
-    <Typography variant='body2' color='white' align='center'>
+    <Typography variant='body2' color='black' align='center'>
       {'Copyright © '}
       <a
         href='https://mui.com/'
