@@ -97,34 +97,49 @@ export default function SignIn() {
                   component={RouterLink}
                   to="/"
                 >
-                  Login
+                  Sign In
                 </Button>
-                <Grid container>
-                  <Grid item>
-                    <Link href="#" variant="body2" component={RouterLink} to="/Signup" align="center">
-                      {"Don't have an account? Sign Up"}
-                    </Link>
-                  </Grid>
+                <Grid container justifyContent="center">
+                <Grid item>
+                  <Link href="#" variant="body1" align="center" component={RouterLink} to="/Signup" >
+                    Don't have an account? Sign Up
+                  </Link>
                 </Grid>
+              </Grid>
               </Box>
-              <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
           </ThemeProvider>
         </Card>
+        </Box>
+        <Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
+					<Typography
+						variant='subtitle1'
+						align='center'
+						color='white'
+						component='p'
+					>
+						Take your projects to the moon!
+					</Typography>
+        <Copyright />
       </Box>
     </>
   );
 }
+
 function Copyright() {
-  return (
-    <Typography variant="body2" color="black" align="center">
-      {'Copyright © '}
-      <a href="https://mui.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'rgb(0,0,990,1)' }}>
-        M.O.O.N.S.T.A.R.
-      </a>
-      {' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
+	return (
+		<Typography variant='body2' color='white' align='center'>
+			{'Copyright © '}
+			<a
+				href='https://mui.com/'
+				target='_blank'
+				rel='noopener noreferrer'
+				style={{ color: 'rgb(0,0,990,1)' }}
+			>
+				M.O.O.N.S.T.A.R.
+			</a>{' '}
+			{new Date().getFullYear()}
+			{'.'}
+		</Typography>
+	);
 }

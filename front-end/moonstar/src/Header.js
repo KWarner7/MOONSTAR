@@ -57,14 +57,14 @@ export default function Header() {
 									</Button>
 								</Link>
 							</Typography>
-							<Link to='/login' style={{ textDecoration: 'none' }}>
+							<Link to='/Signin' style={{ textDecoration: 'none' }}>
 								<Button
 									sx={{
 										color: 'white',
 										textShadow: '0px 0px 10px rgba(178, 243, 172, 0.9)',
 									}}
 								>
-									Login
+									Sign In
 								</Button>
 							</Link>
 						</Toolbar>

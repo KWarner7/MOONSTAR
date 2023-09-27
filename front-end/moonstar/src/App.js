@@ -27,8 +27,8 @@ function App() {
 				<header className='App-header'>
 					<Routes>
 						<Route path='/' element={<HomePage />} />
-						<Route path='/login' element={<Login />} />
-						<Route path='/signup' element={<Signup />} />
+						<Route path='/Signin' element={<Login />} />
+						<Route path='/Signup' element={<Signup />} />
 						<Route path='/active-projects' element={<ActiveProjects />} />
 						<Route path='/completed-projects' element={<CompletedProjects />} />
 						<Route path='/edit-project/:taskId' element={<EditProject />} />
