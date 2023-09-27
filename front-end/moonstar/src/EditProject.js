@@ -38,19 +38,6 @@ const CardStyle = {
 		'linear-gradient(45deg, #B0C4DE 0%, #CFCFCF 40%, #808080 70%, #696969 100%)',
 };
 
-function Copyright() {
-	return (
-		<Typography variant='body2' color='white' align='center'>
-			{'Copyright © '}
-			<Link color='rgb(0,0,990,1)' href='https://mui.com/'>
-				M.O.O.N.S.T.A.R.
-			</Link>{' '}
-			{new Date().getFullYear()}
-			{'.'}
-		</Typography>
-	);
-}
-
 export default function EditProject() {
 	const navigate = useNavigate();
 	const { showSnackbar } = useSnackbar();
@@ -413,16 +400,35 @@ export default function EditProject() {
 				</Container>
 			</main>
 			<Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
-				<Typography
-					variant='subtitle1'
-					align='center'
-					color='white'
-					component='p'
-				>
-					Take your projects to the moon!
-				</Typography>
-				<Copyright />
-			</Box>
+					<Typography
+						variant='subtitle1'
+						align='center'
+						color='white'
+						component='p'
+					>
+						Take your projects to the moon!
+					</Typography>
+					<Copyright />
+				</Box>
 		</>
 	);
 }
+
+function Copyright() {
+	return (
+		<Typography variant='body2' color='white' align='center'>
+			{'Copyright © '}
+			<a
+				href='https://mui.com/'
+				target='_blank'
+				rel='noopener noreferrer'
+				style={{ color: 'rgb(0,0,990,1)' }}
+			>
+				M.O.O.N.S.T.A.R.
+			</a>{' '}
+			{new Date().getFullYear()}
+			{'.'}
+		</Typography>
+	);
+}
+
