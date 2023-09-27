@@ -1,58 +1,58 @@
-import React, { useState, useEffect } from "react";
-import { Card, CardContent, Typography, Button, Grid } from "@mui/material";
-import { useParams, Link } from "react-router-dom";
-import Header from "./Header.js";
-import AppBar from "@mui/material/AppBar";
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, Typography, Button, Grid } from '@mui/material';
+import { useParams, Link } from 'react-router-dom';
+import Header from './Header.js';
+import AppBar from '@mui/material/AppBar';
 
 function ProjectDetails() {
-  const { id } = useParams();
-  const [task, setTask] = useState(null);
-  const [statusUpdates, setStatusUpdates] = useState([]);
-  const [loading, setLoading] = useState(true);
+	const { id } = useParams();
+	const [task, setTask] = useState(null);
+	const [statusUpdates, setStatusUpdates] = useState([]);
+	const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Fetch the project details based on the provided id
-    fetch(`http://localhost:8081/tasks/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Access the data within the array
-        if (data.length > 0) {
-          setTask(data[0]);
-        } else {
-          // Handle the case when no data is found for the given id
-          console.error(`No data found for task with id ${id}`);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching project details:", error);
-        // Handle the error or display an error message
-      });
+	useEffect(() => {
+		// Fetch the project details based on the provided id
+		fetch(`http://localhost:8081/tasks/${id}`)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				return response.json();
+			})
+			.then((data) => {
+				// Access the data within the array
+				if (data.length > 0) {
+					setTask(data[0]);
+				} else {
+					// Handle the case when no data is found for the given id
+					console.error(`No data found for task with id ${id}`);
+				}
+			})
+			.catch((error) => {
+				console.error('Error fetching project details:', error);
+				// Handle the error or display an error message
+			});
 
-    // Fetch the status updates based on the provided id
-    fetch(`http://localhost:8081/status-updates/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Set the status updates data in the state
-        setStatusUpdates(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching status updates:", error);
-        // Handle the error or display an error message
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [id]);
+		// Fetch the status updates based on the provided id
+		fetch(`http://localhost:8081/status-updates/${id}`)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				return response.json();
+			})
+			.then((data) => {
+				// Set the status updates data in the state
+				setStatusUpdates(data);
+			})
+			.catch((error) => {
+				console.error('Error fetching status updates:', error);
+				// Handle the error or display an error message
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	}, [id]);
 
   return (
     <>
