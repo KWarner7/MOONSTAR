@@ -31,7 +31,7 @@ const CardStyle = {
 	borderRadius: '10px',
 	borderColor: '#ddd',
 	background:
-		'linear-gradient(45deg, #00A36C 0%, #00BC77 40%, #00D9E6 70%, #00B0FF 100%)',
+		'linear-gradient(45deg, #B0C4DE 0%, #CFCFCF 40%, #808080 70%, #696969 100%)',
 	transform: 'scale(0.98)',
 	'&:hover': {
 		boxShadow: '0 0 16px rgba(255, 255, 255, 0.9)',
@@ -295,7 +295,7 @@ export default function ActiveProjects() {
 						{filteredTasks.map((task, index) => {
 							if (task.is_active) {
 								return (
-									<Grid item key={task.id} xs={12} sm={6} md={4}>
+									<Grid item key={task.id} xs={12} md={4}>
 										<Link
 											to={`/project-details/${task.id}`}
 											style={{ textDecoration: 'none', width: '100%' }}
@@ -306,24 +306,27 @@ export default function ActiveProjects() {
 														<CardContent sx={{ flexGrow: 1 }}>
 															<Typography
 																gutterBottom
-																variant='h5'
+																variant='h4'
 																component='div'
 																align='center'
+																style={{ fontWeight: 'bold' }}
 															>
 																{task.task_name}
 															</Typography>
 															<Typography
-																variant='body2'
+																variant='body1'
 																color='textSecondary'
 																component='p'
+																style={{ fontWeight: 'bold' }}
 															>
 																{task.task_description}
 															</Typography>
 															<br />
 															<Typography
-																variant='body2'
+																variant='body1'
 																color='textSecondary'
 																component='p'
+																style={{ fontWeight: 'bold' }}
 															>
 																Latest Update:{' '}
 																{
@@ -342,9 +345,10 @@ export default function ActiveProjects() {
 															</Typography>
 															<br />
 															<Typography
-																variant='body2'
+																variant='body1'
 																color='textSecondary'
 																component='p'
+																style={{ fontWeight: 'bold' }}
 															>
 																Due By:{' '}
 																{new Date(task.due_date).toLocaleDateString()}
