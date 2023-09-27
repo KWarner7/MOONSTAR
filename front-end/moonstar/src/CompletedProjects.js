@@ -403,27 +403,34 @@ export default function ActiveProjects() {
 				</Container>
 			</main>
 			<Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
-				<Typography
-					variant='subtitle1'
-					align='center'
-					color='white'
-					component='p'
-				>
-					Take your projects to the moon!
-				</Typography>
-				<Typography variant='body2' color='white' align='center'>
-					{'Copyright © '}
-					<a
-						href='https://mui.com/'
-						target='_blank'
-						rel='noopener noreferrer'
-						style={{ color: 'rgb(0,0,990,1)' }}
+					<Typography
+						variant='subtitle1'
+						align='center'
+						color='white'
+						component='p'
 					>
-						M.O.O.N.S.T.A.R.
-					</a>{' '}
-					{new Date().getFullYear()}
-				</Typography>
-			</Box>
+						Take your projects to the moon!
+					</Typography>
+					<Copyright />
+				</Box>
 		</ThemeProvider>
+	);
+}
+
+function Copyright() {
+	return (
+		<Typography variant='body2' color='white' align='center'>
+			{'Copyright © '}
+			<a
+				href='https://mui.com/'
+				target='_blank'
+				rel='noopener noreferrer'
+				style={{ color: 'rgb(0,0,990,1)' }}
+			>
+				M.O.O.N.S.T.A.R.
+			</a>{' '}
+			{new Date().getFullYear()}
+			{'.'}
+		</Typography>
 	);
 }

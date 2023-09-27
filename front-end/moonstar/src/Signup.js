@@ -46,6 +46,17 @@ export default function SignUp() {
   const navigate = useNavigate();
 
 
+  const defaultTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#000000',
+    },
+    secondary: {
+      main: '#000000',
+    }
+  }
+});
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -95,10 +106,10 @@ export default function SignUp() {
         <Card sx={CardStyle}>
         <ThemeProvider theme={defaultTheme}>
           <Container component="main" maxWidth="xs" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 1, bgcolor: 'black' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5" color="#000000">
+            <Typography component="h1" variant="h5" color="black">
               Sign up
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
@@ -169,7 +180,8 @@ export default function SignUp() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, backgroundColor: "#000000", color: "#ffffff" }}
+                
               >
                 Sign Up
               </Button>
@@ -202,7 +214,7 @@ export default function SignUp() {
 
 function Copyright() {
   return (
-    <Typography variant='body2' color='white' align='center'>
+    <Typography variant='body2' color='black' align='center'>
       {'Copyright © '}
       <a
         href='https://mui.com/'
