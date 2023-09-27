@@ -1,5 +1,15 @@
 import * as React from 'react';
-import { TextField, Button, Grid, Box, Container, Typography, ThemeProvider, MenuItem, Select } from '@mui/material';
+import {
+	TextField,
+	Button,
+	Grid,
+	Box,
+	Container,
+	Typography,
+	ThemeProvider,
+	MenuItem,
+	Select,
+} from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header.js';
@@ -22,6 +32,15 @@ const CardStyle = {
 	// },
 };
 
+const CardStyle = {
+	boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+	transition: '0.3s',
+	borderRadius: '10px',
+	borderColor: '#ddd',
+	background:
+		'linear-gradient(45deg, #B0C4DE 0%, #CFCFCF 40%, #808080 70%, #696969 100%)',
+};
+
 const defaultTheme = createTheme({
 	palette: {
 		primary: {
@@ -29,8 +48,10 @@ const defaultTheme = createTheme({
 		},
 		secondary: {
 			main: '#000000',
-		}
-	}
+
+		},
+	},
+
 });
 
 function CreateTask() {
@@ -85,105 +106,144 @@ function CreateTask() {
 
 			if (response.ok) {
 				const newTask = await response.json();
-				console.log("Task created successfully:", newTask);
+
+				console.log('Task created successfully:', newTask);
+
 				navigate(`/active-projects`);
 				setTimeout(() => {
 					showSnackbar('Project Created Successfully!');
 				}, 500);
 			} else {
 				const errorData = await response.json();
-				console.error("Error creating task:", errorData);
-			}
 
+				console.error('Error creating task:', errorData);
+			}
 		} catch (error) {
-			console.error("There was an error:", error);
+			console.error('There was an error:', error);
 		}
 	};
 
 	return (
 		<ThemeProvider theme={defaultTheme}>
 			<CssBaseline />
-			<AppBar position='relative'>
+			<AppBar position='absolute'>
 				<Header />
 			</AppBar>
-
-			<Container component="main" maxWidth="lg">
-				<Typography component="h1" variant="h4" align="center">
+			<Container component='main' maxWidth='lg'>
+				<Typography component='h1' variant='h4' align='center'>
 					Create New Task
 				</Typography>
-				<Box sx={CardStyle} component="form" noValidate onSubmit={handleSubmit}>
+				<Box
+					component='form'
+					noValidate
+					onSubmit={handleSubmit}
+					sx={{
+						bgcolor: 'white',
+						mt: 3,
+						borderRadius: '10px',
+						padding: '15px',
+						...CardStyle,
+					}}
+				>
+
 					<Grid container spacing={2}>
 						<Grid item xs={12}>
 							<TextField
 								required
 								fullWidth
-								id="task_name"
-								label="Task Name"
-								name="task_name"
+
+								id='task_name'
+								label='Task Name'
+								name='task_name'
+
 							/>
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
 								required
 								fullWidth
-								id="task_description"
-								label="Task Description"
-								name="task_description"
+
+								id='task_description'
+								label='Task Description'
+								name='task_description'
+
 							/>
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
 								required
 								fullWidth
-								id="task_requirement"
-								label="Task Requirement"
-								name="task_requirement"
+
+								id='task_requirement'
+								label='Task Requirement'
+								name='task_requirement'
+
 							/>
 						</Grid>
 						<Grid item xs={12}>
 							<TextField
 								required
 								fullWidth
-								type="datetime-local"
-								id="due_date"
-								label="Due Date"
-								name="due_date"
+
+								type='datetime-local'
+								id='due_date'
+								label='Due Date'
+								name='due_date'
+
 								InputLabelProps={{
 									shrink: true,
 								}}
 							/>
 						</Grid>
 						<Grid item xs={12}>
-							<Typography component="h1" variant="h6" align="left" color="black">
+
+							<Typography
+								component='h1'
+								variant='h6'
+								align='left'
+								color='black'
+							>
+
 								Priority
 							</Typography>
 							<Select
 								required
 								fullWidth
-								id="priority"
-								label="Priority"
-								name="priority"
+
+								id='priority'
+								label='Priority'
+								name='priority'
+
 								InputLabelProps={{
 									shrink: true,
 								}}
 								value={priority}
 								onChange={(event) => setPriority(event.target.value)}
 							>
-								<MenuItem value="Low">Low</MenuItem>
-								<MenuItem value="Medium">Medium</MenuItem>
-								<MenuItem value="High">High</MenuItem>
+
+								<MenuItem value='Low'>Low</MenuItem>
+								<MenuItem value='Medium'>Medium</MenuItem>
+								<MenuItem value='High'>High</MenuItem>
 							</Select>
 						</Grid>
 						<Grid item xs={12}>
-							<Typography component="h1" variant="h6" align="left" color="black">
+							<Typography
+								component='h1'
+								variant='h6'
+								align='left'
+								color='black'
+							>
+
 								Assigned To
 							</Typography>
 							<Select
 								required
 								fullWidth
-								id="assignedTo"
-								label="Assigned To"
-								name="assignedTo"
+
+								id='assignedTo'
+								label='Assigned To'
+								name='assignedTo'
+
 								InputLabelProps={{
 									shrink: true,
 								}}
@@ -198,15 +258,24 @@ function CreateTask() {
 							</Select>
 						</Grid>
 						<Grid item xs={12}>
-							<Typography component="h1" variant="h6" align="left" color="black">
+
+							<Typography
+								component='h1'
+								variant='h6'
+								align='left'
+								color='black'
+							>
+
 								Assigned By
 							</Typography>
 							<Select
 								required
 								fullWidth
-								id="assignedBy"
-								label="Assigned By"
-								name="assignedBy"
+
+								id='assignedBy'
+								label='Assigned By'
+								name='assignedBy'
+
 								InputLabelProps={{
 									shrink: true,
 								}}
@@ -221,18 +290,18 @@ function CreateTask() {
 							</Select>
 						</Grid>
 					</Grid>
-					<Button
-						type="submit"
-						
-						variant="contained"
-						sx={{ mt: 3, mb: 2 }}
-					>
+
+					<Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
 						Create Task
 					</Button>
-					<br></br>
-					<Link to='/active-projects' style={{ textDecoration: 'none' }}>
-							<Button variant='contained'>Cancel</Button>
-						</Link>
+					<Button
+						variant='contained'
+						sx={{ mt: 3, mb: 2, ml: 2, color: 'red' }}
+						onClick={() => navigate(-1)}
+					>
+						Cancel
+					</Button>
+
 				</Box>
 			</Container>
 		</ThemeProvider>
