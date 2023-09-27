@@ -34,7 +34,7 @@ export default function Header() {
 								align='left'
 								sx={{ flexGrow: 1 }}
 							>
-								<Link to='/' style={{ textDecoration: 'none' }}>
+								<Link to='/Home' style={{ textDecoration: 'none' }}>
 									<Button sx={{ color: 'white', fontSize: '2rem' }}>
 										<SpinningIcon show={true}>
 											<Brightness4TwoToneIcon
