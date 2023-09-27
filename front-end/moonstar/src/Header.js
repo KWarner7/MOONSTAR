@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Brightness4TwoToneIcon from '@mui/icons-material/Brightness4TwoTone';
+import { SpinningIcon } from './Animations';
 
 const defaultTheme = createTheme();
 
@@ -35,14 +36,16 @@ export default function Header() {
 							>
 								<Link to='/' style={{ textDecoration: 'none' }}>
 									<Button sx={{ color: 'white', fontSize: '2rem' }}>
-										<Brightness4TwoToneIcon
-											sx={{
-												marginRight: '8px',
-												fontSize: '3rem',
-												filter:
-													'drop-shadow(0px 0px 10px rgba(178, 243, 172, 0.9))',
-											}}
-										/>
+										<SpinningIcon show={true}>
+											<Brightness4TwoToneIcon
+												sx={{
+													marginRight: '8px',
+													fontSize: '3rem',
+													filter:
+														'drop-shadow(0px 0px 10px rgba(178, 243, 172, 0.9))',
+												}}
+											/>
+										</SpinningIcon>
 										<span
 											style={{
 												color: 'white',

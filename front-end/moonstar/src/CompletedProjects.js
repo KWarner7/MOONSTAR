@@ -22,8 +22,23 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { FadeIn, DropIn } from './Animations.js';
 
 const defaultTheme = createTheme();
+
+const CardStyle = {
+	boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+	transition: '0.3s',
+	borderRadius: '10px',
+	borderColor: '#ddd',
+	background:
+		'linear-gradient(45deg, #00A36C 0%, #00BC77 40%, #00D9E6 70%, #00B0FF 100%)',
+	transform: 'scale(0.98)',
+	'&:hover': {
+		boxShadow: '0 0 16px rgba(255, 255, 255, 0.9)',
+		transform: 'scale(1.0)',
+	},
+};
 
 export default function ActiveProjects() {
 	const [startDate, setStartDate] = useState('');
@@ -35,6 +50,8 @@ export default function ActiveProjects() {
 		assignedTo: 'all',
 		assignedBy: 'all',
 		priority: 'all',
+		startDate: '',
+		endDate: '',
 	});
 
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -281,73 +298,61 @@ export default function ActiveProjects() {
 											to={`/project-details/${task.id}`}
 											style={{ textDecoration: 'none', width: '100%' }}
 										>
-											<Card
-												sx={{
-													minWidth:
-														filteredTasks.length < 2 ? '370px' : '170px',
-													height: '100%',
-													display: 'flex',
-													flexDirection: 'column',
-													backgroundColor: 'white',
-													transition: 'all 0.3s ease',
-													'&:hover': {
-														transform: 'scale(1.1)',
-														backgroundColor: 'lightgrey',
-														zIndex: 1,
-													},
-												}}
-												elevation={3}
-											>
-												<CardContent sx={{ flexGrow: 1 }}>
-													<Typography
-														gutterBottom
-														variant='h6'
-														component='h2'
-														align='center'
-													>
-														{task.task_name}
-													</Typography>
-													<Typography
-														variant='body2'
-														color='textSecondary'
-														component='p'
-													>
-														{task.task_description}
-													</Typography>
-													<br />
-													<Typography
-														variant='body2'
-														color='textSecondary'
-														component='p'
-													>
-														Latest Update:{' '}
-														{
-															(
-																statusUpdates
-																	.filter(
-																		(update) => update.task_id === task.id
-																	)
-																	.sort(
-																		(a, b) =>
-																			new Date(b.timestamp) -
-																			new Date(a.timestamp)
-																	)[0] || {}
-															).update_text
-														}
-													</Typography>
-													<br />
-													<Typography
-														variant='body2'
-														color='textSecondary'
-														component='p'
-													>
-														Completed On:{' '}
-														{new Date(
-															task.completion_date
-														).toLocaleDateString()}
-													</Typography>
-												</CardContent>
-											</Card>
+											<DropIn show={true} key={task.id}>
+												<FadeIn show={true} key={task.id}>
+													<Card sx={CardStyle}>
+														<CardContent sx={{ flexGrow: 1 }}>
+															<Typography
+																gutterBottom
+																variant='h6'
+																component='h2'
+																align='center'
+															>
+																{task.task_name}
+															</Typography>
+															<Typography
+																variant='body2'
+																color='textSecondary'
+																component='p'
+															>
+																{task.task_description}
+															</Typography>
+															<br />
+															<Typography
+																variant='body2'
+																color='textSecondary'
+																component='p'
+															>
+																Latest Update:{' '}
+																{
+																	(
+																		statusUpdates
+																			.filter(
+																				(update) => update.task_id === task.id
+																			)
+																			.sort(
+																				(a, b) =>
+																					new Date(b.timestamp) -
+																					new Date(a.timestamp)
+																			)[0] || {}
+																	).update_text
+																}
+															</Typography>
+															<br />
+															<Typography
+																variant='body2'
+																color='textSecondary'
+																component='p'
+															>
+																Completed On:{' '}
+																{new Date(
+																	task.completion_date
+																).toLocaleDateString()}
+															</Typography>
+														</CardContent>
+													</Card>
+												</FadeIn>
+											</DropIn>
 										</Link>
 									</Grid>
 								);
