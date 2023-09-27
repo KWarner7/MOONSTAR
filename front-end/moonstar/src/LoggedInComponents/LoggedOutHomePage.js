@@ -25,7 +25,9 @@ export default function HomePage() {
 				<main>
 					<Box
 						sx={{
-							bgcolor: 'grey.400',
+							borderColor: '#ddd',
+							background:
+								'linear-gradient(45deg, #B0C4DE 0%, #CFCFCF 40%, #808080 70%, #696969 100%)',
 							pt: 8,
 							pb: 6,
 						}}
