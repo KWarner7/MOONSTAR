@@ -15,6 +15,21 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Header from './Header.js';
 import AppBar from '@mui/material/AppBar';
+import Card from '@mui/material/Card';
+
+const CardStyle = {
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  transition: '0.3s',
+  borderRadius: '10px',
+  borderColor: '#ddd',
+  background:
+    'linear-gradient(45deg, #B0C4DE 0%, #CFCFCF 40%, #808080 70%, #696969 100%)',
+  transform: 'scale(0.98)',
+  '&:hover': {
+    boxShadow: '0 0 16px rgba(255, 255, 255, 0.9)',
+    transform: 'scale(1.0)',
+  },
+};
 
 function Copyright(props) {
   return (
@@ -28,8 +43,6 @@ function Copyright(props) {
     </Typography>
   );
 }
-
-// TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme({
   palette: {
@@ -58,7 +71,7 @@ export default function SignUp() {
       section: data.get('section'),
       email: data.get('email'),
       password: data.get('password')
-   };
+    };
 
     console.log(userData);
 
@@ -76,128 +89,134 @@ export default function SignUp() {
       if (response.ok) {
         console.log("User registered successfully:", result);
         navigate("/login");
-    } else {
+      } else {
         console.error("Error registering user:", result);
-    }
+      }
 
     } catch (error) {
       console.error("There was an error:", error);
     }
   };
 
-      return (
-        <ThemeProvider theme={defaultTheme}>
-          <Container component="main" maxWidth="xs" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-          <AppBar position="fixed">
-        <Header />
-      </AppBar>
-              <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5" color="#000000">
-                Sign up
-              </Typography>
-              <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      autoComplete="given-name"
-                      name="firstName"
-                      required
-                      fullWidth
-                      id="firstName"
-                      label="First Name"
-                      autoFocus
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="lastName"
-                      label="Last Name"
-                      name="lastName"
-                      autoComplete="family-name"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="rank"
-                      label="Rank"
-                      name="rank"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="role"
-                      label="Role"
-                      name="role"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="flight"
-                      label="Flight"
-                      name="flight"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="section"
-                      label="Section"
-                      name="section"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="new-password"
-                    />
-                  </Grid>
-                </Grid>
-                <Button
-                  type="submit"
+  return (
+    <>
+    <AppBar position="fixed">
+          <Header />
+        </AppBar>
+        <Box>
+        <Card sx={CardStyle}>
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5" color="#000000">
+            Sign up
+          </Typography>
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="given-name"
+                  name="firstName"
+                  required
                   fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  component={RouterLink}
-                  to="/Login"
-                >
-                  Sign Up
-                </Button>
-                <Grid container justifyContent="center">
-                  <Grid item>
-                    <Link href="#" variant="body1" align="center" component={RouterLink} to="/Login" >
-                      Already have an account? Sign in
-                    </Link>
-                  </Grid>
-                </Grid>
-              </Box>
-            <Copyright sx={{ mt: 5 }} />
-          </Container>
-        </ThemeProvider>
-      );
-    }
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="rank"
+                  label="Rank"
+                  name="rank"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="role"
+                  label="Role"
+                  name="role"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="flight"
+                  label="Flight"
+                  name="flight"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="section"
+                  label="Section"
+                  name="section"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              component={RouterLink}
+              to="/Login"
+            >
+              Sign Up
+            </Button>
+            <Grid container justifyContent="center">
+              <Grid item>
+                <Link href="#" variant="body1" align="center" component={RouterLink} to="/Login" >
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        <Copyright sx={{ mt: 5 }} />
+      </Container>
+    </ThemeProvider>
+    </Card>
+    </Box>
+    </>
+  );
+}
