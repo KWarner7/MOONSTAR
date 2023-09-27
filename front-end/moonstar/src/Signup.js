@@ -42,8 +42,8 @@ export default function SignUp() {
       last_name: data.get('lastName'),
       rank: data.get('rank'),
       role: data.get('role'),
-      flight: data.get('flight'),
-      section: data.get('section'),
+      flight: 'N/A',
+      section: 'N/A',
       email: data.get('email'),
       password: data.get('password')
     };
@@ -80,112 +80,112 @@ export default function SignUp() {
       </AppBar>
       <Box>
         <Card sx={CardStyle}>
-            <Container component="main" maxWidth="xs" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5" color="#000000">
-                Sign up
-              </Typography>
-              <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      autoComplete="given-name"
-                      name="firstName"
-                      required
-                      fullWidth
-                      id="firstName"
-                      label="First Name"
-                      autoFocus
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="lastName"
-                      label="Last Name"
-                      name="lastName"
-                      autoComplete="family-name"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="rank"
-                      label="Rank"
-                      name="rank"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="role"
-                      label="Role"
-                      name="role"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="flight"
-                      label="Flight"
-                      name="flight"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="section"
-                      label="Section"
-                      name="section"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="new-password"
-                    />
-                  </Grid>
+          <Container component="main" maxWidth="xs" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5" color="#000000">
+              Sign up
+            </Typography>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    autoComplete="given-name"
+                    name="firstName"
+                    required
+                    fullWidth
+                    id="firstName"
+                    label="First Name"
+                    autoFocus
+                  />
                 </Grid>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Sign Up
-                </Button>
-                <Grid container justifyContent="center">
-                  <Grid item>
-                    <Link href="#" variant="body1" align="center" component={RouterLink} to="/Login" >
-                      Already have an account? Sign in
-                    </Link>
-                  </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="lastName"
+                    label="Last Name"
+                    name="lastName"
+                    autoComplete="family-name"
+                  />
                 </Grid>
-              </Box>
-              <Copyright sx={{ mt: 5 }} />
-            </Container>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="rank"
+                    label="Rank"
+                    name="rank"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="role"
+                    label="Role"
+                    name="role"
+                  />
+                </Grid>
+                {/* <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="flight"
+                    label="Flight"
+                    name="flight"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="section"
+                    label="Section"
+                    name="section"
+                  />
+                </Grid> */}
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="new-password"
+                  />
+                </Grid>
+              </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
+              <Grid container justifyContent="center">
+                <Grid item>
+                  <Link href="#" variant="body1" align="center" component={RouterLink} to="/Login" >
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
+            <Copyright sx={{ mt: 5 }} />
+          </Container>
         </Card>
       </Box>
     </>
@@ -193,19 +193,19 @@ export default function SignUp() {
 }
 
 function Copyright() {
-	return (
-		<Typography variant='body2' color='white' align='center'>
-			{'Copyright © '}
-			<a
-				href='https://mui.com/'
-				target='_blank'
-				rel='noopener noreferrer'
-				style={{ color: 'rgb(0,0,990,1)' }}
-			>
-				M.O.O.N.S.T.A.R.
-			</a>{' '}
-			{new Date().getFullYear()}
-			{'.'}
-		</Typography>
-	);
+  return (
+    <Typography variant='body2' color='white' align='center'>
+      {'Copyright © '}
+      <a
+        href='https://mui.com/'
+        target='_blank'
+        rel='noopener noreferrer'
+        style={{ color: 'rgb(0,0,990,1)' }}
+      >
+        M.O.O.N.S.T.A.R.
+      </a>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
 }
