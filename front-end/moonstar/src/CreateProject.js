@@ -108,12 +108,27 @@ function CreateTask() {
 	};
 
 	return (
+		<>
+		<Box
+			bgcolor="black"
+			style={{
+				backgroundImage: 'url(https://cdn.pixabay.com/photo/2016/10/20/18/35/earth-1756274_1280.jpg)',
+				backgroundPosition: 'center',
+				backgroundSize: 'cover',
+				backgroundRepeat: 'no-repeat',
+				minHeight: '100%',
+				minWidth: '100%',
+
+			}}
+			>
 		<ThemeProvider theme={defaultTheme}>
 			<CssBaseline />
-			<AppBar position='absolute'>
+			<AppBar position='relative'>
 				<LoggedInHeader />
 			</AppBar>
-			<Container component='main' maxWidth='lg' style={{ marginTop: '64px' }}>
+			<main>
+				<Box sx={{ bgcolor: 'transparent', pt: 2, pb: 1 }}>
+					<Container maxWidth='sm'>
 				<Typography component='h1' variant='h4' align='center'>
 					Create New Task
 				</Typography>
@@ -266,6 +281,8 @@ function CreateTask() {
 					</Button>
 				</Box>
 			</Container>
+			</Box>
+			</main>
 			<Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
 				<Typography
 					variant='subtitle1'
@@ -277,7 +294,10 @@ function CreateTask() {
 				</Typography>
 				<Copyright />
 			</Box>
+
 		</ThemeProvider>
+	</Box>
+	</>
 	);
 }
 function Copyright() {
