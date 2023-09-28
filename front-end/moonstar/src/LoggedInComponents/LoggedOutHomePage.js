@@ -20,7 +20,7 @@ const defaultTheme = createTheme({
   }
 });
 
-export default function HomePage() {
+export default function LoggedOutHomePage() {
 	return (
 		<>
 			<Box
