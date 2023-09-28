@@ -32,7 +32,6 @@ export default function HomePage() {
 				backgroundRepeat: 'no-repeat',
 				minHeight: '100%',
 				minWidth: '100%',
-
 			}}
 			>
 				<ThemeProvider theme={defaultTheme}>
@@ -40,7 +39,6 @@ export default function HomePage() {
 					<AppBar>
 						<Header />
 					</AppBar>
-
 					<main>
 						<Box
 							display="flex"
