@@ -97,7 +97,7 @@ export const TaskStatistics = () => {
 
 								datalabels: {
 									display: true,
-									color: 'black',
+									color: 'white',
 									font: {
 										size: 20,
 										weight: 'bold',
