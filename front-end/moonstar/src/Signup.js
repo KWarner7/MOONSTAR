@@ -53,9 +53,9 @@ export default function SignUp() {
       first_name: data.get('firstName'),
       last_name: data.get('lastName'),
       rank: data.get('rank'),
-      role: data.get('role'),
-      flight: 'N/A',
-      section: 'N/A',
+      role: 'User',
+      flight: 'Alpha',
+      section: 'Operations',
       email: data.get('email'),
       password: data.get('password')
     };
@@ -120,6 +120,15 @@ export default function SignUp() {
                   </Typography>
                   <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <TextField
+                          required
+                          fullWidth
+                          id="rank"
+                          label="Rank"
+                          name="rank"
+                        />
+                      </Grid>
                       <Grid item xs={12} sm={6}>
                         <TextField
                           autoComplete="given-name"
@@ -140,24 +149,6 @@ export default function SignUp() {
                           label="Last Name"
                           name="lastName"
                           autoComplete="family-name"
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          required
-                          fullWidth
-                          id="rank"
-                          label="Rank"
-                          name="rank"
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          required
-                          fullWidth
-                          id="role"
-                          label="Role"
-                          name="role"
                         />
                       </Grid>
                       <Grid item xs={12}>
