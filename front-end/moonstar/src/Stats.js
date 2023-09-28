@@ -55,7 +55,7 @@ export const TaskStatistics = () => {
 						marginBottom: '10px',
 					}}
 				>
-					Active Task Priority
+					<h6>Active Task Priority</h6>
 					<Doughnut
 						data={{
 							labels: ['High Priority', 'Medium Priority', 'Low Priority'],
@@ -76,6 +76,7 @@ export const TaskStatistics = () => {
 										'rgba(255, 205, 86, 1)',
 										'rgba(54, 162, 235, 1)',
 									],
+									cutoutPercentage: 70,
 									borderWidth: 1,
 								},
 							],
@@ -93,15 +94,28 @@ export const TaskStatistics = () => {
 								legend: {
 									display: true,
 								},
-								tooltip: {
-									enabled: true,
-								},
+
 								datalabels: {
 									display: true,
 									color: 'black',
+									font: {
+										size: 20,
+										weight: 'bold',
+									},
 									formatter: (value, ctx) => {
 										return value;
 									},
+								},
+							},
+							datalabels: {
+								display: true,
+								color: 'black',
+								font: {
+									size: 20,
+									weight: 'bold',
+								},
+								formatter: (value, ctx) => {
+									return value;
 								},
 							},
 						}}
