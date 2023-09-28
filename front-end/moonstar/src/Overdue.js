@@ -11,7 +11,7 @@ Chart.register(BarController, BarElement, LinearScale, CategoryScale);
 
 export const OverdueTasksChart = () => {
 	const chartRef = useRef(null);
-	const chartInstanceRef = useRef(null); // Use useRef to persist chartInstance across renders
+	const chartInstanceRef = useRef(null);
 	const [tasks, setTasks] = useState([]);
 
 	useEffect(() => {
@@ -46,11 +46,12 @@ export const OverdueTasksChart = () => {
 				type: 'bar',
 				data: {
 					labels: labels,
+
 					datasets: [
 						{
 							label: 'Days Overdue',
 							data: data,
-							backgroundColor: 'rgba(255, 99, 132, 0.6)',
+							backgroundColor: 'rgba(255, 0, 0, 0.6)',
 							borderColor: 'rgba(255, 99, 132, 1)',
 							borderWidth: 1,
 						},
@@ -58,17 +59,25 @@ export const OverdueTasksChart = () => {
 				},
 				options: {
 					scales: {
-						yAxes: [
-							{
-								ticks: {
-									beginAtZero: true,
+						y: {
+							beginAtZero: true,
+							title: {
+								display: true,
+								text: 'Days Overdue',
+								align: 'center',
+								color: 'white',
+								font: {
+									size: 14,
+									weight: 'bold',
 								},
 							},
-						],
+						},
 					},
+
 					legend: {
+						display: true,
 						labels: {
-							fontColor: 'black',
+							color: 'rgb(255, 99, 132)',
 						},
 					},
 				},
@@ -83,7 +92,8 @@ export const OverdueTasksChart = () => {
 
 	return (
 		<div>
-			<h3>Overdue Projects</h3>
+			<h4>Overdue Projects</h4>
+			<br />
 			<canvas ref={chartRef}></canvas>
 		</div>
 	);
