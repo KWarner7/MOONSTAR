@@ -300,7 +300,7 @@ export default function ActiveProjects() {
 					</Container>
 					<Stack direction='row' spacing={2} justifyContent='center'>
 						<Link to='/create-project' style={{ textDecoration: 'none' }}>
-							<Button variant='contained'>Create New Project</Button>
+							<Button sx={{ backgroundColor: 'black' }} variant='contained'>Create New Project</Button>
 						</Link>
 					</Stack>
 				</Box>
