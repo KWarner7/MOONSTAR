@@ -160,251 +160,246 @@ export default function StatusUpdate() {
 
 	return (
 		<>
-				<Box
-			bgcolor="black"
-			style={{
-				backgroundImage: 'url(https://cdn.pixabay.com/photo/2016/10/20/18/35/earth-1756274_1280.jpg)',
-				backgroundPosition: 'center',
-				backgroundSize: 'cover',
-				backgroundRepeat: 'no-repeat',
-				minHeight: '100%',
-				minWidth: '100%',
+			<Box
+				bgcolor="black"
+				style={{
+					backgroundImage: 'url(https://cdn.pixabay.com/photo/2016/10/20/18/35/earth-1756274_1280.jpg)',
+					backgroundPosition: 'center',
+					backgroundSize: 'cover',
+					backgroundRepeat: 'no-repeat',
+					minHeight: '100%',
+					minWidth: '100%',
 
-			}}
+				}}
 			>
-		<ThemeProvider theme={defaultTheme}>
-			<CssBaseline />
-			<AppBar position='relative'>
-				<LoggedInHeader />
-			</AppBar>
-			<main>
-				<Box sx={{ bgcolor: 'transparent', pt: 2, pb: 1 }}>
-					<Container maxWidth='sm'>
-					<Typography
-						component='h1'
-						variant='h2'
-						align='center'
-						color='white'
-						gutterBottom
-					>
-						Update Status
-					</Typography>
-
-					{task && (
-						<Card variant='outlined' sx={CardStyle}>
-							<CardContent>
-								<Typography variant='h6' gutterBottom>
-									Project "{task.task_name}"
+				<ThemeProvider theme={defaultTheme}>
+					<CssBaseline />
+					<AppBar position='relative'>
+						<LoggedInHeader />
+					</AppBar>
+					<main>
+						<Box sx={{ bgcolor: 'transparent', pt: 7, pb: 10 }}>
+							<Container maxWidth='sm'>
+								<Typography
+									component='h1'
+									variant='h2'
+									align='center'
+									color='white'
+									gutterBottom
+								>
+									Update Status
 								</Typography>
 
-								<div className='flexFieldsContainer'>
-									<div className='flexField'>
-										<FormControl variant='outlined' margin='normal' fullWidth>
-											<Autocomplete
-												options={userData}
-												getOptionLabel={(option) =>
-													`${option.first_name} ${option.last_name}`
-												}
-												value={userData.find(
-													(user) => user.id === assignedByUserId
-												)}
-												renderInput={(params) => (
-													<TextField
-														{...params}
-														label='Assigned By'
-														variant='outlined'
-														InputProps={{
-															readOnly: true,
-															style: {
-																cursor: 'default',
-																userSelect: 'none',
-																pointerEvents: 'none',
-																color: 'inherit',
-															},
-														}}
-													/>
-												)}
-											/>
-										</FormControl>
-									</div>
-
-									<div className='flexField'>
-										<FormControl variant='outlined' margin='normal' fullWidth>
-											<Autocomplete
-												options={userData}
-												getOptionLabel={(option) =>
-													`${option.first_name} ${option.last_name}`
-												}
-												value={userData.find(
-													(user) => user.id === assignedToUserId
-												)}
-												renderInput={(params) => (
-													<TextField
-														{...params}
-														label='Assigned To'
-														variant='outlined'
-														InputProps={{
-															readOnly: true,
-															style: {
-																cursor: 'default',
-																userSelect: 'none',
-																pointerEvents: 'none',
-																color: 'inherit',
-															},
-														}}
-													/>
-												)}
-											/>
-										</FormControl>
-									</div>
-
-									<div className='flexField'>
-										<FormControl variant='outlined' margin='normal' fullWidth>
-											<TextField
-												label='Priority'
-												value={task.priority}
-												InputProps={{
-													readOnly: true,
-													style: {
-														cursor: 'default',
-														userSelect: 'none',
-														pointerEvents: 'none',
-														color: 'inherit',
-													},
-												}}
-											/>
-										</FormControl>
-									</div>
-
-									<div className='flexField'>
-										<TextField
-											margin='normal'
-											label='Due By'
-											size='large'
-											fullWidth
-											value={new Date(task.due_date).toLocaleString()}
-											InputProps={{
-												readOnly: true,
-												style: {
-													cursor: 'default',
-													userSelect: 'none',
-													pointerEvents: 'none',
-													color: 'inherit',
-												},
-											}}
-										/>
-									</div>
-								</div>
-								<div className='flexDescriptionContainer'>
-									<div>
+								{task && (
+									<Card variant='outlined' sx={CardStyle}>
 										<CardContent>
-											<div
-												className='flexDescriptionContainer'
-												style={{
-													display: 'flex',
-													width: '100%',
-												}}
-											>
-												<div
-													className='addStatusUpdateContainer'
-													style={{
-														width: '40%',
-														paddingRight: '10px',
-													}}
-												>
-													<Typography variant='h6' gutterBottom>
-														Add Status Update
-													</Typography>
-													<TextField
-														fullWidth
-														label='Add Status Update'
-														variant='outlined'
-														value={newStatusUpdate}
-														onChange={(e) => setNewStatusUpdate(e.target.value)}
-													/>
-													<Button
-														variant='contained'
-														fullWidth
-														color='primary'
-														onClick={handleAddStatusUpdate}
-														style={{ marginTop: '10px' }}
-													>
-														Save Status Update
-													</Button>
-													<Button
-														variant='contained'
-														color='error'
-														fullWidth
-														onClick={() => navigate(-1)}
-													>
-														Back to Project Details
-													</Button>
+											<Typography variant='h6' sx={{ marginBottom: "6px", fontWeight: "bold" }}>
+												{task.task_name}
+											</Typography>
+
+											<div className='flexFieldsContainer'>
+												<div className='flexField'>
+													<FormControl variant='outlined' margin='normal' fullWidth>
+														<Autocomplete
+															options={userData}
+															getOptionLabel={(option) =>
+																`${option.first_name} ${option.last_name}`
+															}
+															value={userData.find(
+																(user) => user.id === assignedByUserId
+															)}
+															renderInput={(params) => (
+																<TextField
+																	{...params}
+																	label='Assigned By'
+																	variant='outlined'
+																	InputProps={{
+																		readOnly: true,
+																		style: {
+																			cursor: 'default',
+																			userSelect: 'none',
+																			pointerEvents: 'none',
+																			color: 'inherit',
+																		},
+																	}}
+																/>
+															)}
+														/>
+													</FormControl>
 												</div>
 
-												<div className='statusUpdatesContainer' style={{}}>
-													<Typography variant='h6' gutterBottom>
-														Status Updates
-													</Typography>
-													<div
-														style={{
-															maxHeight: '200px',
-															minWidth: '55%',
-															overflowY: 'auto',
-															padding: '10px',
-															border: '1px solid rgb(0,0,0,0.2)',
-															borderRadius: '5px',
-															wordWrap: 'break-word',
-															overflowWrap: 'break-word',
-															whiteSpace: 'pre-wrap',
+												<div className='flexField'>
+													<FormControl variant='outlined' margin='normal' fullWidth>
+														<Autocomplete
+															options={userData}
+															getOptionLabel={(option) =>
+																`${option.first_name} ${option.last_name}`
+															}
+															value={userData.find(
+																(user) => user.id === assignedToUserId
+															)}
+															renderInput={(params) => (
+																<TextField
+																	{...params}
+																	label='Assigned To'
+																	variant='outlined'
+																	InputProps={{
+																		readOnly: true,
+																		style: {
+																			cursor: 'default',
+																			userSelect: 'none',
+																			pointerEvents: 'none',
+																			color: 'inherit',
+																		},
+																	}}
+																/>
+															)}
+														/>
+													</FormControl>
+												</div>
+												<div className='flexField'>
+													<FormControl variant='outlined' margin='normal' fullWidth>
+														<TextField
+															label='Priority'
+															value={task.priority}
+															InputProps={{
+																readOnly: true,
+																style: {
+																	cursor: 'default',
+																	userSelect: 'none',
+																	pointerEvents: 'none',
+																	color: 'inherit',
+																},
+															}}
+														/>
+													</FormControl>
+												</div>
+
+												<div className='flexField'>
+													<TextField
+														margin='normal'
+														label='Due By'
+														size='large'
+														fullWidth
+														value={new Date(task.due_date).toLocaleString()}
+														InputProps={{
+															readOnly: true,
+															style: {
+																cursor: 'default',
+																userSelect: 'none',
+																pointerEvents: 'none',
+																color: 'inherit',
+															},
 														}}
-													>
-														{statusUpdate && statusUpdate.length > 0 ? (
-															[...statusUpdate]
-																.reverse()
-																.map((update, index) => {
-																	if (!update || !update.timestamp) return null;
-																	return (
-																		<div
-																			key={index}
-																			style={{ marginBottom: '16px' }}
-																		>
-																			<div>
-																				{new Date(
-																					update.timestamp
-																				).toLocaleString()}
-																			</div>
-																			<div>{update.update_text}</div>
-																		</div>
-																	);
-																})
-														) : (
-															<div>No updates yet.</div>
-														)}
-													</div>
+													/>
+												</div>
+											</div>
+											<div className='flexDescriptionContainer'>
+												<div>
+													<CardContent>
+														<div
+															className='flexDescriptionContainer'
+															style={{
+																display: 'flex',
+																width: '100%',
+															}}
+														>
+															<div
+																className='addStatusUpdateContainer'
+																style={{
+																	width: '40%',
+																	paddingRight: '10px',
+																}}
+															>
+																<Typography variant='h6' gutterBottom>
+																	Add Status Update
+																</Typography>
+																<TextField
+																	fullWidth
+																	label='Add Status Update'
+																	variant='outlined'
+																	value={newStatusUpdate}
+																	onChange={(e) => setNewStatusUpdate(e.target.value)}
+																/>
+																<Button
+																	variant='contained'
+																	color='success'
+																	fullWidth
+																	onClick={handleAddStatusUpdate}
+																	sx={{ marginTop: '10px', bgcolor: 'green' }}
+																>
+																	Save Status Update
+																</Button>
+																<Button
+																	variant='contained'
+																	color='error'
+																	fullWidth
+																	onClick={() => navigate(-1)}
+																>
+																	Back to Project Details
+																</Button>
+															</div>
+															<div className='statusUpdatesContainer' style={{}}>
+																<Typography variant='h6' gutterBottom>
+																	Status Updates
+																</Typography>
+																<div
+																	style={{
+																		maxHeight: '200px',
+																		minWidth: '55%',
+																		overflowY: 'auto',
+																		padding: '10px',
+																		border: '1px solid rgb(0,0,0,0.2)',
+																		borderRadius: '5px',
+																		wordWrap: 'break-word',
+																		overflowWrap: 'break-word',
+																		whiteSpace: 'pre-wrap',
+																	}}
+																>
+																	{statusUpdate && statusUpdate.length > 0 ? (
+																		[...statusUpdate]
+																			.reverse()
+																			.map((update, index) => {
+																				if (!update || !update.timestamp) return null;
+																				return (
+																					<div key={index} style={{ marginBottom: '16px' }}>
+																						<Typography variant="body2" color="textSecondary">
+																							{new Date(update.timestamp).toLocaleString()}
+																						</Typography>
+																						<Typography variant="body2">
+																							{update.update_text}
+																						</Typography>
+																					</div>
+																				);
+																			})
+																	) : (
+																		<Typography variant="body2" color="textSecondary">No updates yet.</Typography>
+																	)}
+																</div>
+															</div>
+														</div>
+													</CardContent>
 												</div>
 											</div>
 										</CardContent>
-									</div>
-								</div>
-							</CardContent>
-						</Card>
-					)}
-				</Container>
-				</Box>
-			</main>
-			<Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
-				<Typography
-					variant='subtitle1'
-					align='center'
-					color='white'
-					component='p'
-				>
-					Take your projects to the moon!
-				</Typography>
-				<Copyright />
+									</Card>
+								)}
+							</Container>
+						</Box>
+					</main>
+					<Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
+						<Typography
+							variant='subtitle1'
+							align='center'
+							color='white'
+							component='p'
+						>
+							Take your projects to the moon!
+						</Typography>
+						<Copyright />
+					</Box>
+				</ThemeProvider>
 			</Box>
-		</ThemeProvider>
-		</Box>
 		</>
 	);
 }
