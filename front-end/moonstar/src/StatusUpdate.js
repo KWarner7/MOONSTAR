@@ -18,6 +18,10 @@ import { useParams } from 'react-router-dom';
 import './projectStatus.css';
 import { TextareaAutosize } from '@mui/base';
 import { useNavigate } from 'react-router-dom';
+import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const defaultTheme = createTheme();
 
 const CardStyle = {
 	boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
@@ -156,11 +160,26 @@ export default function StatusUpdate() {
 
 	return (
 		<>
-			<AppBar position='absolute'>
+				<Box
+			bgcolor="black"
+			style={{
+				backgroundImage: 'url(https://cdn.pixabay.com/photo/2016/10/20/18/35/earth-1756274_1280.jpg)',
+				backgroundPosition: 'center',
+				backgroundSize: 'cover',
+				backgroundRepeat: 'no-repeat',
+				minHeight: '100%',
+				minWidth: '100%',
+
+			}}
+			>
+		<ThemeProvider theme={defaultTheme}>
+			<CssBaseline />
+			<AppBar position='relative'>
 				<LoggedInHeader />
 			</AppBar>
 			<main>
-				<Container>
+				<Box sx={{ bgcolor: 'transparent', pt: 2, pb: 1 }}>
+					<Container maxWidth='sm'>
 					<Typography
 						component='h1'
 						variant='h2'
@@ -371,6 +390,7 @@ export default function StatusUpdate() {
 						</Card>
 					)}
 				</Container>
+				</Box>
 			</main>
 			<Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
 				<Typography
@@ -383,6 +403,8 @@ export default function StatusUpdate() {
 				</Typography>
 				<Copyright />
 			</Box>
+		</ThemeProvider>
+		</Box>
 		</>
 	);
 }

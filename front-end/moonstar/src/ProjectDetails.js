@@ -297,6 +297,7 @@ function ProjectDetails() {
 										</Card>
 									</Grid>
 
+
 									{/* Buttons */}
 									<div>
 										<Button
@@ -345,6 +346,7 @@ function ProjectDetails() {
 			</main>
 		</>
 	);
+
 }
 
 export default ProjectDetails;
