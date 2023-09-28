@@ -41,7 +41,7 @@ const CardStyle = {
 	},
 };
 
-export default function ActiveProjects() {
+export default function CompletedProjects() {
 	const [startDate, setStartDate] = useState('');
 	const [endDate, setEndDate] = useState('');
 
@@ -321,11 +321,11 @@ export default function ActiveProjects() {
 						justifyContent={filteredTasks.length >= 2 ? 'center' : 'start'}
 					>
 						{filteredTasks.map((task, index) => {
-							if (!task.is_active) {
+							if (task.is_active) {
 								return (
 									<Grid item key={task.id} xs={12} md={4}>
 										<Link
-											to={`/project-details/${task.id}`}
+											to={`/completed-project-details/${task.id}`}
 											style={{ textDecoration: 'none', width: '100%' }}
 										>
 											<DropIn show={true} key={task.id}>
