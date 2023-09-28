@@ -113,7 +113,7 @@ function CreateTask() {
 			<AppBar position='absolute'>
 				<Header />
 			</AppBar>
-			<Container component='main' maxWidth='lg'>
+			<Container component='main' maxWidth='lg' style={{ marginTop: '64px' }}>
 				<Typography component='h1' variant='h4' align='center'>
 					Create New Task
 				</Typography>
@@ -267,16 +267,16 @@ function CreateTask() {
 				</Box>
 			</Container>
 			<Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
-					<Typography
-						variant='subtitle1'
-						align='center'
-						color='white'
-						component='p'
-					>
-						Take your projects to the moon!
-					</Typography>
-					<Copyright />
-				</Box>
+				<Typography
+					variant='subtitle1'
+					align='center'
+					color='white'
+					component='p'
+				>
+					Take your projects to the moon!
+				</Typography>
+				<Copyright />
+			</Box>
 		</ThemeProvider>
 	);
 }
