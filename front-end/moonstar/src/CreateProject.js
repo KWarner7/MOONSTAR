@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import Header from './Header.js';
+import LoggedInHeader from './LoggedInComponents/LoggedInHeader.js';
 import AppBar from '@mui/material/AppBar';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useSnackbar } from './SnackbarContext';
@@ -111,7 +111,7 @@ function CreateTask() {
 		<ThemeProvider theme={defaultTheme}>
 			<CssBaseline />
 			<AppBar position='absolute'>
-				<Header />
+				<LoggedInHeader />
 			</AppBar>
 			<Container component='main' maxWidth='lg' style={{ marginTop: '64px' }}>
 				<Typography component='h1' variant='h4' align='center'>
