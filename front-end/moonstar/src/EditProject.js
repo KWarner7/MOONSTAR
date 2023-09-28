@@ -162,276 +162,278 @@ export default function EditProject() {
 
 	return (
 		<>
-		<Box
-			bgcolor="black"
-			style={{
-				backgroundImage: 'url(https://cdn.pixabay.com/photo/2016/10/20/18/35/earth-1756274_1280.jpg)',
-				backgroundPosition: 'center',
-				backgroundSize: 'cover',
-				backgroundRepeat: 'no-repeat',
-				minHeight: '100%',
-				minWidth: '100%',
+			<Box
+				bgcolor="black"
+				style={{
+					backgroundImage: 'url(https://cdn.pixabay.com/photo/2016/10/20/18/35/earth-1756274_1280.jpg)',
+					backgroundPosition: 'center',
+					backgroundSize: 'cover',
+					backgroundRepeat: 'no-repeat',
+					minHeight: '100%',
+					minWidth: '100%',
 
-			}}
+				}}
 			>
-		<ThemeProvider theme={defaultTheme}>
-			<CssBaseline />
-			<AppBar position='relative'>
-				<LoggedInHeader />
-			</AppBar>
-			<main>
-				<Box sx={{ bgcolor: 'transparent', pt: 2, pb: 1 }}>
-					<Container maxWidth='sm'>
-					<Typography
-						component='h1'
-						variant='h2'
-						align='center'
-						color='white'
-						gutterBottom
-					>
-						Edit Project
-					</Typography>
+				<ThemeProvider theme={defaultTheme}>
+					<CssBaseline />
+					<AppBar position='relative'>
+						<LoggedInHeader />
+					</AppBar>
+					<main>
+						<Box sx={{ bgcolor: 'transparent', pt: 2, pb: 1 }}>
+							<Container maxWidth='sm'>
+								<Typography
+									component='h1'
+									variant='h2'
+									align='center'
+									color='white'
+									gutterBottom
+								>
+									Edit Project
+								</Typography>
 
-					{task && (
-						<Card variant='outlined' sx={CardStyle}>
-							<CardContent>
-								<div className='flexFieldsContainer'>
-									<Typography variant='h6' gutterBottom fullWidth>
-										Project "{task.task_name}"
-										<TextField
-											fullWidth
-											label='Project Name'
-											margin='normal'
-											size='small'
-											value={task.task_name}
-											onChange={(e) =>
-												setTask({ ...task, task_name: e.target.value })
-											}
-										/>
-									</Typography>
-								</div>
-
-								<div className='flexFieldsContainer'>
-									<div className='flexField autocompleteAssignedBy'>
-										<Autocomplete
-											options={userData}
-											getOptionLabel={(option) =>
-												`${option.first_name} ${option.last_name}`
-											}
-											value={userData.find(
-												(user) => user.id === assignedByUserId
-											)}
-											onChange={(event, newValue) => {
-												setAssignedByUserId(newValue ? newValue.id : null);
-												setTask({
-													...task,
-													assigned_by_first_name: newValue
-														? newValue.first_name
-														: '',
-													assigned_by_last_name: newValue
-														? newValue.last_name
-														: '',
-												});
-											}}
-											renderInput={(params) => (
-												<TextField
-													{...params}
-													label='Assigned By'
-													variant='outlined'
-													fullWidth
-												/>
-											)}
-										/>
-									</div>
-									<div className='flexField autocompleteAssignedTo'>
-										<Autocomplete
-											options={userData}
-											getOptionLabel={(option) =>
-												`${option.first_name} ${option.last_name}`
-											}
-											value={userData.find(
-												(user) => user.id === assignedToUserId
-											)}
-											onChange={(event, newValue) => {
-												setAssignedToUserId(newValue ? newValue.id : null);
-												setTask({
-													...task,
-													assigned_to_first_name: newValue
-														? newValue.first_name
-														: '',
-													assigned_to_last_name: newValue
-														? newValue.last_name
-														: '',
-												});
-											}}
-											renderInput={(params) => (
-												<TextField
-													{...params}
-													label='Assigned To'
-													variant='outlined'
-												/>
-											)}
-										/>
-									</div>
-									<div className='flexField priorityControl'>
-										<FormControl variant='outlined' fullWidth>
-											<InputLabel>Priority</InputLabel>
-											<Select
-												label='Priority'
-												value={task.priority}
-												onChange={(e) =>
-													setTask({ ...task, priority: e.target.value })
-												}
-											>
-												<MenuItem value='Low'>Low</MenuItem>
-												<MenuItem value='Medium'>Medium</MenuItem>
-												<MenuItem value='High'>High</MenuItem>
-											</Select>
-										</FormControl>
-									</div>
-									<div className='flexField dueDateControl'>
-										<LocalizationProvider dateAdapter={AdapterDateFns}>
-											<DateTimePicker
-												slotProps={{
-													textField: { size: 'large' },
-												}}
-												fullWidth
-												label='Due Date/Time'
-												value={new Date(task.due_date)}
-												onChange={(date) =>
-													setTask({ ...task, due_date: date.toISOString() })
-												}
-											/>
-										</LocalizationProvider>
-									</div>
-								</div>
-								<div className='flexDescriptionContainer'>
-									<div className='projectDescription'>
-										<Typography variant='h6' gutterBottom>
-											Project Description
-										</Typography>
-										<TextareaAutosize
-											minRows={6}
-											style={{
-												fontFamily: 'Arial',
-												fontSize: '1rem',
-												width: '100%',
-												padding: '10px',
-												resize: 'vertical',
-												marginTop: '15px',
-												borderColor: 'rgb(0,0,0,0.2)',
-												borderRadius: '5px',
-												backgroundColor: 'transparent',
-											}}
-											value={task.task_description}
-											onChange={(e) =>
-												setTask({ ...task, task_description: e.target.value })
-											}
-										/>
-										<FormControlLabel
-											control={
-												<Checkbox
-													checked={isCompleted}
-													onChange={() => {
-														const newCompletionStatus = !isCompleted;
-														setIsCompleted(newCompletionStatus);
-														setCompletionDate(
-															newCompletionStatus
-																? new Date().toISOString()
-																: null
-														);
-													}}
-													name='completedCheckbox'
-													color='primary'
-												/>
-											}
-											label='Mark As Complete'
-										/>
-									</div>
-
-									<div className='taskRequirements'>
-										<Typography variant='h6' gutterBottom>
-											Task Requirements
-										</Typography>
-										{taskRequirements.map((requirement, index) => (
-											<div
-												key={index}
-												style={{ display: 'flex', alignItems: 'center' }}
-											>
-												<TextField
-													fullWidth
-													margin='normal'
-													label={`Task Requirement ${index + 1}`}
-													variant='outlined'
-													value={requirement}
-													style={{
-														backgroundColor: isCompleted
-															? 'grey'
-															: 'transparent',
-													}}
-													onChange={(e) => {
-														const updatedRequirements = [...taskRequirements];
-														updatedRequirements[index] = e.target.value;
-														setTaskRequirements(updatedRequirements);
-													}}
-												/>
-												<Button
-													variant='contained'
-													color='error'
-													onClick={() => handleDeleteTaskRequirement(index)}
-												>
-													Remove
-												</Button>
+								{task && (
+									<Card variant='outlined' sx={CardStyle}>
+										<CardContent>
+											<div className='flexFieldsContainer'>
+												<Typography variant='h6' gutterBottom fullWidth>
+													Project "{task.task_name}"
+													<TextField
+														fullWidth
+														label='Project Name'
+														margin='normal'
+														size='small'
+														value={task.task_name}
+														onChange={(e) =>
+															setTask({ ...task, task_name: e.target.value })
+														}
+													/>
+												</Typography>
 											</div>
-										))}
-										<Button
-											variant='contained'
-											color='primary'
-											onClick={handleAddTaskRequirement}
-										>
-											Add Task Requirement
-										</Button>
-									</div>
-								</div>
-							</CardContent>
 
-							<CardActions>
-								<Button
-									variant='contained'
-									fullWidth
-									type='submit'
-									onClick={handleSave}
-								>
-									Save
-								</Button>
+											<div className='flexFieldsContainer'>
+												<div className='flexField autocompleteAssignedBy'>
+													<Autocomplete
+														options={userData}
+														getOptionLabel={(option) =>
+															`${option.first_name} ${option.last_name}`
+														}
+														value={userData.find(
+															(user) => user.id === assignedByUserId
+														)}
+														onChange={(event, newValue) => {
+															setAssignedByUserId(newValue ? newValue.id : null);
+															setTask({
+																...task,
+																assigned_by_first_name: newValue
+																	? newValue.first_name
+																	: '',
+																assigned_by_last_name: newValue
+																	? newValue.last_name
+																	: '',
+															});
+														}}
+														renderInput={(params) => (
+															<TextField
+																{...params}
+																label='Assigned By'
+																variant='outlined'
+																fullWidth
+															/>
+														)}
+													/>
+												</div>
+												<div className='flexField autocompleteAssignedTo'>
+													<Autocomplete
+														options={userData}
+														getOptionLabel={(option) =>
+															`${option.first_name} ${option.last_name}`
+														}
+														value={userData.find(
+															(user) => user.id === assignedToUserId
+														)}
+														onChange={(event, newValue) => {
+															setAssignedToUserId(newValue ? newValue.id : null);
+															setTask({
+																...task,
+																assigned_to_first_name: newValue
+																	? newValue.first_name
+																	: '',
+																assigned_to_last_name: newValue
+																	? newValue.last_name
+																	: '',
+															});
+														}}
+														renderInput={(params) => (
+															<TextField
+																{...params}
+																label='Assigned To'
+																variant='outlined'
+															/>
+														)}
+													/>
+												</div>
+												<div className='flexField priorityControl'>
+													<FormControl variant='outlined' fullWidth>
+														<InputLabel>Priority</InputLabel>
+														<Select
+															label='Priority'
+															value={task.priority}
+															onChange={(e) =>
+																setTask({ ...task, priority: e.target.value })
+															}
+														>
+															<MenuItem value='Low'>Low</MenuItem>
+															<MenuItem value='Medium'>Medium</MenuItem>
+															<MenuItem value='High'>High</MenuItem>
+														</Select>
+													</FormControl>
+												</div>
+												<div className='flexField dueDateControl'>
+													<LocalizationProvider dateAdapter={AdapterDateFns}>
+														<DateTimePicker
+															slotProps={{
+																textField: { size: 'large' },
+															}}
+															fullWidth
+															label='Due Date/Time'
+															value={new Date(task.due_date)}
+															onChange={(date) =>
+																setTask({ ...task, due_date: date.toISOString() })
+															}
+														/>
+													</LocalizationProvider>
+												</div>
+											</div>
+											<div className='flexDescriptionContainer'>
+												<div className='projectDescription'>
+													<Typography variant='h6' gutterBottom>
+														Project Description
+													</Typography>
+													<TextareaAutosize
+														minRows={6}
+														style={{
+															fontFamily: 'Arial',
+															fontSize: '1rem',
+															width: '100%',
+															padding: '10px',
+															resize: 'vertical',
+															marginTop: '15px',
+															borderColor: 'rgb(0,0,0,0.2)',
+															borderRadius: '5px',
+															backgroundColor: 'transparent',
+														}}
+														value={task.task_description}
+														onChange={(e) =>
+															setTask({ ...task, task_description: e.target.value })
+														}
+													/>
+													<FormControlLabel
+														control={
+															<Checkbox
+																checked={isCompleted}
+																onChange={() => {
+																	const newCompletionStatus = !isCompleted;
+																	setIsCompleted(newCompletionStatus);
+																	setCompletionDate(
+																		newCompletionStatus
+																			? new Date().toISOString()
+																			: null
+																	);
+																}}
+																name='completedCheckbox'
+																color='primary'
+															/>
+														}
+														label='Mark As Complete'
+													/>
+												</div>
 
-								<Button
-									variant='contained'
-									color='error'
-									fullWidth
-									onClick={() => navigate(-1)}
-								>
-									Cancel
-								</Button>
-							</CardActions>
-						</Card>
-					)}
-				</Container>
-				</Box>
-			</main>
-			<Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
-					<Typography
-						variant='subtitle1'
-						align='center'
-						color='white'
-						component='p'
-					>
-						Take your projects to the moon!
-					</Typography>
-					<Copyright />
-				</Box>
-		</ThemeProvider>
-		</Box>
+												<div className='taskRequirements'>
+													<Typography variant='h6' gutterBottom>
+														Task Requirements
+													</Typography>
+													{taskRequirements.map((requirement, index) => (
+														<div
+															key={index}
+															style={{ display: 'flex', alignItems: 'center' }}
+														>
+															<TextField
+																fullWidth
+																margin='normal'
+																label={`Task Requirement ${index + 1}`}
+																variant='outlined'
+																value={requirement}
+																style={{
+																	backgroundColor: isCompleted
+																		? 'grey'
+																		: 'transparent',
+																}}
+																onChange={(e) => {
+																	const updatedRequirements = [...taskRequirements];
+																	updatedRequirements[index] = e.target.value;
+																	setTaskRequirements(updatedRequirements);
+																}}
+															/>
+															<Button
+																variant='contained'
+																color='error'
+																onClick={() => handleDeleteTaskRequirement(index)}
+															>
+																Remove
+															</Button>
+														</div>
+													))}
+													<Button
+														sx={{ backgroundColor: 'black' }}
+														variant='contained'
+														color='primary'
+														onClick={handleAddTaskRequirement}
+													>
+														Add Task Requirement
+													</Button>
+												</div>
+											</div>
+										</CardContent>
+
+										<CardActions>
+											<Button
+												sx={{ backgroundColor: 'black' }}
+												variant='contained'
+												fullWidth
+												type='submit'
+												onClick={handleSave}
+											>
+												Save
+											</Button>
+
+											<Button
+												variant='contained'
+												color='error'
+												fullWidth
+												onClick={() => navigate(-1)}
+											>
+												Cancel
+											</Button>
+										</CardActions>
+									</Card>
+								)}
+							</Container>
+						</Box>
+					</main>
+					<Box sx={{ bgcolor: 'transparent', p: 6 }} component='footer'>
+						<Typography
+							variant='subtitle1'
+							align='center'
+							color='white'
+							component='p'
+						>
+							Take your projects to the moon!
+						</Typography>
+						<Copyright />
+					</Box>
+				</ThemeProvider>
+			</Box>
 		</>
 	);
 }
