@@ -58,6 +58,22 @@ export const OverdueTasksChart = () => {
 					],
 				},
 				options: {
+					layout: {
+						padding: {
+							top: 20,
+						},
+					},
+					plugins: {
+						datalabels: {
+							color: 'white',
+							display: 'auto',
+							align: 'center',
+							anchor: 'center',
+							formatter: (value, ctx) => {
+								return value;
+							},
+						},
+					},
 					scales: {
 						y: {
 							beginAtZero: true,
@@ -69,7 +85,21 @@ export const OverdueTasksChart = () => {
 								font: {
 									size: 14,
 									weight: 'bold',
+									color: 'white',
 								},
+								padding: {
+									top: 10,
+
+									left: 20,
+								},
+							},
+							ticks: {
+								color: 'white',
+							},
+						},
+						x: {
+							ticks: {
+								color: 'white',
 							},
 						},
 					},
@@ -77,7 +107,7 @@ export const OverdueTasksChart = () => {
 					legend: {
 						display: true,
 						labels: {
-							color: 'rgb(255, 99, 132)',
+							color: 'rgb(0, 0, 0)',
 						},
 					},
 				},
