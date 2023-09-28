@@ -321,7 +321,7 @@ export default function CompletedProjects() {
 						justifyContent={filteredTasks.length >= 2 ? 'center' : 'start'}
 					>
 						{filteredTasks.map((task, index) => {
-							if (task.is_active) {
+							if (!task.is_active) {
 								return (
 									<Grid item key={task.id} xs={12} md={4}>
 										<Link
