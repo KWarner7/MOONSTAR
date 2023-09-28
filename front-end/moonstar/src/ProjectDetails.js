@@ -1,75 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, Button, Grid } from '@mui/material';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Header from './Header.js';
 import AppBar from '@mui/material/AppBar';
 
-const CardStyle = {
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-  transition: '0.3s',
-  borderRadius: '10px',
-  borderColor: '#ddd',
-  background:
-    'linear-gradient(45deg, #B0C4DE 0%, #CFCFCF 40%, #808080 70%, #696969 100%)',
-  transform: 'scale(0.98)',
-};
-
 function ProjectDetails() {
-  const { id } = useParams();
-  const [task, setTask] = useState(null);
-  const [statusUpdates, setStatusUpdates] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+	const { id } = useParams();
+	const [task, setTask] = useState(null);
+	const [statusUpdates, setStatusUpdates] = useState([]);
+	const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Fetch the project details based on the provided id
-    fetch(`http://localhost:8081/tasks/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Access the data within the array
-        if (data.length > 0) {
-          setTask(data[0]);
-          // Check if the project is active or not
-          if (!data[0].is_active) {
-            // If not active, navigate to the completed project details page
-            navigate(`/completed-project-details/${id}`);
-          }
-        } else {
-          // Handle the case when no data is found for the given id
-          console.error(`No data found for task with id ${id}`);
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching project details:', error);
-        // Handle the error or display an error message
-      });
+	useEffect(() => {
+		// Fetch the project details based on the provided id
+		fetch(`http://localhost:8081/tasks/${id}`)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				return response.json();
+			})
+			.then((data) => {
+				// Access the data within the array
+				if (data.length > 0) {
+					setTask(data[0]);
+				} else {
+					// Handle the case when no data is found for the given id
+					console.error(`No data found for task with id ${id}`);
+				}
+			})
+			.catch((error) => {
+				console.error('Error fetching project details:', error);
+				// Handle the error or display an error message
+			});
 
-    // Fetch the status updates based on the provided id
-    fetch(`http://localhost:8081/status-updates/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Set the status updates data in the state
-        setStatusUpdates(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching status updates:', error);
-        // Handle the error or display an error message
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [id, navigate]);
-
+		// Fetch the status updates based on the provided id
+		fetch(`http://localhost:8081/status-updates/${id}`)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				return response.json();
+			})
+			.then((data) => {
+				// Set the status updates data in the state
+				setStatusUpdates(data);
+			})
+			.catch((error) => {
+				console.error('Error fetching status updates:', error);
+				// Handle the error or display an error message
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	}, [id]);
 
   return (
     <>
@@ -82,21 +65,18 @@ function ProjectDetails() {
             <div>Loading...</div>
           ) : task ? (
             <>
-            <Typography   style={{ fontWeight: 'bold' }} variant="h4" sx={{ marginBottom: "16px" }}>
-                    Active Project Details
-                  </Typography>
-              <Card sx={{ ...CardStyle, width: 1250, height: 675 , borderRadius: "8px" , backgroundColor: "#f5f5f5", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)"}}>
+              <Card sx={{ width: 1250, height: 650 , borderRadius: "8px" }}>
                 <CardContent>
-                  <Typography   style={{ fontWeight: 'bold' }} variant="h5" sx={{ marginBottom: "16px" }}>
-                    Project Name: {task.task_name}
+                  <Typography variant="h5" sx={{ marginBottom: "16px" }}>
+                    Task Name: {task.task_name}
                   </Typography>
 
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={3}>
                       {/* Card for Assigned By */}
-                      <Card sx={{ background: 'transparent', height: 90 , marginBottom: 2,border: "1px solid #CCCCCC",  }}>
+                      <Card sx={{ marginBottom: 2,border: "1px solid #e0e0e0" }}>
                         <CardContent>
-                          <Typography  style={{ fontWeight: 'bold' }}>Assigned By:</Typography>
+                          <Typography>Assigned By:</Typography>
                           <Typography>
                             {task.assigned_by_rank}{" "}
                             {task.assigned_by_first_name}{" "}
@@ -108,19 +88,19 @@ function ProjectDetails() {
 
                     <Grid item xs={12} md={3}>
                       {/* Card for Priority */}
-                      <Card sx={{ background: 'transparent', height: 90, marginBottom: 2 , border: "1px solid #CCCCCC"}}>
+                      <Card sx={{ marginBottom: 2 , border: "1px solid #e0e0e0"}}>
                         <CardContent>
-                          <Typography  style={{ fontWeight: 'bold' }}>Priority:</Typography>
-                          <Typography>{task.priority}</Typography>
+                          <Typography>Priority:</Typography>
+                          <Typography>Priority: {task.priority}</Typography>
                         </CardContent>
                       </Card>
                     </Grid>
 
                     <Grid item xs={12} md={3}>
                       {/* Card for Assigned To */}
-                      <Card sx={{ background: 'transparent', height: 90, marginBottom: 2, border: "1px solid #CCCCCC" }}>
+                      <Card sx={{ marginBottom: 2, border: "1px solid #e0e0e0" }}>
                         <CardContent>
-                          <Typography  style={{ fontWeight: 'bold' }}>Assigned To:</Typography>
+                          <Typography>Assigned To:</Typography>
                           <Typography>
                             {task.assigned_to_rank}{" "}
                             {task.assigned_to_first_name}{" "}
@@ -132,9 +112,9 @@ function ProjectDetails() {
 
                     <Grid item xs={12} md={3}>
                       {/* Card for Due Date */}
-                      <Card sx={{ background: 'transparent', height: 90, marginBottom: 2 , border: "1px solid #CCCCCC"}}>
+                      <Card sx={{ marginBottom: 2 , border: "1px solid #e0e0e0"}}>
                         <CardContent>
-                          <Typography  style={{ fontWeight: 'bold' }}>Due Date:</Typography>
+                          <Typography>Due Date:</Typography>
                           <Typography>
                             {new Date(task.due_date).toLocaleDateString()}
                           </Typography>
@@ -145,11 +125,11 @@ function ProjectDetails() {
 
                   <Grid item xs={12} md={6}>
                     {/* Description card with scroll */}
-                    <Card sx={{background: 'transparent', marginBottom: 2, border: "1px solid #CCCCCC" }}>
+                    <Card sx={{ marginBottom: 2, border: "1px solid #e0e0e0" }}>
                       <CardContent
-                        sx={{ height: 100, maxHeight: "200px", overflowY: "auto" }}
+                        sx={{ maxHeight: "200px", overflowY: "auto" }}
                       >
-                        <Typography  style={{ fontWeight: 'bold' }}>
+                        <Typography>
                           Description:
                         </Typography>
                         <Typography>
@@ -161,22 +141,22 @@ function ProjectDetails() {
 
                   <Grid item xs={12} md={6}>
                     {/* Requirements card with scroll */}
-                    <Card sx={{background: 'transparent', height: 100, marginBottom: 2 , border: "1px solid #CCCCCC"}}>
+                    <Card sx={{ marginBottom: 2 , border: "1px solid #e0e0e0"}}>
                       <CardContent
                         sx={{ maxHeight: "200px", overflowY: "auto" }}
                       >
-                       <Typography  style={{ fontWeight: 'bold' }}
+                       <Typography
                           sx={{
                             position: "sticky",
                             top: "0",
-                            background: 'transparent',
+                            backgroundColor: "white",
                             zIndex: "1",
                           }}
-                        >Requirements:</Typography>
+                        >Requirement:</Typography>
                         {task && task.task_requirement ? (
                           <Typography>{task.task_requirement}</Typography>
                         ) : (
-                          <Typography>No requirements.</Typography>
+                          <Typography>No requirement.</Typography>
                         )}
                       </CardContent>
                     </Card>
@@ -184,15 +164,15 @@ function ProjectDetails() {
 
                   <Grid item xs={2} md={2}>
                     {/* Status updates card with scroll */}
-                    <Card sx={{background: 'transparent', marginBottom: 2 , border: "1px solid #CCCCCC"}}>
+                    <Card sx={{ marginBottom: 2 , border: "1px solid #e0e0e0"}}>
                       <CardContent
-                        sx={{ height: "180px", overflowY: "auto" }}
+                        sx={{ maxHeight: "200px", overflowY: "auto" }}
                       >
-                        <Typography  style={{ fontWeight: 'bold' }}
+                        <Typography
                           sx={{
                             position: "sticky",
                             top: "0",
-                            background: 'transparent',
+                            backgroundColor: "white",
                             zIndex: "1",
                           }}
                         >
@@ -202,11 +182,11 @@ function ProjectDetails() {
                           <ul
                             style={{
                               paddingLeft: "20px",
-                              listStyleType: "none",
+                              listStyleType: "disc",
                             }}
                           >
                             {statusUpdates.map((update, index) => (
-                              <li key={index} style={{ textAlign: "center" }}>
+                              <li key={index} style={{ textAlign: "left" }}>
                                 <Typography>
                                   {update.update_text}{" "}
                                   {new Date(update.timestamp).toLocaleString()}
@@ -227,7 +207,7 @@ function ProjectDetails() {
                       variant="contained"
                       component={Link}
                       to={`/project-status/${id}`}
-                      style={{ marginRight: "20px", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",  }}
+                      style={{ marginRight: "20px" }}
                     >
                       Project Status
                     </Button>
@@ -235,7 +215,7 @@ function ProjectDetails() {
                       variant="contained"
                       component={Link}
                       to={`/edit-project/${id}`}
-                      style={{ marginRight: "20px", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)", }}
+                      style={{ marginRight: "20px" }}
                     >
                       Edit Project
                     </Button>
@@ -243,7 +223,7 @@ function ProjectDetails() {
                       variant="contained"
                       component={Link}
                       to="/active-projects"
-                      style={{ marginRight: "20px", backgroundColor: "red", color: "white" , boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)", }}
+
                     >
                       Return to Active Projects
                     </Button>
